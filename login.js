@@ -2,6 +2,7 @@ let usernameInput = document.querySelector("#usernameInput");
 let passwordInput = document.querySelector("#passwordInput");
 
 let logInBtn = document.querySelector('#logInBtn');
+
 let registerBtn = document.querySelector('#registerBtn');
 
 let main = document.querySelector("main");
@@ -82,3 +83,9 @@ let login = async () => {
 
 
 logInBtn.addEventListener("click", login);
+
+
+
+let 
+logInBtn.addEventListener("click", login())
+

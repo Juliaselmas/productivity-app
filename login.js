@@ -4,6 +4,7 @@ let passwordInput = document.querySelector("#passwordInput");
 
 
 let logInBtn = document.querySelector('#logInBtn');
+
 let registerBtn = document.querySelector('#registerBtn');
 
 let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
@@ -72,3 +73,9 @@ let login = async () => {
 
 
 logInBtn.addEventListener("click", login);
+
+
+
+let 
+logInBtn.addEventListener("click", login())
+

@@ -126,3 +126,20 @@ function loadTasksFromLocalStorage() {
 
 // Ladda uppgifterna från localStorage när skriptet körs
 loadTasksFromLocalStorage();
+
+
+
+
+
+
+//Redigera tasks
+
+//funktionen här
+
+let openTaskEdit = () => {
+    let newInputTitle = document.createElement("input[type:text]");
+    
+}
+
+
+//sätta eventlistener på alla redigera knappar

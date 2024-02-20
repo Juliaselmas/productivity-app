@@ -75,17 +75,20 @@ let login = async () => {
     quoteParagraph.innerText = quote;
 
     main.append(quoteParagraph);
-    
 
 
+    //Hämta rätt användares todos och rutiner och skriv ut dem - hur kopplar vi dem till användaren??????
 
 };
-
 
 logInBtn.addEventListener("click", login);
 
 
+//Logga ut funktion
+let logOutBtn = document.querySelector("#logOutBtn");
 
-let 
-logInBtn.addEventListener("click", login())
+logOutBtn.addEventListener("click", () => {
+    //ta bort alla ärenden och rutiner
+});
+
 

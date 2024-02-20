@@ -1,11 +1,11 @@
 // Hämta referenser till uppgiftens inmatningsfält och uppgiftslistan
-const taskTitle = document.getElementById('taskTitle');
-const taskDescription = document.getElementById('taskDescription');
-const taskStatus = document.getElementById('taskStatus');
-const taskDeadline = document.getElementById('taskDeadline');
-const taskEstimate = document.getElementById('taskEstimate');
-const taskCategory = document.getElementById('taskCategory');
-const taskList = document.getElementById('taskList');
+let taskTitle = document.getElementById('taskTitle');
+let taskDescription = document.getElementById('taskDescription');
+let taskStatus = document.getElementById('taskStatus');
+let taskDeadline = document.getElementById('taskDeadline');
+let taskEstimate = document.getElementById('taskEstimate');
+let taskCategory = document.getElementById('taskCategory');
+let taskList = document.getElementById('taskList');
 
 let tasks = [];
 
@@ -14,7 +14,7 @@ function createTaskElement(task, index) {
     // Skapa ett nytt listelement
     const li = document.createElement('li');
 
-    // Lägg till uppgiftens titel, beskrivning, status, deadline, uppskattning och kategori till listelementet
+    // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
         <h3>${task.title}</h3>
         <p>${task.description}</p>
@@ -45,7 +45,8 @@ function createTaskElement(task, index) {
     // Returnera listelementet
     return li;
 }
-
+    // Spara uppgifterna till localstorage
+    saveTasksToLocalStorage();
 // Funktion för att lägga till en ny uppgift
 function addTask() {
 
@@ -96,8 +97,6 @@ function addTask() {
     taskEstimate.value = '';
     taskCategory.value = '';
 
-    // Spara uppgifterna till localStorage
-    saveTasksToLocalStorage();
 }
 
 // Funktion för att spara uppgifter till localStorage
@@ -105,10 +104,10 @@ function saveTasksToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Funktion för att ladda uppgifter från localStorage
+// Funktion för att ladda uppgifter från localstorage
 function loadTasksFromLocalStorage() {
     try {
-        // Hämta uppgifterna från localStorage
+        // Hämta uppgifterna från localstorage
         const loadedTasks = JSON.parse(localStorage.getItem('tasks'));
         // Om det finns några uppgifter, skapa ett nytt uppgiftselement för varje och lägg till det i uppgiftslistan
         if (loadedTasks) {
@@ -120,9 +119,9 @@ function loadTasksFromLocalStorage() {
         }
     } catch (error) {
         console.error('Failed to parse tasks from localStorage:', error);
-        // Du kan också visa ett felmeddelande till användaren här, om du vill
+        // Man  kan också visa ett felmeddelande till användaren här. 
     }
 }
 
-// Ladda uppgifterna från localStorage när skriptet körs
+// Ladda uppgifterna från localStorage
 loadTasksFromLocalStorage();

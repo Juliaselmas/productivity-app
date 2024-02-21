@@ -9,10 +9,15 @@ let taskList = document.getElementById('taskList');
 
 let tasks = [];
 
+// Funktion för att spara uppgifter till localStorage
+function saveTasksToLocalStorage() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
 // Funktiion för att skapa ett nytt uppgiftselement
 function createTaskElement(task, index) {
     // Skapa ett nytt listelement
-    const li = document.createElement('li');
+    let li = document.createElement('li');
 
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
@@ -44,9 +49,11 @@ function createTaskElement(task, index) {
 
     // Returnera listelementet
     return li;
-}
+    
+    
     // Spara uppgifterna till localstorage
     saveTasksToLocalStorage();
+}
 // Funktion för att lägga till en ny uppgift
 function addTask() {
 
@@ -75,7 +82,7 @@ function addTask() {
     }
     
     // Skapa ett nytt uppgifts-objekt med värdena från inmatningsfälten
-    const task = {
+    let task = {
         title: taskTitle.value,
         description: taskDescription.value,
         status: taskStatus.checked,
@@ -99,10 +106,6 @@ function addTask() {
 
 }
 
-// Funktion för att spara uppgifter till localStorage
-function saveTasksToLocalStorage() {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
 
 // Funktion för att ladda uppgifter från localstorage
 function loadTasksFromLocalStorage() {
@@ -125,3 +128,41 @@ function loadTasksFromLocalStorage() {
 
 // Ladda uppgifterna från localStorage
 loadTasksFromLocalStorage();
+
+
+
+
+
+
+//Redigera tasks
+
+//funktionen här
+let openTaskEdit = () => {
+    console.log("eventlistener funkar!");
+
+    //välja nuvarande task
+    let taskToEdit = this.parentNode; // this är knappen, parentNode är dess förälder
+    
+    //skapa nya inputs
+    let newTitleInput = document.createElement("input[type:text]");
+    let newDescriptionInput = document.createElement("input[type:text]");
+
+    //välja de specifika raderna och lägga in nya input bredvid
+    let taskTitleRow = taskToEdit.firstChild;
+    taskTitleRow.append(newTitleInput);
+
+    let taskDescriptionRow = taskToEdit.secondChild;
+    taskDescriptionRow.append(newDescriptionInput);
+    
+
+    
+}
+
+
+//sätta eventlistener på alla redigera knappar
+let editBtnsNodes= document.querySelectorAll(".edit");
+
+editBtnsNodes.forEach(function(editBtn) {
+    editBtn.addEventListener('click', openTaskEdit );
+
+});

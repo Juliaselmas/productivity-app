@@ -1,11 +1,15 @@
 let usernameInput = document.querySelector("#usernameInput");
 let passwordInput = document.querySelector("#passwordInput");
 
-
-
 let logInBtn = document.querySelector('#logInBtn');
 
 let registerBtn = document.querySelector('#registerBtn');
+
+let main = document.querySelector("main");
+
+
+
+
 
 let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
 
@@ -67,15 +71,24 @@ let login = async () => {
     let quote = response.data[0].content;
     console.log(quote);
 
+    let quoteParagraph = document.createElement("p");
+    quoteParagraph.innerText = quote;
 
+    main.append(quoteParagraph);
+
+
+    //Hämta rätt användares todos och rutiner och skriv ut dem - hur kopplar vi dem till användaren??????
 
 };
-
 
 logInBtn.addEventListener("click", login);
 
 
+//Logga ut funktion
+let logOutBtn = document.querySelector("#logOutBtn");
 
-let 
-logInBtn.addEventListener("click", login())
+logOutBtn.addEventListener("click", () => {
+    //ta bort alla ärenden och rutiner
+});
+
 

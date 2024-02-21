@@ -9,6 +9,11 @@ let taskList = document.getElementById('taskList');
 
 let tasks = [];
 
+// Funktion för att spara uppgifter till localStorage
+function saveTasksToLocalStorage() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
 // Funktiion för att skapa ett nytt uppgiftselement
 function createTaskElement(task, index) {
     // Skapa ett nytt listelement
@@ -44,9 +49,11 @@ function createTaskElement(task, index) {
 
     // Returnera listelementet
     return li;
-}
+    
+    
     // Spara uppgifterna till localstorage
     saveTasksToLocalStorage();
+}
 // Funktion för att lägga till en ny uppgift
 function addTask() {
 
@@ -99,10 +106,6 @@ function addTask() {
 
 }
 
-// Funktion för att spara uppgifter till localStorage
-function saveTasksToLocalStorage() {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
 
 // Funktion för att ladda uppgifter från localstorage
 function loadTasksFromLocalStorage() {
@@ -135,6 +138,8 @@ loadTasksFromLocalStorage();
 
 //funktionen här
 let openTaskEdit = () => {
+    console.log("eventlistener funkar!");
+
     //välja nuvarande task
     let taskToEdit = this.parentNode; // this är knappen, parentNode är dess förälder
     
@@ -147,7 +152,7 @@ let openTaskEdit = () => {
     taskTitleRow.append(newTitleInput);
 
     let taskDescriptionRow = taskToEdit.secondChild;
-    taskTitleRow.append(newDescriptionInput);
+    taskDescriptionRow.append(newDescriptionInput);
     
 
     
@@ -160,5 +165,4 @@ let editBtnsNodes= document.querySelectorAll(".edit");
 editBtnsNodes.forEach(function(editBtn) {
     editBtn.addEventListener('click', openTaskEdit );
 
-    console.log("eventlistener funkar!");
 });

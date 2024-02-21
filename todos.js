@@ -12,7 +12,7 @@ let tasks = [];
 // Funktiion för att skapa ett nytt uppgiftselement
 function createTaskElement(task, index) {
     // Skapa ett nytt listelement
-    const li = document.createElement('li');
+    let li = document.createElement('li');
 
     // Lägg till uppgiftens titel, beskrivning, status, deadline, uppskattning och kategori till listelementet
     li.innerHTML = `
@@ -74,7 +74,7 @@ function addTask() {
     }
     
     // Skapa ett nytt uppgifts-objekt med värdena från inmatningsfälten
-    const task = {
+    let task = {
         title: taskTitle.value,
         description: taskDescription.value,
         status: taskStatus.checked,
@@ -135,11 +135,31 @@ loadTasksFromLocalStorage();
 //Redigera tasks
 
 //funktionen här
-
 let openTaskEdit = () => {
-    let newInputTitle = document.createElement("input[type:text]");
+    //välja nuvarande task
+    let taskToEdit = this.parentNode; // this är knappen, parentNode är dess förälder
+    
+    //skapa nya inputs
+    let newTitleInput = document.createElement("input[type:text]");
+    let newDescriptionInput = document.createElement("input[type:text]");
+
+    //välja de specifika raderna och lägga in nya input bredvid
+    let taskTitleRow = taskToEdit.firstChild;
+    taskTitleRow.append(newTitleInput);
+
+    let taskDescriptionRow = taskToEdit.secondChild;
+    taskTitleRow.append(newDescriptionInput);
+    
+
     
 }
 
 
 //sätta eventlistener på alla redigera knappar
+let editBtnsNodes= document.querySelectorAll(".edit");
+
+editBtnsNodes.forEach(function(editBtn) {
+    editBtn.addEventListener('click', openTaskEdit );
+
+    console.log("eventlistener funkar!");
+});

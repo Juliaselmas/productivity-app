@@ -41,6 +41,7 @@ registerBtn.addEventListener("click", register);
 
 
 let quoteParagraph = document.createElement("p");//den här behöver ligga globalt eftersom den ska användas både i login in och logout
+let taskListUl = document.querySelector("#taskList");//samma som ovan
 
 let login = async () => {
     //hämta inputs
@@ -63,9 +64,24 @@ let login = async () => {
         console.log("Lol u failed");
     }
     
+
+
+
+    //Hämta rätt användares todos och rutiner och skriv ut dem 
+    if (user.todos) {
+        let taskLi = document.createElement("li");
+        taskLi.innerHTML = '<p> ${user.todos} </p>';
+        taskListUl.append(taskLi);
+    } else {
+        let paragraph = document.createElement("p");
+        paragraph.innerText = "Create your first task!";
+        taskListUl.append(paragraph);
+    }
     
+
+
+
     //skriva ut citat från API
-    //kom ihåg await och axios
 
     // här börjar axios
     let response = await axios.get('https://api.quotable.io/quotes/random');
@@ -75,10 +91,6 @@ let login = async () => {
     quoteParagraph.innerText = quote;
 
     main.append(quoteParagraph);
-
-
-    //Hämta rätt användares todos och rutiner och skriv ut dem - hur kopplar vi dem till användaren??????
-
 };
 
 logInBtn.addEventListener("click", login);
@@ -89,7 +101,6 @@ let logOutBtn = document.querySelector("#logOutBtn");
 
 logOutBtn.addEventListener("click", () => {
     //ta bort alla ärenden och rutiner
-    let taskListUl = document.querySelector("#taskList");
     taskListUl.innerHTML = " ";
     quoteParagraph.innerHTML= " ";
 });
@@ -97,4 +108,11 @@ logOutBtn.addEventListener("click", () => {
 
 
 
-//skiss på hur man i todo ska 
+
+
+
+
+
+
+
+

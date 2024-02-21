@@ -7,8 +7,10 @@ let taskEstimate = document.getElementById('taskEstimate');
 let taskCategory = document.getElementById('taskCategory');
 let taskList = document.getElementById('taskList');
 
-let tasks = [];
-
+// Funktion för att spara uppgifter till localStorage
+let saveTasksToLocalStorage = () => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
 // Funktiion för att skapa ett nytt uppgiftselement
 function createTaskElement(task, index) {
@@ -17,37 +19,39 @@ function createTaskElement(task, index) {
     
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
-    <h3>${task.title}</h3>
-    <p>${task.description}</p>
-    <p>Status: <span class="status">${task.status ? 'Slutförd' : 'Ej slutförd'}</span></p>
-    <p>Deadline: ${task.deadline}</p>
-        <p>Uppskattad tid: ${task.estimate} timmar</p>
+        <h3>${task.title}</h3>
+        <p>${task.description}</p>
+        <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
+        <p>Deadline: ${task.deadline}</p>
+        <p>Uppskattad tid: ${task.estimate} hours</p>
         <p>Kategori: ${task.category}</p>
-        <button class="toggle">${task.status ? 'Ångra' : 'Markera som slutförd'}</button>
-        <button class="edit">Redigera</button>
-        <button class="delete">Radera</button>
-        `;
-        
-        // Lägg till en eventListener till "Markera som slutförd" / "Ångra" knappen
-        li.querySelector('.toggle').addEventListener('click', function() {
-            task.status = !task.status;
-            li.querySelector('.status').textContent = task.status ? 'Slutförd' : 'Ej slutförd';
-            this.textContent = task.status ? 'Ångra' : 'Markera som slutförd';
-            saveTasksToLocalStorage();
-        });
-        
-        // Lägg till en eventListener till "Radera" knappen
-    li.querySelector('.delete').addEventListener('click', function() {
+        <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
+        <button class="edit">Edit</button>
+        <button class="delete">Delete</button>
+    `;
+
+    // Lägg till en eventListener till "Markera som slutförd" / "Ångra" knappen
+    li.querySelector('.toggle').addEventListener('click', function () {
+        task.status = !task.status;
+        li.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';
+        this.textContent = task.status ? 'Undo' : 'Mark as complete';
+        saveTasksToLocalStorage();
+    });
+
+    // Lägg till en eventListener till "Radera" knappen
+    li.querySelector('.delete').addEventListener('click', function () {
         taskList.removeChild(li);
         tasks.splice(index, 1);
         saveTasksToLocalStorage();
     });
-    
+
+    // Lägg till en eventListener till "Redigera" knappen
+    li.querySelector('.edit').addEventListener('click', function () {
+        openTaskEdit(task, index);
+    });
+
     // Returnera listelementet
     return li;
-    
-    
-    
 }
 // Funktion för att lägga till en ny uppgift
 function addTask() {
@@ -56,25 +60,26 @@ function addTask() {
     /* kontrollerar att man som användare har fyllt i alla uppgifter. Just nu är det en "alert", men jag tycker att vi ska se om det finns en mer användarvänlig metod att meddela användaren om att hen inte fyllt i korrekt .
     Jag är medveten om att man kan skriva en bättre if sats, men har ej gjort det än */
     if (!taskTitle.value) {
-        alert('Vänligen ange en uppgiftstitel');
+        alert('Please enter a task title');
         return;
     }
     if(!taskDescription.value){
-        alert('Vänligen ange en uppgiftsbeskrivning');
+        alert('Please enter a task description');
         return;
     }
     if(!taskDeadline.value){
-        alert('Vänligen ange en deadline för uppgiften');
+        alert('Please provide a deadline for the task');
         return;
     }
     if(!taskEstimate.value){
-        alert('Vänligen ange en uppskattad tid för uppgiften');
+        alert('Please provide an estimated time for the task');
         return;
     }
     if(!taskCategory.value){
-        alert('Vänligen ange en kategori för uppgiften');
+        alert('Please enter a category for the task');
         return;
     }
+    
     
     // Skapa ett nytt uppgifts-objekt med värdena från inmatningsfälten
     let task = {
@@ -126,19 +131,11 @@ function loadTasksFromLocalStorage() {
 // Ladda uppgifterna från localStorage
 loadTasksFromLocalStorage();
 
-// Funktion för att spara uppgifter till localStorage
-let saveTasksToLocalStorage = () => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-
-
-
 
 
 
 //Redigera tasks
 
-//funktionen här
 let openTaskEdit = () => {
     console.log("eventlistener funkar!");
 
@@ -159,8 +156,6 @@ let openTaskEdit = () => {
 
     
 }
-
-
 //sätta eventlistener på alla redigera knappar
 let editBtnsNodes= document.querySelectorAll(".edit");
 

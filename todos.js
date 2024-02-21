@@ -95,6 +95,8 @@ function addTask() {
     const taskElement = createTaskElement(task, tasks.length - 1);
     taskList.appendChild(taskElement);
 
+    
+
     // Rensa inmatningsfälten
     taskTitle.value = '';
     taskDescription.value = '';

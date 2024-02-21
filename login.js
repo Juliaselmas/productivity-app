@@ -18,28 +18,29 @@ let register = async () => {
     let username = usernameInput.value;
     let password = passwordInput.value;
     console.log("användarnamn: "+ username)
-
+    
     //skapa användare & lägg i array
     let user = {
         username: username,
         password: password
     }
     console.log(user);
-
+    
     users.push(user);
     console.log(users);
-
+    
     //lägg input i localstorage
     localStorage.setItem("users", JSON.stringify(users));
-
+    
     console.log(localStorage.getItem("users"));
-
+    
 };
 
 registerBtn.addEventListener("click", register);
 
 
 
+let quoteParagraph = document.createElement("p");//den här behöver ligga globalt eftersom den ska användas både i login in och logout
 
 let login = async () => {
     //hämta inputs
@@ -71,7 +72,6 @@ let login = async () => {
     let quote = response.data[0].content;
     console.log(quote);
 
-    let quoteParagraph = document.createElement("p");
     quoteParagraph.innerText = quote;
 
     main.append(quoteParagraph);
@@ -89,6 +89,12 @@ let logOutBtn = document.querySelector("#logOutBtn");
 
 logOutBtn.addEventListener("click", () => {
     //ta bort alla ärenden och rutiner
+    let taskListUl = document.querySelector("#taskList");
+    taskListUl.innerHTML = " ";
+    quoteParagraph.innerHTML= " ";
 });
 
 
+
+
+//skiss på hur man i todo ska 

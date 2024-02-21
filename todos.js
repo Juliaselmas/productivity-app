@@ -10,7 +10,7 @@ let taskList = document.getElementById('taskList');
 let tasks = [];
 
 // Funktion för att spara uppgifter till localStorage
-function saveTasksToLocalStorage() {
+let saveTasksToLocalStorage = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
@@ -51,8 +51,7 @@ function createTaskElement(task, index) {
     return li;
     
     
-    // Spara uppgifterna till localstorage
-    saveTasksToLocalStorage();
+   
 }
 // Funktion för att lägga till en ny uppgift
 function addTask() {

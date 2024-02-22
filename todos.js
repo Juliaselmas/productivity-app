@@ -146,7 +146,7 @@ function openTaskEdit(task, index) {
     newStatusInput.type = "checkbox";
     newStatusInput.checked = task.status;
     let newDeadlineInput = document.createElement("input");
-    newDeadlineInput.type ="date";
+    newDeadlineInput.type = "date";
     newDeadlineInput.value = task.deadline;
     let newEstimateInput = document.createElement("input");
     newEstimateInput.type = "number";
@@ -195,8 +195,8 @@ function openTaskEdit(task, index) {
         <p>${task.description}</p>
         <p>status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
         <p>Deadline: ${task.deadline}</p>
-        <p>Estemated time: ${task.estimate} hours</p>
-        <p>Catagory: ${task.category}</p>
+        <p>Estimated time: ${task.estimate} hours</p>
+        <p>Category: ${task.category}</p>
         <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
         <button class="edit">Edit</button>
         <button class="delete">Delete</button>

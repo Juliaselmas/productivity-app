@@ -36,8 +36,8 @@ let register = async () => {
 
 
 
-     // sätt nuvarande användare i Localstorage
-     localStorage.setItem("currentUser", user.username)
+    // sätt nuvarande användare i Localstorage
+    localStorage.setItem("currentUser", JSON.stringify(user))
     
 };
 
@@ -73,9 +73,9 @@ let login = async () => {
 
 
     //Hämta rätt användares todos och rutiner och skriv ut dem 
-    if (user.todos) {
+    if (user.tasks) { // varför reageras på detta? om det inte finns några tasks så bör den väl snarare bara gå till else satsen???
         let taskLi = document.createElement("li");
-        taskLi.innerHTML = '<p> ${user.todos} </p>';
+        taskLi.innerHTML = '<p> ${user.tasks} </p>';
         taskListUl.append(taskLi);
     } else {
         let paragraph = document.createElement("p");
@@ -100,7 +100,7 @@ let login = async () => {
 
     // sätt nuvarande användare i Localstorage
     localStorage.setItem("currentUser", JSON.stringify(user))
-    //localStorage.setItem("currentUser", user) // antingen lägger man username här och sen kollar igenom users för att hitta användaren sen, eller så lägger man objektet här och får bara ut object object i local storage?????
+   
 
    
 };

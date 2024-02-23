@@ -1,19 +1,12 @@
 // Hämta referenser till uppgiftens inmatningsfält och uppgiftslistan
-let taskTitle = document.getElementById('taskTitle');
-let taskDescription = document.getElementById('taskDescription');
-let taskStatus = document.getElementById('taskStatus');
-let taskDeadline = document.getElementById('taskDeadline');
-let taskEstimate = document.getElementById('taskEstimate');
-let taskCategory = document.getElementById('taskCategory');
-let taskList = document.getElementById('taskList');
-
-
-
-//selecta nuvarande användaren
-let currentUser = localStorage.getItem("currentUser");
-
-
-let tasks = [];
+const taskTitle = document.getElementById('taskTitle');
+const taskDescription = document.getElementById('taskDescription');
+const taskStatus = document.getElementById('taskStatus');
+const taskDeadline = document.getElementById('taskDeadline');
+const taskEstimate = document.getElementById('taskEstimate');
+const taskCategory = document.getElementById('taskCategory');
+const taskList = document.getElementById('taskList');
+const tasks = [];
 
 // Deklaration av funktioner
 let saveTasksToLocalStorage = () => {
@@ -23,14 +16,14 @@ let saveTasksToLocalStorage = () => {
 function createTaskElement(task, index) {
     // Skapa ett nytt listelement
     let li = document.createElement('li');
-    
+
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
         <h3>${task.title}</h3>
         <p>${task.description}</p>
         <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
         <p>Deadline: ${task.deadline}</p>
-        <p>Estemated time: ${task.estimate} hours</p>
+        <p>Estimated time: ${task.estimate} hours</p>
         <p>catagory: ${task.category}</p>
         <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
         <button class="edit">Edit</button>
@@ -47,10 +40,12 @@ function createTaskElement(task, index) {
     });
 
     // Lägg till en eventListener till "Radera" knappen
+    // I delete-eventet för uppgifter, använd index för att ta bort uppgiften från arrayen tasks och från DOM:en
     li.querySelector('.delete').addEventListener('click', function () {
-        taskList.removeChild(li);
-        tasks.splice(index, 1);
+        let taskIndex = Array.from(taskList.children).indexOf(li); // Hittar indexet för det aktuella listelementet
+        tasks.splice(taskIndex, 1); // Tar bort uppgiften från arrayen
         saveTasksToLocalStorage();
+        taskList.removeChild(li); // Tar bort listelementet från DOM
     });
 
     // Lägg till en eventListener till "Redigera" knappen
@@ -98,26 +93,12 @@ function addTask() {
         estimate: taskEstimate.value,
         category: taskCategory.value
     };
-    
+
     // Lägg till den nya uppgiften i uppgiftslistan
     tasks.push(task);
-    const taskElement = createTaskElement(task, tasks.length - 1);
+    const taskElement = createTaskElement(task, tasks.length - 1); // Använd tasks.length - 1 som index
     taskList.appendChild(taskElement);
-    
 
-    //lägga till tasks inuti currentUser
-   let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
-   currentUserObject.tasks = tasks;
-   console.log(currentUserObject);
-   currentUser = JSON.stringify(currentUserObject); //konverterar tillbaka till en sträng
-
-
-   localStorage.setItem("currentUser" , currentUser); // uppdaterar currentUser till det nya som har skapats
-
-    
-    
-    
-    
     // Rensa inmatningsfälten
     taskTitle.value = '';
     taskDescription.value = '';
@@ -151,9 +132,7 @@ function loadTasksFromLocalStorage() {
 
 // Funktion för att ladda uppgifter från localStorage vid sidans laddning
 loadTasksFromLocalStorage();
-
-
-// Funktion för att filtrera uppgifter baserat på deras STATUS 
+// Funktion för att filtrera uppgifter baserat på deras status
 function filterTasksByStatus(status) {
     return tasks.filter(task => task.status === status);
 }
@@ -172,6 +151,18 @@ function displayTasksByStatus(status) {
     });
 }
 
+//Funktion för att visa samtliga tasks utan sortering. 
+function showAllTasks() {
+    // Rensa taskList
+    taskList.innerHTML = '';
+
+    // Iterera över tasks
+    tasks.forEach((task, index) => {
+        // Skapa ett nytt uppgiftselement och lägg till det i taskList
+        const taskElement = createTaskElement(task, index);
+        taskList.appendChild(taskElement);
+    });
+}
 
 // Funktion för att öppna redigeringsläge för en uppgift. Den tar in två argument, task och index. 
 function openTaskEdit(task, index) {
@@ -259,7 +250,7 @@ function openTaskEdit(task, index) {
         });
     });
 
-    
+
 }
 loadTasksFromLocalStorage();
 

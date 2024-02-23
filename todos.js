@@ -6,6 +6,13 @@ let taskDeadline = document.getElementById('taskDeadline');
 let taskEstimate = document.getElementById('taskEstimate');
 let taskCategory = document.getElementById('taskCategory');
 let taskList = document.getElementById('taskList');
+
+
+
+//selecta nuvarande användaren
+let currentUser = localStorage.getItem("currentUser");
+
+
 let tasks = [];
 
 // Deklaration av funktioner
@@ -16,7 +23,7 @@ let saveTasksToLocalStorage = () => {
 function createTaskElement(task, index) {
     // Skapa ett nytt listelement
     let li = document.createElement('li');
-
+    
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
         <h3>${task.title}</h3>
@@ -91,12 +98,26 @@ function addTask() {
         estimate: taskEstimate.value,
         category: taskCategory.value
     };
-
+    
     // Lägg till den nya uppgiften i uppgiftslistan
     tasks.push(task);
     const taskElement = createTaskElement(task, tasks.length - 1);
     taskList.appendChild(taskElement);
+    
 
+    //lägga till tasks inuti currentUser
+   let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
+   currentUserObject.tasks = tasks;
+   console.log(currentUserObject);
+   currentUser = JSON.stringify(currentUserObject); //konverterar tillbaka till en sträng
+
+
+   localStorage.setItem("currentUser" , currentUser); // uppdaterar currentUser till det nya som har skapats
+
+    
+    
+    
+    
     // Rensa inmatningsfälten
     taskTitle.value = '';
     taskDescription.value = '';

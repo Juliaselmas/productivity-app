@@ -52,8 +52,10 @@
             <textarea id="taskDescription" placeholder="Add a new task description"></textarea>
             <input type="checkbox" id="taskStatus"> Completed
             <input type="date" id="taskDeadline">
-            <input type="number" id="taskEstimate" placeholder="Estimated time in hours" min="0"> <!-- man Bör kanske göra en funktion i js (?) Man kan fortfarande skriva - och + . Bör lösas  -->
-            
+            <input type="number" id="taskEstimate" placeholder="Estimated time in hours" min="0">
+            <!-- man Bör kanske göra en funktion i js (?) Man kan fortfarande skriva - och + . Bör lösas  -->
+
+
             <select id="taskCategory">
                 <option value="">Select a category</option>
                 <option value="health">Health</option>
@@ -63,13 +65,10 @@
             </select>
             <button onclick="addTask()">Add Task </button> <br>
             <button onclick="displayTasksByStatus(true)">Show Completed Tasks</button>
-<button onclick="displayTasksByStatus(false)">Show Not Completed Tasks</button>
+            <button onclick="displayTasksByStatus(false)">Show Not Completed Tasks</button>
+            <button onclick="showAllTasks()">Show All Tasks</button>
             <ul id="taskList"></ul>
-
-
-
-
-
+        </div>
     </main>
 
     <footer>

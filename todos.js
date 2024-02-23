@@ -6,15 +6,13 @@ let taskDeadline = document.getElementById('taskDeadline');
 let taskEstimate = document.getElementById('taskEstimate');
 let taskCategory = document.getElementById('taskCategory');
 let taskList = document.getElementById('taskList');
-
 let tasks = [];
 
-// Funktion för att spara uppgifter till localStorage
+// Deklaration av funktioner
 let saveTasksToLocalStorage = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Funktiion för att skapa ett nytt uppgiftselement
 function createTaskElement(task, index) {
     // Skapa ett nytt listelement
     let li = document.createElement('li');
@@ -133,6 +131,27 @@ function loadTasksFromLocalStorage() {
 // Funktion för att ladda uppgifter från localStorage vid sidans laddning
 loadTasksFromLocalStorage();
 
+
+// Funktion för att filtrera uppgifter baserat på deras STATUS 
+function filterTasksByStatus(status) {
+    return tasks.filter(task => task.status === status);
+}
+// Funktion för att visa uppgifter baserat på deras status
+function displayTasksByStatus(status) {
+    // Filtrera uppgifterna
+    let filteredTasks = filterTasksByStatus(status);
+
+    // Rensa den nuvarande uppgiftslistan
+    taskList.innerHTML = '';
+
+    // Skapa och lägg till ett nytt uppgiftselement för varje filtrerad uppgift
+    filteredTasks.forEach((task, index) => {
+        const taskElement = createTaskElement(task, index);
+        taskList.appendChild(taskElement);
+    });
+}
+
+
 // Funktion för att öppna redigeringsläge för en uppgift. Den tar in två argument, task och index. 
 function openTaskEdit(task, index) {
     // Skapa nya inputs för redigering av varje uppgiftsdel. 
@@ -218,5 +237,8 @@ function openTaskEdit(task, index) {
             openTaskEdit(task, index);
         });
     });
+
+    
 }
+loadTasksFromLocalStorage();
 

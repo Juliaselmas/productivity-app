@@ -18,28 +18,35 @@ let register = async () => {
     let username = usernameInput.value;
     let password = passwordInput.value;
     console.log("användarnamn: "+ username)
-
+    
     //skapa användare & lägg i array
     let user = {
         username: username,
         password: password
     }
     console.log(user);
-
+    
     users.push(user);
     console.log(users);
-
+    
     //lägg input i localstorage
     localStorage.setItem("users", JSON.stringify(users));
-
+    
     console.log(localStorage.getItem("users"));
 
+
+
+     // sätt nuvarande användare i Localstorage
+     localStorage.setItem("currentUser", user.username)
+    
 };
 
 registerBtn.addEventListener("click", register);
 
 
 
+let quoteParagraph = document.createElement("p");//den här behöver ligga globalt eftersom den ska användas både i login in och logout
+let taskListUl = document.querySelector("#taskList");//samma som ovan
 
 let login = async () => {
     //hämta inputs
@@ -62,23 +69,40 @@ let login = async () => {
         console.log("Lol u failed");
     }
     
+
+
+
+    //Hämta rätt användares todos och rutiner och skriv ut dem 
+    if (user.todos) {
+        let taskLi = document.createElement("li");
+        taskLi.innerHTML = '<p> ${user.todos} </p>';
+        taskListUl.append(taskLi);
+    } else {
+        let paragraph = document.createElement("p");
+        paragraph.innerText = "Create your first task!";
+        taskListUl.append(paragraph);
+    }
     
+
+
+
     //skriva ut citat från API
-    //kom ihåg await och axios
 
     // här börjar axios
     let response = await axios.get('https://api.quotable.io/quotes/random');
     let quote = response.data[0].content;
     console.log(quote);
 
-    let quoteParagraph = document.createElement("p");
     quoteParagraph.innerText = quote;
 
     main.append(quoteParagraph);
 
 
-    //Hämta rätt användares todos och rutiner och skriv ut dem - hur kopplar vi dem till användaren??????
+    // sätt nuvarande användare i Localstorage
+    localStorage.setItem("currentUser", JSON.stringify(user))
+    //localStorage.setItem("currentUser", user) // antingen lägger man username här och sen kollar igenom users för att hitta användaren sen, eller så lägger man objektet här och får bara ut object object i local storage?????
 
+   
 };
 
 logInBtn.addEventListener("click", login);
@@ -89,6 +113,21 @@ let logOutBtn = document.querySelector("#logOutBtn");
 
 logOutBtn.addEventListener("click", () => {
     //ta bort alla ärenden och rutiner
+    taskListUl.innerHTML = " ";
+    quoteParagraph.innerHTML= " ";
+
+    // nollställ nuvarande användare i Localstorage
+    localStorage.setItem("currentUser", "none");
 });
+
+
+
+
+
+
+
+
+
+
 
 

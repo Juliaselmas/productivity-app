@@ -7,6 +7,11 @@ let taskEstimate = document.getElementById('taskEstimate');
 let taskCategory = document.getElementById('taskCategory');
 let taskList = document.getElementById('taskList');
 
+
+//selecta nuvarande användaren
+let currentUser = localStorage.getItem("currentUser");
+
+
 let tasks = [];
 
 // Funktion för att spara uppgifter till localStorage
@@ -98,6 +103,18 @@ function addTask() {
     tasks.push(task);
     const taskElement = createTaskElement(task, tasks.length - 1);
     taskList.appendChild(taskElement);
+    
+
+    //lägga till tasks inuti currentUser
+   let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
+   currentUserObject.tasks = tasks;
+   console.log(currentUserObject);
+   currentUser = JSON.stringify(currentUserObject); //konverterar tillbaka till en sträng
+
+
+   localStorage.setItem("currentUser" , currentUser); // uppdaterar currentUser till det nya som har skapats
+
+    
     
     
     

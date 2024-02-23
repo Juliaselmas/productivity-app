@@ -33,6 +33,11 @@ let register = async () => {
     localStorage.setItem("users", JSON.stringify(users));
     
     console.log(localStorage.getItem("users"));
+
+
+
+     // sätt nuvarande användare i Localstorage
+     localStorage.setItem("currentUser", user.username)
     
 };
 
@@ -91,6 +96,13 @@ let login = async () => {
     quoteParagraph.innerText = quote;
 
     main.append(quoteParagraph);
+
+
+    // sätt nuvarande användare i Localstorage
+    localStorage.setItem("currentUser", JSON.stringify(user))
+    //localStorage.setItem("currentUser", user) // antingen lägger man username här och sen kollar igenom users för att hitta användaren sen, eller så lägger man objektet här och får bara ut object object i local storage?????
+
+   
 };
 
 logInBtn.addEventListener("click", login);
@@ -103,6 +115,9 @@ logOutBtn.addEventListener("click", () => {
     //ta bort alla ärenden och rutiner
     taskListUl.innerHTML = " ";
     quoteParagraph.innerHTML= " ";
+
+    // nollställ nuvarande användare i Localstorage
+    localStorage.setItem("currentUser", "none");
 });
 
 

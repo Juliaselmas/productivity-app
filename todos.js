@@ -107,6 +107,13 @@ function addTask() {
     taskList.appendChild(taskElement);
     
 
+
+    
+
+
+    // OBS ej klart /S
+
+
     //lägga till tasks inuti currentUser
     let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
     currentUserObject.tasks = tasks;
@@ -138,7 +145,14 @@ function addTask() {
     localStorage.setItem("users", JSON.stringify(users));
     }
     
-    
+    //
+
+
+
+
+
+
+
     
     
     // Rensa inmatningsfälten

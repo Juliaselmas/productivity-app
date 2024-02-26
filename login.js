@@ -7,6 +7,7 @@ let registerBtn = document.querySelector('#registerBtn');
 
 let main = document.querySelector("main");
 
+let userContentContainer = document.querySelector("#userContentContainer");
 
 
 
@@ -113,8 +114,7 @@ let logOutBtn = document.querySelector("#logOutBtn");
 
 logOutBtn.addEventListener("click", () => {
     //ta bort alla ärenden och rutiner
-    taskListUl.innerHTML = " ";
-    quoteParagraph.innerHTML= " ";
+    userContentContainer.innerHTML = " ";
 
     // nollställ nuvarande användare i Localstorage
     localStorage.setItem("currentUser", "none");

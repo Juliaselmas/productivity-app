@@ -6,15 +6,6 @@ let taskDeadline = document.getElementById('taskDeadline');
 let taskEstimate = document.getElementById('taskEstimate');
 let taskCategory = document.getElementById('taskCategory');
 let taskList = document.getElementById('taskList');
-
-
-
-// selecta nuvarande användaren -- detta behövs till användardatan
-let currentUser = localStorage.getItem("currentUser");
-
-
-
-
 let tasks = [];
 
 // Deklaration av funktioner
@@ -107,56 +98,6 @@ function addTask() {
     tasks.push(task);
     const taskElement = createTaskElement(task, tasks.length - 1); // Använd tasks.length - 1 som index
     taskList.appendChild(taskElement);
-    
-
-
-    
-
-
-    // OBS ej klart /S
-
-
-    //lägga till tasks inuti currentUser
-    let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
-    currentUserObject.tasks = tasks;
-    console.log(currentUserObject);
-    currentUser = JSON.stringify(currentUserObject); //konverterar tillbaka till en sträng
-
-
-    localStorage.setItem("currentUser" , currentUser); // uppdaterar currentUser till det nya som har skapats
-
-
-    //hämta motsvarande user frånusers array och uppdatera den med nya tasks, stoppa sedan tillbaka den i users arrayn
-
-    let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
-    let previousUser = users.find(
-        (user) => user.username === currentUser.username && user.password === currentUser.password
-        );
-    let updatedUser = currentUser; //uppdaterar så att updatedUser matchar currentUser
-
-
-    let index = users.findIndex(
-    (user) => user.username === previousUser.username && user.password === previousUser.password
-    ); // skapa ett index för var i users arrayen som användaren vi jobbar med ligger
-
-    if (index !== -1) {
-        // ersätta previousUser med updatedUser med hjälp av indexet
-        users[index] = updatedUser;
-
-    // spara den uppdaterade användaren tillbaka till localStorage
-    localStorage.setItem("users", JSON.stringify(users));
-    }
-    
-    //
-
-
-
-
-
-
-
-    
-    
     // Rensa inmatningsfälten
     taskTitle.value = '';
     taskDescription.value = '';
@@ -194,7 +135,6 @@ loadTasksFromLocalStorage();
 function filterTasksByStatus(status) {
     return tasks.filter(task => task.status === status);
 }
-
 
 
 // Funktion för att visa uppgifter baserat på deras status
@@ -314,7 +254,7 @@ function openTaskEdit(task, index) {
 }
 
 // Lägg till en eventlistener för knappen "Apply Filters"
-document.getElementById('applyFiltersButton').addEventListener('click', function() {
+document.getElementById('applyFiltersButton').addEventListener('click', function () {
     filterTasksByCategory();
 });
 
@@ -338,6 +278,32 @@ function filterTasksByCategory() {
     });
 }
 
+// 4 Funktioner som ser likadana ut. De sorterar bara på olika variabler 
+
+// Funktionalitet  för att sortera uppgifter baserat på DEADLINE i stigande ordning. Ser exakt likadon ut som nästa funktion. (Hittade logiken på stackoverflow) 
+function sortByDeadlineAscending() {
+    tasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+    showAllTasks(); // Visa de sorterade uppgifterna
+}
+
+// Funktionalitet  för att sortera uppgifter baserat på deadline i fallande ordning
+function sortByDeadlineDescending() {
+    tasks.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
+    showAllTasks();
+
+}
+
+// Funktion för att sortera uppgifter baserat på TIDSESTIMAT i stigande ordning
+function sortByEstimateAscending() {
+    tasks.sort((a, b) => a.estimate - b.estimate);
+    showAllTasks(); // Visa de sorterade uppgifterna
+}
+
+// Funktion för att sortera uppgifter baserat på tidsestimat i fallande ordning
+function sortByEstimateDescending() {
+    tasks.sort((a, b) => b.estimate - a.estimate);
+    showAllTasks();
+}
 
 // Ladda uppgifter från localStorage när sidan laddas
 loadTasksFromLocalStorage();

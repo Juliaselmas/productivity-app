@@ -1,12 +1,12 @@
 // Hämta referenser till uppgiftens inmatningsfält och uppgiftslistan
-const taskTitle = document.getElementById('taskTitle');
-const taskDescription = document.getElementById('taskDescription');
-const taskStatus = document.getElementById('taskStatus');
-const taskDeadline = document.getElementById('taskDeadline');
-const taskEstimate = document.getElementById('taskEstimate');
-const taskCategory = document.getElementById('taskCategory');
-const taskList = document.getElementById('taskList');
-const tasks = [];
+let taskTitle = document.getElementById('taskTitle');
+let taskDescription = document.getElementById('taskDescription');
+let taskStatus = document.getElementById('taskStatus');
+let taskDeadline = document.getElementById('taskDeadline');
+let taskEstimate = document.getElementById('taskEstimate');
+let taskCategory = document.getElementById('taskCategory');
+let taskList = document.getElementById('taskList');
+let tasks = [];
 
 // Deklaration av funktioner
 let saveTasksToLocalStorage = () => {
@@ -23,7 +23,7 @@ function createTaskElement(task, index) {
         <p>${task.description}</p>
         <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
         <p>Deadline: ${task.deadline}</p>
-        <p>Estimated time: ${task.estimate} hours</p>
+        <p>Estemated time: ${task.estimate} hours</p>
         <p>catagory: ${task.category}</p>
         <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
         <button class="edit">Edit</button>
@@ -40,13 +40,14 @@ function createTaskElement(task, index) {
     });
 
     // Lägg till en eventListener till "Radera" knappen
-    // I delete-eventet för uppgifter, använd index för att ta bort uppgiften från arrayen tasks och från DOM:en
-    li.querySelector('.delete').addEventListener('click', function () {
-        let taskIndex = Array.from(taskList.children).indexOf(li); // Hittar indexet för det aktuella listelementet
-        tasks.splice(taskIndex, 1); // Tar bort uppgiften från arrayen
-        saveTasksToLocalStorage();
-        taskList.removeChild(li); // Tar bort listelementet från DOM
-    });
+// I delete-eventet för uppgifter, använd index för att ta bort uppgiften från arrayen tasks och från DOM:en
+li.querySelector('.delete').addEventListener('click', function () {
+    let taskIndex = Array.from(taskList.children).indexOf(li); // Hitta indexet för det aktuella listelementet
+    tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen
+    saveTasksToLocalStorage();
+    taskList.removeChild(li); // Ta bort listelementet från DOM:en
+});
+
 
     // Lägg till en eventListener till "Redigera" knappen
     li.querySelector('.edit').addEventListener('click', function () {
@@ -250,7 +251,7 @@ function openTaskEdit(task, index) {
         });
     });
 
-
+    
 }
 loadTasksFromLocalStorage();
 

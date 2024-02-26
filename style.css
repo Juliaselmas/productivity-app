@@ -2,6 +2,12 @@
   text-decoration: line-through;
 }
 
+body {
+  background-image: linear-gradient(#A7A0CE 0%, #302185 100%);
+  margin: 0;
+  height: 100vh;
+}
+
 h1, h2, h3, h4, h5 {
   font-family: Helvetica, sans-serif;
 }
@@ -14,7 +20,46 @@ button {
   margin: 3px;
 }
 
+#logoutBtn {
+  display: flex;
+  flex-direction: row;
+}
+
 #userIcon {
   height: 15px;
   margin-right: 8px;
+}
+
+main {
+  width: 100vw;
+  padding: 3%;
+  box-sizing: border-box;
+}
+main #userContentContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+main #userContentContainer .mainColumn {
+  width: 27%;
+  display: flex;
+  flex-direction: column;
+}
+main #userContentContainer .listColumn {
+  background-color: #eeeeee;
+  border-radius: 4px;
+}
+main #userContentContainer .listColumn .card {
+  width: 90%;
+  background-color: white;
+}
+
+footer {
+  background-color: #333333;
+  color: white;
+  width: 100vw;
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  justify-content: center;
 }/*# sourceMappingURL=style.css.map */

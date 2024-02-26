@@ -47,6 +47,49 @@
             <button id="registerBtn">Sign up</button>
 
         </div>
+
+        
+        
+        
+        <div id="userContentContainer">
+            <div id="leftColumnContainer" class="mainColumn">
+                <section id="newTaskSection" >
+                    <h2>To do list </h2>
+                    <input type="text" id="taskTitle" placeholder="Add a new task title">
+                    <textarea id="taskDescription" placeholder="Add a new task description"></textarea>
+                    <div id="completedWrapper"> <p>Completed</p> <input type="checkbox" id="taskStatus"> </div>
+                    <input type="date" id="taskDeadline">
+                    <input type="number" id="taskEstimate" placeholder="Estimated time in hours" min="0"> <!-- man Bör kanske göra en funktion i js (?) Man kan fortfarande skriva - och + . Bör lösas  -->
+                    
+                    <select id="taskCategory">
+                        <option value="">Select a category</option>
+                        <option value="health">Health</option>
+                        <option value="household">Household</option>
+                        <option value="work">Work-related</option>
+                        <option value="fun">Fun</option>
+                    </select>
+                    <button onclick="addTask()">Add Task </button>
+        
+                </section>
+                
+            </div>
+            
+            <div id="todo-container" class="mainColumn listColumn todo-container">
+                <ul id="taskList"></ul>
+                
+            </div>
+
+            <div id="habitsContainer" class="mainColumn listColumn">
+
+            </div>
+
+
+        </div>
+
+
+
+
+
         <div class="todo-container">
             <h2>To Do List </h2>
             <input type="text" id="taskTitle" placeholder="Add a new task title">

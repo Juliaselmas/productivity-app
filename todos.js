@@ -31,7 +31,6 @@ function createTaskElement(task, index) {
     `;
 
     // Lägg till en eventListener till "Markera som slutförd" / "Ångra" knappen. 
-    //Lägg till styling när något är färdigt 
     li.querySelector('.toggle').addEventListener('click', function () {
         task.status = !task.status;
         li.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';
@@ -40,13 +39,13 @@ function createTaskElement(task, index) {
     });
 
     // Lägg till en eventListener till "Radera" knappen
-// I delete-eventet för uppgifter, använd index för att ta bort uppgiften från arrayen tasks och från DOM:en
-li.querySelector('.delete').addEventListener('click', function () {
-    let taskIndex = Array.from(taskList.children).indexOf(li); // Hitta indexet för det aktuella listelementet
-    tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen
-    saveTasksToLocalStorage();
-    taskList.removeChild(li); // Ta bort listelementet från DOM:en
-});
+    // I delete-eventet för uppgifter, använd index för att ta bort uppgiften från arrayen tasks och från DOM:en
+    li.querySelector('.delete').addEventListener('click', function () {
+        let taskIndex = Array.from(taskList.children).indexOf(li); // Hitta indexet för det aktuella listelementet
+        tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen
+        saveTasksToLocalStorage();
+        taskList.removeChild(li); // Ta bort listelementet från DOM:en
+    });
 
 
     // Lägg till en eventListener till "Redigera" knappen
@@ -137,6 +136,9 @@ loadTasksFromLocalStorage();
 function filterTasksByStatus(status) {
     return tasks.filter(task => task.status === status);
 }
+
+
+
 // Funktion för att visa uppgifter baserat på deras status
 function displayTasksByStatus(status) {
     // Filtrera uppgifterna
@@ -251,7 +253,34 @@ function openTaskEdit(task, index) {
         });
     });
 
-    
 }
+
+// Lägg till en eventlistener för knappen "Apply Filters"
+document.getElementById('applyFiltersButton').addEventListener('click', function() {
+    filterTasksByCategory();
+});
+
+
+// Funktion för att filtrera uppgifter baserat på kategorierna som är markerade
+function filterTasksByCategory() {
+    let selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.id.replace("CategoryCheckbox", "").toLowerCase());
+
+    if (selectedCategories.length === 0) {
+        showAllTasks();
+        return;
+    }
+
+    let filteredTasks = tasks.filter(task => selectedCategories.includes(task.category.toLowerCase()));
+
+    taskList.innerHTML = ''; // Rensa den aktuella uppgiftslistan
+    filteredTasks.forEach((task, index) => { // Lägg till de filtrerade uppgifterna i listan
+        const taskElement = createTaskElement(task, index);
+        taskList.appendChild(taskElement);
+    });
+}
+
+
+// Ladda uppgifter från localStorage när sidan laddas
 loadTasksFromLocalStorage();
 

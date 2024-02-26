@@ -10,22 +10,23 @@
     <!-- länk till js -->
     <script src="login.js" defer></script>
     <script src="todos.js" defer></script>
-
- 
-
-    <script src="habits.js"defer></script>
+    <script src="habits.js" defer></script>
 
     <!-- länka in axios -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </head>
 
 <body>
 
-  <nav>
-    <button id="logOutBtn">  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" id="userIcon"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>Log out</button>
-    
-  </nav>  
+    <nav>
+        <button id="logOutBtn"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                id="userIcon"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                <path
+                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+            </svg>Log out</button>
+
+    </nav>
 
     <nav>
 
@@ -89,6 +90,41 @@
 
 
 
+        <div class="todo-container">
+            <h2>To Do List </h2>
+            <input type="text" id="taskTitle" placeholder="Add a new task title">
+            <textarea id="taskDescription" placeholder="Add a new task description"></textarea>
+            <input type="checkbox" id="taskStatus"> Completed
+            <input type="date" id="taskDeadline">
+            <input type="number" id="taskEstimate" placeholder="Estimated time in hours" min="0">   <!-- man Bör kanske göra en funktion i js (?) Man kan fortfarande skriva - och + . Bör lösas  -->
+        
+            <select id="taskCategory">
+                <option value="">Select a category</option>
+                <option value="health">Health</option>
+                <option value="household">Household</option>
+                <option value="work">Work-related</option>
+                <option value="fun">Fun</option>
+            </select>
+            <button onclick="addTask()">Add Task</button> <br>
+        
+            <input type="checkbox" id="healthCategoryCheckbox">
+            <label for="healthCategoryCheckbox">Health</label>
+            <input type="checkbox" id="householdCategoryCheckbox">
+            <label for="householdCategoryCheckbox">Household</label>
+            <input type="checkbox" id="workCategoryCheckbox">
+            <label for="workCategoryCheckbox">Work-related</label>
+            <input type="checkbox" id="funCategoryCheckbox">
+            <label for="funCategoryCheckbox">Fun</label>
+            
+        
+            <button id="applyFiltersButton">Apply Filters</button>
+
+            <button onclick="displayTasksByStatus(true)">Show Completed Tasks</button>
+            <button onclick="displayTasksByStatus(false)">Show Not Completed Tasks</button>
+            <button onclick="showAllTasks()">Show All Tasks</button>
+        
+            <ul id="taskList"></ul>
+        </div>
     </main>
 
     <footer>

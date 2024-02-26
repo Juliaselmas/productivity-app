@@ -48,15 +48,13 @@
 
         </div>
         <div class="todo-container">
-            <h2>To do list </h2>
+            <h2>To Do List </h2>
             <input type="text" id="taskTitle" placeholder="Add a new task title">
             <textarea id="taskDescription" placeholder="Add a new task description"></textarea>
             <input type="checkbox" id="taskStatus"> Completed
             <input type="date" id="taskDeadline">
-            <input type="number" id="taskEstimate" placeholder="Estimated time in hours" min="0">
-            <!-- man Bör kanske göra en funktion i js (?) Man kan fortfarande skriva - och + . Bör lösas  -->
-
-
+            <input type="number" id="taskEstimate" placeholder="Estimated time in hours" min="0">   <!-- man Bör kanske göra en funktion i js (?) Man kan fortfarande skriva - och + . Bör lösas  -->
+        
             <select id="taskCategory">
                 <option value="">Select a category</option>
                 <option value="health">Health</option>
@@ -64,10 +62,24 @@
                 <option value="work">Work-related</option>
                 <option value="fun">Fun</option>
             </select>
-            <button onclick="addTask()">Add Task </button> <br>
+            <button onclick="addTask()">Add Task</button> <br>
+        
+            <input type="checkbox" id="healthCategoryCheckbox">
+            <label for="healthCategoryCheckbox">Health</label>
+            <input type="checkbox" id="householdCategoryCheckbox">
+            <label for="householdCategoryCheckbox">Household</label>
+            <input type="checkbox" id="workCategoryCheckbox">
+            <label for="workCategoryCheckbox">Work-related</label>
+            <input type="checkbox" id="funCategoryCheckbox">
+            <label for="funCategoryCheckbox">Fun</label>
+            
+        
+            <button id="applyFiltersButton">Apply Filters</button>
+
             <button onclick="displayTasksByStatus(true)">Show Completed Tasks</button>
             <button onclick="displayTasksByStatus(false)">Show Not Completed Tasks</button>
             <button onclick="showAllTasks()">Show All Tasks</button>
+        
             <ul id="taskList"></ul>
         </div>
     </main>

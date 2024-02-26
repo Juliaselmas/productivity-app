@@ -84,40 +84,38 @@
 
                     <button onclick="displayTasksByStatus(true)">Show Completed Tasks</button>
                     <button onclick="displayTasksByStatus(false)">Show Not Completed Tasks</button>
-                    <button onclick="showAllTasks()">Show All Tasks</button>
-        
+                    <button onclick="showAllTasks()">Show All Tasks</button>  
 
-            <ul id="taskList"></ul>
-        </div>
-
-      
                 </section>
                 
+            <section>
+                <h2>Habits</h2>
+                <input type="text" id="habitInput" placeholder="Add a new habit">
+                <button id="addHabitBtn">Add Habit</button>
+                </br>
+                <label for="">Choose a priority:</label>
+                <input type="radio" name="priority" id="highPriority">
+                <label for="priority">High</label>
+                <input type="radio" name="priority" id="mediumPriority">
+                <label for="priority">Medium</label>
+                <input type="radio" name="priority" id="lowPriority">
+                <label for="priority">Low</label>
+            </section>
+            
+            </div>  <!-- här slutar den vänstra kolumnen -->
+        
+            <div id="todo-container" class="mainColumn listColumn todo-container">
+                    <ul id="taskList"></ul>
+                </div>
+                
+                
+            <div id="habitsContainer" class="mainColumn listColumn">
+                <ul id="habitList"></ul>
             </div>
             
-            <div id="todo-container" class="mainColumn listColumn todo-container">
-                <ul id="taskList"></ul>
-                
-            </div>
-
-            <div id="habitsContainer" class="mainColumn listColumn">
-              <h2>Habits</h2>
-            <input type="text" id="habitInput" placeholder="Add a new habit">
-            <button id="addHabitBtn">Add Habit</button>
-        </br>
-            <label for="">Choose a priority:</label>
-            <input type="radio" name="priority" id="highPriority">
-            <label for="priority">High</label>
-            <input type="radio" name="priority" id="mediumPriority">
-            <label for="priority">Medium</label>
-            <input type="radio" name="priority" id="lowPriority">
-            <label for="priority">Low</label>
-            <ul id="habitList"></ul>
-
-            </div>
-
-
         </div> 
+
+        </div>
 
 
 

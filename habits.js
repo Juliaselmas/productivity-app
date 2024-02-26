@@ -1,5 +1,5 @@
 let habits = []
-let habitUl = document.getElementById("habitList");
+let habitList = document.getElementById("habitList");
 let habitContainer = document.getElementById("habit-container");
 let habitInput = document.getElementById("habitInput");
 let addHabitBtn = document.getElementById("addHabitBtn");
@@ -22,10 +22,27 @@ addHabitBtn.addEventListener("click", () => {
     deleteHabitBtn.innerText = "Delete Habit";
     li.append(deleteHabitBtn);
 
+    //hittar och tar bort index för habit i array
+    let currentIndex = habits.length;
+
+    deleteHabitBtn.addEventListener("click", () => {
+        li.remove();
+        let newHabitList = todos.filter((habit, i) => i !== currentIndex);
+        habits = [...newHabitList];
+        localStorage.setItem("habit", JSON.stringify(habits));
+    });
+
+    habitList.append("li");
+    habitInput.value = "";
+
+    //sparar värden i localStorage
+    habits.push(newHabit);
+    console.log(habits);
+    localStorage.setItem("habits", JSON.stringify(habits));
+
 });
 
-habitUl.append("li");
-habitInput.value = "";
+
 
 
 

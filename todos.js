@@ -213,6 +213,7 @@ function filterTasksByStatus(status) {
 
 
 
+
 // Funktion för att visa uppgifter baserat på deras status
 function displayTasksByStatus(status) {
     // Filtrera uppgifterna
@@ -229,6 +230,8 @@ function displayTasksByStatus(status) {
 }
 
 //Funktion för att visa samtliga tasks utan sortering. 
+
+
 function showAllTasks() {
     // Rensa taskList
     taskList.innerHTML = '';

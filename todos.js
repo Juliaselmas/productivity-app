@@ -8,7 +8,6 @@ let taskCategory = document.getElementById('taskCategory');
 let taskList = document.getElementById('taskList');
 let tasks = [];
 
-
 // selecta nuvarande användaren -- detta behövs till användardatan
 let currentUser = localStorage.getItem("currentUser");
 

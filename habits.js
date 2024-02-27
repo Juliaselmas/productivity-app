@@ -4,6 +4,36 @@ let habitContainer = document.getElementById("habit-container");
 let habitInput = document.getElementById("habitInput");
 let addHabitBtn = document.getElementById("addHabitBtn");
 
+let createHabitListItem = (habitText, index) => {
+    let li = document.createElement("li");
+    li.innerHTML = `<h3>${habitText}</h3>`;
+
+    //Ny completedknapp
+    let completedHabitBtn = document.createElement("button");
+    completedHabitBtn.innerText = "Mark as Completed";
+    li.append(completedHabitBtn);
+
+    //Ny deleteknapp
+    let deleteHabitBtn = document.createElement("button");
+    deleteHabitBtn.innerText = "Delete Habit";
+    li.append(deleteHabitBtn);
+
+
+    deleteHabitBtn.addEventListener("click", () => {
+        li.remove();
+
+        //Tar bort vanan från arrayen baserat på det givna indexet
+        let habitIndex = habits.indexOf(habitText);
+        habits.splice(habitIndex, 1);
+        localStorage.setItem("habits", JSON.stringify(habits));
+    });
+
+    //Lägger till det nya <li> elementet i DOM
+    habitList.append(li);
+
+    return li;
+};
+
 
 let onRender = () => {
     //kollar om det finns data i localStorage
@@ -12,77 +42,40 @@ let onRender = () => {
         //skapar li för varje habit
 
         habits.forEach((habit, i) => {
-            let li = document.createElement("li");
-            li.innerHTML = `
-            <h3>${habit}</h3>
-            `;
+           
+            let li = createHabitListItem(habit);
             habitList.append(li);
-            //deleteknapp
-            let deleteHabitBtn = document.createElement("button");
-            deleteHabitBtn.innerText = "Delete Task";
-            li.append(deleteHabitBtn);
 
-            //Hitta och ta bort index för denna habit i array
-
-            deleteHabitBtn.addEventListener("click", () => {
-                li.remove();
-                let newHabitList = habits.filter((habit, index) => i !== index);
-                habits = [...newHabitList];
-                localStorage.setItem("habits", JSON.stringify(habits));
-                console.log("Det verkar funka!", localStorage.getItem("habits"));
-            });
         });
     };
 };
 
+
 addHabitBtn.addEventListener("click", () => {
     //if-sats för att säkerställa att prio är vald?
-
-    //ny Habit
-    let li = document.createElement("li");
-    let newHabit = habitInput.value;
-    li.innerText = newHabit;
-
-    //ny completedknapp
-    let completedHabitBtn = document.createElement("button");
-    completedHabitBtn.innerText = "Mark as Completed";
-    li.append(completedHabitBtn);
-
-    //ny deleteknapp
-    let deleteHabitBtn = document.createElement("button");
-    deleteHabitBtn.innerText = "Delete Habit";
-    li.append(deleteHabitBtn);
-
-    //hittar och tar bort index för habit i array
-    let currentIndex = habits.length;
-
-    deleteHabitBtn.addEventListener("click", () => {
-        li.remove();
-        let newHabitList = todos.filter((habit, i) => i !== currentIndex);
-        habits = [...newHabitList];
-        localStorage.setItem("habit", JSON.stringify(habits));
+    let priorityBtn = document.querySelectorAll('input[name="priority"]');
+    let prioritySelected = false;
+    priorityBtn.forEach(radio => {
+        if (radio.checked) {
+            prioritySelected = true;
+        }
     });
 
+    if (!prioritySelected) {
+        alert("Please select a priority for your new habit.");
+        return;
+    };
+
+    let newHabit = habitInput.value;
+    let li = createHabitListItem(newHabit);
     habitList.append(li);
-    habitInput.value = "";
 
     //sparar värden i localStorage
     habits.push(newHabit);
-    console.log(habits);
+    
     localStorage.setItem("habits", JSON.stringify(habits));
+    habitInput.value = "";
 
 });
 
 onRender();
-
-
-
-
-
-//behövs detta?
-//const fetchData = async (url) => {
-    //let response = await fetch(url);
-    //let json = await response.json();
-    //return json;
-  //};
-

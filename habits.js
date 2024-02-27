@@ -4,13 +4,44 @@ let habitContainer = document.getElementById("habit-container");
 let habitInput = document.getElementById("habitInput");
 let addHabitBtn = document.getElementById("addHabitBtn");
 
+
+let onRender = () => {
+    //kollar om det finns data i localStorage
+    if (localStorage.getItem("habits")) {
+        habits = JSON.parse(localStorage.getItem("habits"));
+        //skapar li för varje habit
+
+        habits.forEach((habit, i) => {
+            let li = document.createElement("li");
+            li.innerHTML = `
+            <h3>${habit}</h3>
+            `;
+            habitList.append(li);
+            //deleteknapp
+            let deleteHabitBtn = document.createElement("button");
+            deleteHabitBtn.innerText = "Delete Task";
+            li.append(deleteHabitBtn);
+
+            //Hitta och ta bort index för denna habit i array
+
+            deleteHabitBtn.addEventListener("click", () => {
+                li.remove();
+                let newHabitList = habits.filter((habit, index) => i !== index);
+                habits = [...newHabitList];
+                localStorage.setItem("habits", JSON.stringify(habits));
+                console.log("Det verkar funka!", localStorage.getItem("habits"));
+            });
+        });
+    };
+};
+
 addHabitBtn.addEventListener("click", () => {
     //if-sats för att säkerställa att prio är vald?
 
     //ny Habit
     let li = document.createElement("li");
     let newHabit = habitInput.value;
-    li.innertext = newHabit;
+    li.innerText = newHabit;
 
     //ny completedknapp
     let completedHabitBtn = document.createElement("button");
@@ -32,7 +63,7 @@ addHabitBtn.addEventListener("click", () => {
         localStorage.setItem("habit", JSON.stringify(habits));
     });
 
-    habitList.append("li");
+    habitList.append(li);
     habitInput.value = "";
 
     //sparar värden i localStorage
@@ -41,6 +72,8 @@ addHabitBtn.addEventListener("click", () => {
     localStorage.setItem("habits", JSON.stringify(habits));
 
 });
+
+onRender();
 
 
 

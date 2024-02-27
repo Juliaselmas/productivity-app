@@ -18,10 +18,16 @@ let tasks = [];
 
 // Deklaration av funktioner
 let saveTasksToLocalStorage = () => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    // Filtrera bort raderade uppgifter innan du sparar till localStorage
+    let tasksToSave = tasks.filter(task => !task.deleted);
+    localStorage.setItem('tasks', JSON.stringify(tasksToSave));
 }
 
 function createTaskElement(task, index) {
+    if (task.deleted) {
+        // Ignorera raderade uppgifter
+        return null;
+    }
     // Skapa ett nytt listelement
     let li = document.createElement('li');
 
@@ -31,8 +37,8 @@ function createTaskElement(task, index) {
         <p>${task.description}</p>
         <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
         <p>Deadline: ${task.deadline}</p>
-        <p>Estemated time: ${task.estimate} hours</p>
-        <p>catagory: ${task.category}</p>
+        <p>Estimated time: ${task.estimate} hours</p>
+        <p>category: ${task.category}</p>
         <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
         <button class="edit">Edit</button>
         <button class="delete">Delete</button>
@@ -47,22 +53,32 @@ function createTaskElement(task, index) {
     });
 
     // Lägg till en eventListener till "Radera" knappen
-    // I delete-eventet för uppgifter, använd index för att ta bort uppgiften från arrayen tasks och från DOM:en
+    // I delete-eventet för uppgifter, använd data-attribut för att hämta indexet för uppgiften
     li.querySelector('.delete').addEventListener('click', function () {
-        let taskIndex = Array.from(taskList.children).indexOf(li); // Hitta indexet för det aktuella listelementet
-        tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen
+        let taskIndex = parseInt(li.getAttribute('data-index'));
+        tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen baserat på index
         saveTasksToLocalStorage();
         taskList.removeChild(li); // Ta bort listelementet från DOM:en
+        updateTaskIndices(); // Uppdatera data-index attributen för alla uppgifter efter borttagning
     });
-
 
     // Lägg till en eventListener till "Redigera" knappen
     li.querySelector('.edit').addEventListener('click', function () {
         openTaskEdit(task, index);
     });
 
+    // Sätt data-index attributet för att lagra indexet för uppgiften
+    li.setAttribute('data-index', index);
+
     // Returnera listelementet
     return li;
+}
+
+// Funktion för att uppdatera data-index attributen för alla uppgifter i listan
+function updateTaskIndices() {
+    Array.from(taskList.children).forEach((taskElement, index) => {
+        taskElement.setAttribute('data-index', index);
+    });
 }
 
 // Funktion för att lägga till en ny uppgift
@@ -91,7 +107,6 @@ function addTask() {
         return;
     }
 
-
     // Skapa ett nytt uppgifts-objekt med värdena från inmatningsfälten
     let task = {
         title: taskTitle.value,
@@ -99,13 +114,17 @@ function addTask() {
         status: taskStatus.checked,
         deadline: taskDeadline.value,
         estimate: taskEstimate.value,
-        category: taskCategory.value
+        category: taskCategory.value,
+        deleted: false // indikera om uppgiften är raderad
     };
 
-    // Lägg till den nya uppgiften i uppgiftslistan
-    tasks.push(task);
-    const taskElement = createTaskElement(task, tasks.length - 1); // Använd tasks.length - 1 som index
-    taskList.appendChild(taskElement);
+    if (!task.deleted) {
+        tasks.push(task);
+        const taskElement = createTaskElement(task, tasks.length - 1); // Använd tasks.length - 1 som index
+        taskList.appendChild(taskElement);
+        taskElement.setAttribute('data-index', tasks.length - 1); // Sätt data-index attributet för att lagra indexet
+    }
+
     // Rensa inmatningsfälten
     taskTitle.value = '';
     taskDescription.value = '';
@@ -128,7 +147,9 @@ function loadTasksFromLocalStorage() {
             tasks = loadedTasks;
             tasks.forEach((task, index) => {
                 const taskElement = createTaskElement(task, index);
-                taskList.appendChild(taskElement);
+                if (taskElement) {
+                    taskList.appendChild(taskElement);
+                }
             });
         }
     } catch (error) {
@@ -136,31 +157,15 @@ function loadTasksFromLocalStorage() {
         // Man kan också visa ett felmeddelande till användaren här.
     }
 }
-
 // Funktion för att ladda uppgifter från localStorage vid sidans laddning
 loadTasksFromLocalStorage();
+
 // Funktion för att filtrera uppgifter baserat på deras status
 function filterTasksByStatus(status) {
     return tasks.filter(task => task.status === status);
 }
 
-
-// Funktion för att visa uppgifter baserat på deras status
-function displayTasksByStatus(status) {
-    // Filtrera uppgifterna
-    let filteredTasks = filterTasksByStatus(status);
-
-    // Rensa den nuvarande uppgiftslistan
-    taskList.innerHTML = '';
-
-    // Skapa och lägg till ett nytt uppgiftselement för varje filtrerad uppgift
-    filteredTasks.forEach((task, index) => {
-        const taskElement = createTaskElement(task, index);
-        taskList.appendChild(taskElement);
-    });
-}
-
-//Funktion för att visa samtliga tasks utan sortering. 
+// Funktion för att visa samtliga tasks utan sortering. 
 function showAllTasks() {
     // Rensa taskList
     taskList.innerHTML = '';
@@ -169,7 +174,9 @@ function showAllTasks() {
     tasks.forEach((task, index) => {
         // Skapa ett nytt uppgiftselement och lägg till det i taskList
         const taskElement = createTaskElement(task, index);
-        taskList.appendChild(taskElement);
+        if (taskElement) {
+            taskList.appendChild(taskElement);
+        }
     });
 }
 
@@ -282,7 +289,9 @@ function filterTasksByCategory() {
     taskList.innerHTML = ''; // Rensa den aktuella uppgiftslistan
     filteredTasks.forEach((task, index) => { // Lägg till de filtrerade uppgifterna i listan
         const taskElement = createTaskElement(task, index);
-        taskList.appendChild(taskElement);
+        if (taskElement) {
+            taskList.appendChild(taskElement);
+        }
     });
 }
 
@@ -315,4 +324,3 @@ function sortByEstimateDescending() {
 
 // Ladda uppgifter från localStorage när sidan laddas
 loadTasksFromLocalStorage();
-

@@ -9,7 +9,6 @@ let taskList = document.getElementById('taskList');
 
 
 
-
 // selecta nuvarande användaren -- detta behövs till användardatan
 let currentUser = localStorage.getItem("currentUser");
 

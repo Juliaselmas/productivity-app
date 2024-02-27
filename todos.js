@@ -6,6 +6,14 @@ let taskDeadline = document.getElementById('taskDeadline');
 let taskEstimate = document.getElementById('taskEstimate');
 let taskCategory = document.getElementById('taskCategory');
 let taskList = document.getElementById('taskList');
+
+
+
+
+// selecta nuvarande användaren -- detta behövs till användardatan
+let currentUser = localStorage.getItem("currentUser");
+
+
 let tasks = [];
 
 // Deklaration av funktioner

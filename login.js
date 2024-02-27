@@ -96,13 +96,18 @@ let login = async () => {
 
     quoteParagraph.innerText = quote;
 
-    main.append(quoteParagraph);
+    //main.append(quoteParagraph);
+    let qotdSection = document.querySelector("#qotdSection");
+    qotdSection.append(quoteParagraph);
 
 
     // sätt nuvarande användare i Localstorage
     localStorage.setItem("currentUser", JSON.stringify(user))
-   
 
+   
+    //lämna hälsningsmeddelande
+    let h1 = document.querySelector("#h1");
+    h1.innerText = 'Welcome ' + user.username + "!";
    
 };
 

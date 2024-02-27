@@ -48,19 +48,20 @@
 
         </div>
 
-        
-        
-        
+
+
+
         <div id="userContentContainer">
             <div id="leftColumnContainer" class="mainColumn">
-                <section id="newTaskSection" >
+                <section id="newTaskSection">
                     <h2>To Do List </h2>
                     <input type="text" id="taskTitle" placeholder="Add a new task title">
                     <textarea id="taskDescription" placeholder="Add a new task description"></textarea>
                     <input type="checkbox" id="taskStatus"> Completed
                     <input type="date" id="taskDeadline">
-                    <input type="number" id="taskEstimate" placeholder="Estimated time in hours" min="0">   <!-- man Bör kanske göra en funktion i js (?) Man kan fortfarande skriva - och + . Bör lösas  -->
-                
+                    <input type="number" id="taskEstimate" placeholder="Estimated time in hours" min="0">
+                    <!-- man Bör kanske göra en funktion i js (?) Man kan fortfarande skriva - och + . Bör lösas  -->
+
                     <select id="taskCategory">
                         <option value="">Select a category</option>
                         <option value="health">Health</option>
@@ -69,7 +70,7 @@
                         <option value="fun">Fun</option>
                     </select>
                     <button onclick="addTask()">Add Task</button> <br>
-                
+
                     <input type="checkbox" id="healthCategoryCheckbox">
                     <label for="healthCategoryCheckbox">Health</label>
                     <input type="checkbox" id="householdCategoryCheckbox">
@@ -78,8 +79,8 @@
                     <label for="workCategoryCheckbox">Work-related</label>
                     <input type="checkbox" id="funCategoryCheckbox">
                     <label for="funCategoryCheckbox">Fun</label>
-                    
-                
+
+
                     <button id="applyFiltersButton">Apply Filters</button>
                     <button onclick="displayTasksByStatus(true)">Show Completed Tasks</button>
                     <button onclick="displayTasksByStatus(false)">Show Not Completed Tasks</button>
@@ -87,10 +88,10 @@
                     <button onclick="sortByDeadlineAscending()">Sort by Deadline (stigande)</button>
                     <button onclick="sortByDeadlineDescending()">Sort by Deadline (fallande )</button>
                     <button onclick="sortByEstimateAscending()">Sort by Estimated time (stigande)</button>
-                    <button onclick="sortByEstimateDescending()">Sort by Estimated time (Fallande)</button> 
+                    <button onclick="sortByEstimateDescending()">Sort by Estimated time (Fallande)</button>
 
                 </section>
-                
+
                 <section>
                     <h2>Habits</h2>
                     <input type="text" id="habitInput" placeholder="Add a new habit">
@@ -104,22 +105,22 @@
                     <input type="radio" name="priority" id="lowPriority">
                     <label for="priority">Low</label>
                 </section>
-            
-            </div>  <!-- här slutar den vänstra kolumnen -->
 
-        
+            </div> <!-- här slutar den vänstra kolumnen -->
+
+
             <div id="todo-container" class="mainColumn listColumn todo-container">
-                    <ul id="taskList"></ul>
-                </div>
-                
-                
+                <ul id="taskList"></ul>
+            </div>
+
+
             <div id="habitsContainer" class="mainColumn listColumn">
                 <ul id="habitList"></ul>
             </div>
-            
-        </div> 
 
-       
+        </div>
+
+
 
 
 

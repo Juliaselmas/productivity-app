@@ -13,8 +13,6 @@ let taskList = document.getElementById('taskList');
 let currentUser = localStorage.getItem("currentUser");
 
 
-
-
 let tasks = [];
 
 // Deklaration av funktioner

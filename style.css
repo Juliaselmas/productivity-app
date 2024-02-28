@@ -15,7 +15,7 @@ h1, h2, h3, h4, h5 {
   font-family: Helvetica, sans-serif;
 }
 
-p, button, li {
+p, button, li, label {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -69,6 +69,18 @@ main #userContentContainer #quoteParagraph {
   font-style: italic;
   font-size: 12px;
   margin-top: 0;
+  color: grey;
+}
+main #userContentContainer input[type=text] {
+  color: grey;
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+main #userContentContainer label {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+}
+main #userContentContainer select {
   color: grey;
 }
 main #userContentContainer .mainColumn {

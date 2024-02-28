@@ -74,9 +74,9 @@ let login = async () => {
         //successful login
         console.log("Welcome " + user.username + "!");
     } else {
-        console.log("Lol u failed");
+        console.log("Lol u failed"); 
     }
-    
+     
 
 
 

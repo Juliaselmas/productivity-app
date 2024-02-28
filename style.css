@@ -45,6 +45,9 @@ nav #navLogoText {
 nav #logoutBtn {
   display: flex;
   flex-direction: row;
+  border-radius: 3px;
+  border: none;
+  box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
 }
 nav #userIcon {
   height: 15px;
@@ -71,10 +74,9 @@ main #userContentContainer #quoteParagraph {
   margin-top: 0;
   color: grey;
 }
-main #userContentContainer input[type=text] {
+main #userContentContainer input[type=text], main #userContentContainer textarea {
   color: grey;
-  margin-top: 10px;
-  margin-bottom: 2px;
+  margin-bottom: 10px;
 }
 main #userContentContainer label {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

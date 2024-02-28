@@ -56,11 +56,8 @@
         <div id="userContentContainer">
             <div id="leftColumnContainer" class="mainColumn">
 
-                <section id="newTaskSection">
-                    <h2>To Do List </h2>
-
-                    <section id="qotdSection">
-                        <h2 id="qotd">Quote of the day</h2>
+                <section id="qotdSection"> 
+                    <h2 id="qotd">Quote of the day</h2>
 
                     </section>
 
@@ -103,11 +100,55 @@
 
             </div> <!-- här slutar den vänstra kolumnen -->
 
+                    <select id="taskCategory">
+                        <option value="">Select a category</option>
+                        <option value="health">Health</option>
+                        <option value="household">Household</option>
+                        <option value="work">Work-related</option>
+                        <option value="fun">Fun</option>
+                    </select>
+                    <button onclick="addTask()">Add Task</button> <br>
+    
+                </section>
+
+                
+
+                <section>
+                    <h2>Add a habit</h2>
+                    <input type="text" id="habitInput" placeholder="Add a new habit">
+                    <button id="addHabitBtn">Add Habit</button>
+                    </br>
+                    <label for="">Choose a priority:</label>
+                    <input type="radio" name="priority" id="highPriority">
+                    <label for="priority">High</label>
+                    <input type="radio" name="priority" id="mediumPriority">
+                    <label for="priority">Medium</label>
+                    <input type="radio" name="priority" id="lowPriority">
+                    <label for="priority">Low</label>
+                </section>
+                
+                <section>
+                    <h2>Habits</h2>
+                    <input type="text" id="habitInput" placeholder="Add a new habit">
+                    <button id="addHabitBtn">Add Habit</button>
+                    </br>
+                    <label for="">Choose a priority:</label>
+                    <input type="radio" name="priority" id="highPriority">
+                    <label for="priority">High</label>
+                    <input type="radio" name="priority" id="mediumPriority">
+                    <label for="priority">Medium</label>
+                    <input type="radio" name="priority" id="lowPriority">
+                    <label for="priority">Low</label>
+                </section>
+
+            </div>  <!-- här slutar den vänstra kolumnen -->
+            
+            
 
             <div id="todo-container" class="mainColumn listColumn todo-container">
-                <h2>My tasks</h2>
-                <!-- filtrering här -->
+                 <h2>My to-dos</h2>
 
+                <!-- filtrering här -->
                 <div class="filterBox">
 
                     <input type="checkbox" id="healthCategoryCheckbox">
@@ -130,58 +171,33 @@
                     <button onclick="sortByDeadlineAscending()">Sort by Deadline (stigande)</button>
                     <button onclick="sortByDeadlineDescending()">Sort by Deadline (fallande )</button>
                     <button onclick="sortByEstimateAscending()">Sort by Estimated time (stigande)</button>
-
                     <button onclick="sortByEstimateDescending()">Sort by Estimated time (Fallande)</button>
 
-                    </section>
-
-                    <section>
-                        <h2>Habits</h2>
-                        <input type="text" id="habitInput" placeholder="Add a new habit">
-                        <button id="addHabitBtn">Add Habit</button>
-                        </br>
-                        <label for="">Choose a priority:</label>
-                        <input type="radio" name="priority" id="highPriority">
-                        <label for="priority">High</label>
-                        <input type="radio" name="priority" id="mediumPriority">
-                        <label for="priority">Medium</label>
-                        <input type="radio" name="priority" id="lowPriority">
-                        <label for="priority">Low</label>
-                    </section>
-
-                </div> <!-- här slutar den vänstra kolumnen -->
-
-
-                <div id="todo-container" class="mainColumn listColumn todo-container">
                     <ul id="taskList"></ul>
+
                 </div>
-
-
-
-                <button onclick="sortByEstimateDescending()">Sort by Estimated time (Fallande)</button>
             </div>
 
-
-
-            <ul id="taskList"></ul>
-
-        </div>
-
-
-
-        <div id="habitsContainer" class="mainColumn listColumn">
-            <h2>My habits</h2>
-            <ul id="habitList"></ul>
-
-            <div class="filterBox">
-
-
+    
+            
+            <div id="habitsContainer" class="mainColumn listColumn">
+                <h2>My habits</h2>
+                <div class="filterBox">
+                    <!--Lägg filtreringen här-->
+    
+                </div>
+    
+                <ul id="habitList">
+                    <!--här skapas själva den visuella listan-->
+                </ul>
+    
+    
             </div>
-
-        </div>
-
-        </div>
-
+            
+            
+        </div> <!--här slutar userContentContainer-->
+        
+        
 
 
 

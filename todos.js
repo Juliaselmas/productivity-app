@@ -354,9 +354,7 @@ function filterTasksByCategory() {
     taskList.innerHTML = ''; // Rensa den aktuella uppgiftslistan
     filteredTasks.forEach((task, index) => { // Lägg till de filtrerade uppgifterna i listan
         const taskElement = createTaskElement(task, index);
-        if (taskElement) {
-            taskList.appendChild(taskElement);
-        }
+        taskList.appendChild(taskElement);
     });
 }
 

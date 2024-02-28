@@ -74,7 +74,7 @@ main #userContentContainer #quoteParagraph {
   margin-top: 0;
   color: grey;
 }
-main #userContentContainer input[type=text], main #userContentContainer textarea, main #userContentContainer input[type=number] input[type=date] {
+main #userContentContainer input[type=text], main #userContentContainer textarea, main #userContentContainer input[type=number], main #userContentContainer input[type=date] {
   color: grey;
   margin-bottom: 10px;
 }
@@ -86,8 +86,11 @@ main #userContentContainer select {
   color: grey;
   margin-bottom: 10px;
 }
-main #userContentContainer .mainColumn {
+main #userContentContainer #leftColumnContainer {
+  box-sizing: border-box;
   width: 27%;
+}
+main #userContentContainer .mainColumn {
   display: flex;
   flex-direction: column;
 }
@@ -102,6 +105,7 @@ main #userContentContainer .mainColumn section {
   flex-direction: column;
 }
 main #userContentContainer .listColumn {
+  width: 27%;
   background-color: #eeeeee;
   padding: 2%;
   border-radius: 4px;

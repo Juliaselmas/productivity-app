@@ -94,7 +94,7 @@ main {
 
         //Add new relaterat
 
-        input[type=text] , textarea, input[type=number] input[type=date]{
+        input[type=text] , textarea, input[type=number], input[type=date]{
             color: grey;
             margin-bottom: 10px;
         }
@@ -112,11 +112,13 @@ main {
 
         
 
-
+        #leftColumnContainer {
+            box-sizing: border-box;
+            width: 27%;
+        }
 
     
         .mainColumn {
-            width: 27%;
             display: flex;
             flex-direction: column;
             
@@ -135,6 +137,7 @@ main {
         }
         
         .listColumn {
+            width: 27%;
             background-color: #eeeeee;
             padding: 2%;
             border-radius: 4px;
@@ -144,9 +147,12 @@ main {
                 width:90%;
                 background-color: white;
             }
+
+            
         }
         
         .addBtn {
+            //lös bredden på dessa
             background-color: #766BB5;
             color: white;
             border: none;

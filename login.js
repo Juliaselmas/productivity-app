@@ -54,6 +54,8 @@ registerBtn.addEventListener("click", register);
 
 
 let quoteParagraph = document.createElement("p");//den här behöver ligga globalt eftersom den ska användas både i login in och logout
+quoteParagraph.setAttribute('id', 'quoteParagraph');
+
 let taskListUl = document.querySelector("#taskList");//samma som ovan
 
 let login = async () => {
@@ -107,10 +109,12 @@ let login = async () => {
     let qotdSection = document.querySelector("#qotdSection");
     qotdSection.append(quoteParagraph);
 
+    //slut på axios
+
+
 
     // sätt nuvarande användare i Localstorage
     localStorage.setItem("currentUser", JSON.stringify(user))
-
    
     //lämna hälsningsmeddelande
     let h1 = document.querySelector("#h1");

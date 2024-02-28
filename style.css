@@ -61,6 +61,16 @@ main #userContentContainer {
   flex-direction: row;
   justify-content: space-between;
 }
+main #userContentContainer #qotd {
+  color: grey;
+  margin-bottom: 0.5em;
+}
+main #userContentContainer #quoteParagraph {
+  font-style: italic;
+  font-size: 12px;
+  margin-top: 0;
+  color: grey;
+}
 main #userContentContainer .mainColumn {
   width: 27%;
   display: flex;
@@ -68,19 +78,31 @@ main #userContentContainer .mainColumn {
 }
 main #userContentContainer .mainColumn section {
   background-color: white;
-  padding: 2%;
+  padding: 5%;
   width: 100%;
   border-radius: 4px;
+  box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
   margin-bottom: 5%;
 }
 main #userContentContainer .listColumn {
   background-color: #eeeeee;
   padding: 2%;
   border-radius: 4px;
+  box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
 }
 main #userContentContainer .listColumn .card {
   width: 90%;
   background-color: white;
+}
+main #userContentContainer .addBtn {
+  background-color: #766BB5;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
+  font-weight: 600;
+  margin-left: none;
+  padding: 3%;
 }
 
 footer {

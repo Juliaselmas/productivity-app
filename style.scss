@@ -94,7 +94,7 @@ main {
 
         //Add new relaterat
 
-        input[type=text] , textarea{
+        input[type=text] , textarea, input[type=number] input[type=date]{
             color: grey;
             margin-bottom: 10px;
         }
@@ -107,6 +107,7 @@ main {
 
         select {
         color:grey;
+         margin-bottom: 10px;
         }
 
         
@@ -127,6 +128,9 @@ main {
                 box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
 
                 margin-bottom: 5%;
+
+                display: flex;
+                flex-direction: column;
             }
         }
         

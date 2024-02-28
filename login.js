@@ -19,26 +19,33 @@ let register = async () => {
     let username = usernameInput.value;
     let password = passwordInput.value;
     console.log("användarnamn: "+ username)
-    
-    //skapa användare & lägg i array
-    let user = {
-        username: username,
-        password: password
-    }
-    console.log(user);
-    
-    users.push(user);
-    console.log(users);
-    
-    //lägg input i localstorage
-    localStorage.setItem("users", JSON.stringify(users));
-    
-    console.log(localStorage.getItem("users"));
 
 
+    //kolla så att användarnamnet inte redan finns
+    let userNameAlreadyExists = users.find((user) => user.username === username);
+        
+    if (userNameAlreadyExists){
+        alert("Username is already taken!");
+    } else {
+        //skapa användare & lägg i array
+        let user = {
+            username: username,
+            password: password
+        }
+        console.log(user);
+        
+        users.push(user);
+        console.log(users);
+        
+        //lägg input i localstorage
+        localStorage.setItem("users", JSON.stringify(users));
+        
+        console.log(localStorage.getItem("users"));
+    
+        // sätt nuvarande användare i Localstorage
+        localStorage.setItem("currentUser", JSON.stringify(user))
 
-    // sätt nuvarande användare i Localstorage
-    localStorage.setItem("currentUser", JSON.stringify(user))
+    }; // här slutar else satsen
     
 };
 
@@ -67,9 +74,9 @@ let login = async () => {
         //successful login
         console.log("Welcome " + user.username + "!");
     } else {
-        console.log("Lol u failed");
+        console.log("Lol u failed"); 
     }
-    
+     
 
 
 
@@ -123,6 +130,8 @@ logOutBtn.addEventListener("click", () => {
 
     // nollställ nuvarande användare i Localstorage
     localStorage.setItem("currentUser", "none");
+
+    //
 });
 
 

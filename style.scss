@@ -103,6 +103,7 @@ main {
         label {
             font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 14px;
+            
         }
 
         select {
@@ -143,12 +144,17 @@ main {
             border-radius: 4px;
             box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
 
-            .card{
-                width:90%;
-                background-color: white;
-            }
+            ul{
+                list-style-type: none;
 
-            
+                li{
+                    width:90%;
+                    background-color: white;
+                    padding: 4%;
+                    border-radius: 4px;
+                    box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
+                }
+            }
         }
         
         .addBtn {

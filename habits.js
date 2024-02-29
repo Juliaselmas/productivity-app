@@ -23,11 +23,23 @@ let createHabitListItem = (habitText, index) => {
     selectedPriority.innerText = priorityBtn + " Priority";
     li.append(selectedPriority);
 
+    let streakNumber = document.createElement("p");
+    streakNumber.innerText = "Streak: " + "0";
+    li.append(streakNumber);
 
     //skapar ny completedknapp
     let completedHabitBtn = document.createElement("button");
     completedHabitBtn.innerText = "Mark as Completed";
     li.append(completedHabitBtn);
+
+    completedHabitBtn.addEventListener("click", () => {
+// Här ska det läggas in funktionalitet för att ändra streaknummer. typ index+1?
+    });
+
+    //skapar ny editknapp
+    let editHabitBtn = document.createElement("button");
+    editHabitBtn.innerText = "Edit Habit";
+    li.append(editHabitBtn);
 
     //skapar ny deleteknapp
     let deleteHabitBtn = document.createElement("button");

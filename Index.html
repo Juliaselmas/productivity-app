@@ -66,7 +66,16 @@
 
                     <input type="text" id="taskTitle" placeholder="Add a new task title">
                     <textarea id="taskDescription" placeholder="Add a new task description"></textarea>
+
                     <input type="checkbox" id="taskStatus"> Completed
+
+                    
+                    <div id="taskStatusContainer">
+                        <input type="checkbox" id="taskStatus"> 
+                        <label for="#taskStatus">Completed</label> 
+                    </div>
+
+
                     <input type="date" id="taskDeadline">
                     <input type="number" id="taskEstimate" placeholder="Estimated time in hours" min="0">
                     <!-- man Bör kanske göra en funktion i js (?) Man kan fortfarande skriva - och + . Bör lösas  -->
@@ -78,7 +87,7 @@
                         <option value="work">Work-related</option>
                         <option value="fun">Fun</option>
                     </select>
-                    <button onclick="addTask()">Add Task</button> <br>
+                    <button onclick="addTask()" class="addBtn">Add Task</button> <br>
     
                 </section>
 
@@ -87,7 +96,7 @@
                 <section>
                     <h2>Add a habit</h2>
                     <input type="text" id="habitInput" placeholder="Add a new habit">
-                    <button id="addHabitBtn">Add Habit</button>
+                    <button id="addHabitBtn" class="addBtn">Add Habit</button>
                     </br>
                     <label for="">Choose a priority:</label>
                     <input type="radio" name="priority" id="highPriority">
@@ -98,19 +107,6 @@
                     <label for="priority">Low</label>
                 </section>
                 
-                <section>
-                    <h2>Habits</h2>
-                    <input type="text" id="habitInput" placeholder="Add a new habit">
-                    <button id="addHabitBtn">Add Habit</button>
-                    </br>
-                    <label for="">Choose a priority:</label>
-                    <input type="radio" name="priority" id="highPriority">
-                    <label for="priority">High</label>
-                    <input type="radio" name="priority" id="mediumPriority">
-                    <label for="priority">Medium</label>
-                    <input type="radio" name="priority" id="lowPriority">
-                    <label for="priority">Low</label>
-                </section>
 
             </div>  <!-- här slutar den vänstra kolumnen -->
             
@@ -119,8 +115,11 @@
             <div id="todo-container" class="mainColumn listColumn todo-container">
                  <h2>My to-dos</h2>
 
-                <!-- filtrering här -->
-                <div class="filterBox">
+                <!-- filtrering & sortering här -->
+                <button class="showFiltersBtn">Filters</button>
+                <button class="showSortingBtn">Sorting</button>
+
+                <div class="filterBox hide">
 
                     <input type="checkbox" id="healthCategoryCheckbox">
                     <label for="healthCategoryCheckbox">Health</label>
@@ -132,21 +131,28 @@
                     <label for="funCategoryCheckbox">Fun</label>
 
 
+
                     <button id="applyFiltersButton">Apply Filters</button>
 
                     
             
                      <button onclick="displayTasksByStatus(true)">Show Completed Tasks</button>
+
+                    <button id="applyFiltersButton">Apply Filters</button>            
+                </div>
+                
+                <div class="sortingBox hide">
+                    <button onclick="displayTasksByStatus(true)">Show Completed Tasks</button>
+
                     <button onclick="displayTasksByStatus(false)">Show Not Completed Tasks</button>
                     <button onclick="showAllTasks()">Show All Tasks</button>
                     <button onclick="sortByDeadlineAscending()">Sort by Deadline (stigande)</button>
                     <button onclick="sortByDeadlineDescending()">Sort by Deadline (fallande )</button>
                     <button onclick="sortByEstimateAscending()">Sort by Estimated time (stigande)</button>
                     <button onclick="sortByEstimateDescending()">Sort by Estimated time (Fallande)</button>
-
-                    <ul id="taskList"></ul>
-
                 </div>
+
+                <ul id="taskList"></ul> <!--denna ska ligga här, utanför filterbox-->
             </div>
 
     

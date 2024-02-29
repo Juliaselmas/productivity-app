@@ -15,12 +15,12 @@ h1, h2, h3, h4, h5 {
   font-family: Helvetica, sans-serif;
 }
 
-p, button, li {
+p, button, li, label {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h2 {
-  font-size: 1.17em;
+  font-size: 1.25em;
 }
 
 h1 {
@@ -45,6 +45,9 @@ nav #navLogoText {
 nav #logoutBtn {
   display: flex;
   flex-direction: row;
+  border-radius: 3px;
+  border: none;
+  box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
 }
 nav #userIcon {
   height: 15px;
@@ -61,26 +64,66 @@ main #userContentContainer {
   flex-direction: row;
   justify-content: space-between;
 }
-main #userContentContainer .mainColumn {
+main #userContentContainer #qotd {
+  color: grey;
+  margin-bottom: 0.5em;
+}
+main #userContentContainer #quoteParagraph {
+  font-style: italic;
+  font-size: 12px;
+  margin-top: 0;
+  color: grey;
+}
+main #userContentContainer input[type=text], main #userContentContainer textarea, main #userContentContainer input[type=number], main #userContentContainer input[type=date] {
+  color: grey;
+  margin-bottom: 10px;
+}
+main #userContentContainer label {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+}
+main #userContentContainer select {
+  color: grey;
+  margin-bottom: 10px;
+}
+main #userContentContainer #leftColumnContainer {
+  box-sizing: border-box;
   width: 27%;
+}
+main #userContentContainer .mainColumn {
   display: flex;
   flex-direction: column;
 }
 main #userContentContainer .mainColumn section {
   background-color: white;
-  padding: 2%;
+  padding: 5%;
   width: 100%;
   border-radius: 4px;
+  box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
   margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
 }
 main #userContentContainer .listColumn {
+  width: 27%;
   background-color: #eeeeee;
   padding: 2%;
   border-radius: 4px;
+  box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
 }
 main #userContentContainer .listColumn .card {
   width: 90%;
   background-color: white;
+}
+main #userContentContainer .addBtn {
+  background-color: #766BB5;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
+  font-weight: 600;
+  margin-left: none;
+  padding: 3%;
 }
 
 footer {

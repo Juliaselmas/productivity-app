@@ -134,7 +134,7 @@ function addTask() {
     
 
 
-    // OBS ej klart /S
+    // OBS nedan ej klart /S
 
 
     //lägga till tasks inuti currentUser
@@ -150,9 +150,17 @@ function addTask() {
     //hämta motsvarande user frånusers array och uppdatera den med nya tasks, stoppa sedan tillbaka den i users arrayn
 
     let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
-    let previousUser = users.find(
+
+    //tittar i arrayn med users och väljer den användaren som legat i arrayn
+    let thisUserInTheArray = users.find(
         (user) => user.username === currentUser.username && user.password === currentUser.password
         );
+
+    
+
+    // let previousUser = users.find(
+    //     (user) => user.username === currentUser.username && user.password === currentUser.password
+    //     );
     let updatedUser = currentUser; //uppdaterar så att updatedUser matchar currentUser
 
 

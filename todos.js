@@ -367,5 +367,9 @@ function sortByEstimateDescending() {
     showAllTasks();
 }
 
+
+
+
+
 // Ladda uppgifter från localStorage när sidan laddas
 loadTasksFromLocalStorage();

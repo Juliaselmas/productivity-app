@@ -143,69 +143,53 @@ function addTask() {
     console.log(currentUserObject);
     currentUser = JSON.stringify(currentUserObject); //konverterar tillbaka till en sträng
 
-    
+
     localStorage.setItem("currentUser" , currentUser); // uppdaterar currentUser till det nya som har skapats
-    
-    
+
+
     //hämta motsvarande user frånusers array och uppdatera den med nya tasks, stoppa sedan tillbaka den i users arrayn
-    
+
     let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
-    
-    //tittar i arrayn med users och väljer den användaren som legat i arrayn
+
+    //tittar i arrayn med users och väljer den användaren
     let thisUserInTheArray = users.find(
         (user) => user.username === currentUser.username && user.password === currentUser.password
         );
 
-        console.log(currentUserObject.tasks);        
-    //byta ut tasks i användaren i users mot currentusers tasks
-    thisUserInTheArray.tasks = currentUserObject.tasks;
-       
-    console.log(thisUserInTheArray);
-        
-        
-        // let previousUser = users.find(
-    //     (user) => user.username === currentUser.username && user.password === currentUser.password
-    //     );
-    // let updatedUser = currentUser; //uppdaterar så att updatedUser matchar currentUser
+    let previousUser = users.find(
+        (user) => user.username === currentUser.username && user.password === currentUser.password
+        );
+    let updatedUser = currentUser; //uppdaterar så att updatedUser matchar currentUser
 
-    
-    // let index = users.findIndex(
-    // (user) => user.username === previousUser.username && user.password === previousUser.password
-    // ); // skapa ett index för var i users arrayen som användaren vi jobbar med ligger
 
-    // if (index !== -1) {
-    //     // ersätta previousUser med updatedUser med hjälp av indexet
-    //     users[index] = updatedUser;
-        
-        // spara den uppdaterade användaren tillbaka till localStorage
+    let index = users.findIndex(
+    (user) => user.username === previousUser.username && user.password === previousUser.password
+    ); // skapa ett index för var i users arrayen som användaren vi jobbar med ligger
+
+    if (index !== -1) {
+        // ersätta previousUser med updatedUser med hjälp av indexet
+        users[index] = updatedUser;
+
+    // spara den uppdaterade användaren tillbaka till localStorage
     localStorage.setItem("users", JSON.stringify(users));
     }
     
-
-    //hämta tasks[ ] och lägg in dem i currentUser
-
-    //lägga in updated version av currentUser i users
-
-    // uppdatera currentuser och users när man raderar en task från tasks[]
-
-    //uppdatera currentUser och users när man redigerar en task från tasks []
-
-
     //slut på sofias kodblock
-    
-    
-    
-    
+
+
+
+
 
 
     
     
 
-      // Spara uppgifterna till localStorage
+    // Spara uppgifterna till localStorage
     saveTasksToLocalStorage();
+}
 
-
-// Funktion för att ladda uppgifter från localStorage 
+// Funktion för att ladda uppgifter från localStorage (Fungerar ej ?)
+function loadTasksFromLocalStorage() {
     try {
         // Hämta uppgifterna från localStorage
         const loadedTasks = JSON.parse(localStorage.getItem('tasks'));
@@ -223,7 +207,7 @@ function addTask() {
         console.error('Failed to parse tasks from localStorage:', error);
         // Man kan också visa ett felmeddelande till användaren här.
     }
-
+}
 // Funktion för att ladda uppgifter från localStorage vid sidans laddning
 loadTasksFromLocalStorage();
 
@@ -388,10 +372,6 @@ function sortByEstimateDescending() {
     tasks.sort((a, b) => b.estimate - a.estimate);
     showAllTasks();
 }
-
-
-
-
 
 // Ladda uppgifter från localStorage när sidan laddas
 loadTasksFromLocalStorage();

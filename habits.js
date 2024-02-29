@@ -3,16 +3,25 @@ let habitList = document.getElementById("habitList");
 let habitContainer = document.getElementById("habit-container");
 let habitInput = document.getElementById("habitInput");
 let addHabitBtn = document.getElementById("addHabitBtn");
-let priorityBtn = document.querySelectorAll('input[name="priority"]');
-let priorityBtnChecked = document.querySelectorAll('input[name="priority"]:checked');
+// let priorityBtn = document.querySelector("input[name='priority']");
+// let priorityBtnChecked = document.querySelectorAll("input[name='priority']:checked").value;
+
+
 
 
 let createHabitListItem = (habitText, index) => {
+    let priorityBtn = document.querySelector("input[name='priority']:checked").value;
+    // let priorityBtnChecked = document.querySelectorAll("input[name='priority']:checked").value;
+    console.log(priorityBtn)
     let li = document.createElement("li");
-    li.innerHTML = `
-    <h3>${habitText}</h3>
-    <p>${priorityBtnChecked.value} Priority</p>
+    li.innerHTML = ` 
+    <h3>${habitText}</h3> 
     `;
+
+
+    let selectedPriority = document.createElement("p");
+    selectedPriority.innerText = priorityBtn + " Priority";
+    li.append(selectedPriority);
 
 
     //skapar ny completedknapp

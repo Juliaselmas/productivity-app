@@ -54,6 +54,8 @@ registerBtn.addEventListener("click", register);
 
 
 let quoteParagraph = document.createElement("p");//den här behöver ligga globalt eftersom den ska användas både i login in och logout
+quoteParagraph.setAttribute('id', 'quoteParagraph');
+
 let taskListUl = document.querySelector("#taskList");//samma som ovan
 
 let login = async () => {
@@ -107,10 +109,12 @@ let login = async () => {
     let qotdSection = document.querySelector("#qotdSection");
     qotdSection.append(quoteParagraph);
 
+    //slut på axios
+
+
 
     // sätt nuvarande användare i Localstorage
     localStorage.setItem("currentUser", JSON.stringify(user))
-
    
     //lämna hälsningsmeddelande
     let h1 = document.querySelector("#h1");
@@ -137,6 +141,35 @@ logOutBtn.addEventListener("click", () => {
 
 
 
+
+//dölj eller visa sorting och filter knappar, flytta till todo sen
+//välja knapparna
+let showFiltersBtnsNodes = document.querySelectorAll(".showFiltersBtn");
+let showSortingBtnsNodes = document.querySelectorAll(".showSortingBtn");
+
+//eventlisteners på knapparna
+showFiltersBtnsNodes.forEach(function(button) {
+    button.addEventListener('click', function() {
+        //välja rutan
+        let parentColumn = this.parentNode;
+        let closestFilterBox = parentColumn.querySelector('.filterBox');
+
+        //toggla klassen .hide när man klickar
+        closestFilterBox.classList.toggle('hide');
+    });
+});
+
+//sortering
+showSortingBtnsNodes.forEach(function(button) {
+    button.addEventListener('click', function() {
+        //välja rutan
+        let parentColumn = this.parentNode;
+        let closestSortingBox = parentColumn.querySelector('.sortingBox');
+
+        //toggla klassen .hide när man klickar
+        closestSortingBox.classList.toggle('hide');
+    });
+});
 
 
 

@@ -80,29 +80,13 @@ function updateTaskIndices() {
 
 // Funktion för att lägga till en ny uppgift
 function addTask() {
-    /* kontrollerar att man som användare har fyllt i alla uppgifter. Just nu är det en "alert", men jag tycker att vi ska se om det finns en mer användarvänlig metod att meddela användaren om att hen inte fyllt i korrekt .
-    Jag är medveten om att man kan skriva en bättre if sats, men har ej gjort det än */
+    /* kontrollerar att man som användare har fyllt i alla uppgifter. */
 
-    if (!taskTitle.value) {
-        alert('Please enter a task title');
-        return;
-    }
-    if (!taskDescription.value) {
-        alert('Please enter a task description');
-        return;
-    }
-    if (!taskDeadline.value) {
-        alert('Please provide a deadline for the task');
-        return;
-    }
-    if (!taskEstimate.value) {
-        alert('Please provide an estimated time for the task');
-        return;
-    }
-    if (!taskCategory.value) {
-        alert('Please enter a category for the task');
-        return;
-    }
+    if (!taskTitle.value || !taskDescription.value || !taskDeadline.value || !taskEstimate.value || !taskCategory.value) {
+        let errorMessage = 'Fill in all the information to add a task';
+
+    alert(errorMessage);
+    return;}
 
     // Skapa ett nytt uppgifts-objekt med värdena från inmatningsfälten
     let task = {

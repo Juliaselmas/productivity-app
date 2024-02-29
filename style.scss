@@ -3,7 +3,7 @@
 
 
 .hide {
-    display:none;
+    display: none;
 }
 
 //När man klickar på denna (toggle) så stryks ett sträck ovanför 
@@ -12,19 +12,26 @@
 }
 
 body {
-    background-image: linear-gradient( #A7A0CE 0%, #302185 100%);
-    margin:0;
+    background-image: linear-gradient(#A7A0CE 0%, #302185 100%);
+    margin: 0;
     //height: 100vh;
 }
 
 //typografi
 
-h1, h2 , h3 ,h4 , h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
     font-family: Helvetica, sans-serif;
 }
 
-p , button , li, label {
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+p,
+button,
+li,
+label {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h2 {
@@ -48,22 +55,22 @@ nav {
     justify-content: space-around;
 
 
-    #navLogoText{
+    #navLogoText {
         color: white;
     }
 
     #logoutBtn {
-        display:flex;
+        display: flex;
         flex-direction: row;
         border-radius: 3px;
         border: none;
         box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
-        
+
     }
-    
+
     #userIcon {
-        height:15px;
-        margin-right:8px;
+        height: 15px;
+        margin-right: 8px;
     }
 }
 
@@ -74,17 +81,19 @@ main {
     width: 100vw;
     padding: 3%;
     box-sizing: border-box;
-    
+
     #userContentContainer {
-    
-        display:flex;
+
+        display: flex;
         flex-direction: row;
         justify-content: space-between;
 
-        #qotd{ //detta refererar rubriken
-            color:grey;
+        #qotd {
+            //detta refererar rubriken
+            color: grey;
             margin-bottom: 0.5em;
         }
+
         #quoteParagraph {
             font-style: italic;
             font-size: 12px;
@@ -94,35 +103,38 @@ main {
 
         //Add new relaterat
 
-        input[type=text] , textarea, input[type=number], input[type=date]{
+        input[type=text],
+        textarea,
+        input[type=number],
+        input[type=date] {
             color: grey;
             margin-bottom: 10px;
         }
-        
+
 
         label {
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 14px;
         }
 
         select {
-        color:grey;
-         margin-bottom: 10px;
+            color: grey;
+            margin-bottom: 10px;
         }
 
-        
+
 
         #leftColumnContainer {
             box-sizing: border-box;
             width: 27%;
         }
 
-    
+
         .mainColumn {
             display: flex;
             flex-direction: column;
-            
-            section{
+
+            section {
                 background-color: white;
                 padding: 5%;
                 width: 100%;
@@ -135,7 +147,7 @@ main {
                 flex-direction: column;
             }
         }
-        
+
         .listColumn {
             width: 27%;
             background-color: #eeeeee;
@@ -143,14 +155,12 @@ main {
             border-radius: 4px;
             box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
 
-            .card{
-                width:90%;
+            .card {
+                width: 90%;
                 background-color: white;
             }
 
-            
         }
-        
         .addBtn {
             //lös bredden på dessa
             background-color: #766BB5;
@@ -164,7 +174,13 @@ main {
 
 
         }
-    
+    }
+    #taskTitle,
+    #taskDescription {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 14px;
+        resize: vertical;  // För att förhindra att vyn görändras. Kan ändras till annan höjd om så önskas
+        max-height: 200px
     }
 }
 
@@ -178,6 +194,6 @@ footer {
     position: relative;
     bottom: 0px;
 
-    display:flex;
+    display: flex;
     justify-content: center;
 }

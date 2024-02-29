@@ -3,50 +3,50 @@ let habitList = document.getElementById("habitList");
 let habitContainer = document.getElementById("habit-container");
 let habitInput = document.getElementById("habitInput");
 let addHabitBtn = document.getElementById("addHabitBtn");
-// let priorityBtn = document.querySelector("input[name='priority']");
-// let priorityBtnChecked = document.querySelectorAll("input[name='priority']:checked").value;
+let habitStreakCounter = 0;
 
 
 
 
 let createHabitListItem = (habitText, index) => {
     let priorityBtn = document.querySelector("input[name='priority']:checked").value;
-    // let priorityBtnChecked = document.querySelectorAll("input[name='priority']:checked").value;
-    console.log(priorityBtn)
-    let li = document.createElement("li");
-    li.innerHTML = ` 
-    <h3>${habitText}</h3> 
-    `;
 
+    let li = document.createElement("li");
+    li.innerHTML = ` <h3>${habitText}</h3> `;
 
     let selectedPriority = document.createElement("p");
     selectedPriority.innerText = priorityBtn + " Priority";
     li.append(selectedPriority);
 
     let streakNumber = document.createElement("p");
-    streakNumber.innerText = "Streak: " + "0";
+    streakNumber.innerText = "Streak: " + index;
     li.append(streakNumber);
+
 
     //skapar ny completedknapp
     let completedHabitBtn = document.createElement("button");
     completedHabitBtn.innerText = "Mark as Completed";
     li.append(completedHabitBtn);
 
+    //funktion för att öka index på streak
     completedHabitBtn.addEventListener("click", () => {
-// Här ska det läggas in funktionalitet för att ändra streaknummer. typ index+1?
+        habitStreakCounter++;
+        streakNumber.innerText = "Streak: " + habitStreakCounter;
     });
+
 
     //skapar ny editknapp
     let editHabitBtn = document.createElement("button");
     editHabitBtn.innerText = "Edit Habit";
     li.append(editHabitBtn);
 
+
     //skapar ny deleteknapp
     let deleteHabitBtn = document.createElement("button");
     deleteHabitBtn.innerText = "Delete Habit";
     li.append(deleteHabitBtn);
 
-
+    //funktion för att ta bort habit
     deleteHabitBtn.addEventListener("click", () => {
         li.remove();
 
@@ -95,7 +95,7 @@ addHabitBtn.addEventListener("click", () => {
     };
 
     let newHabit = habitInput.value;
-    let li = createHabitListItem(newHabit);
+    let li = createHabitListItem(newHabit, 0);
     habitList.append(li);
 
     //sparar värden i localStorage

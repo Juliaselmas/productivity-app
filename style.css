@@ -113,6 +113,7 @@ main #userContentContainer .listColumn {
 }
 main #userContentContainer .listColumn ul {
   list-style-type: none;
+  padding-left: 0;
 }
 main #userContentContainer .listColumn ul li {
   width: 90%;

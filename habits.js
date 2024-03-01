@@ -6,7 +6,7 @@ let addHabitBtn = document.getElementById("addHabitBtn");
 let habitStreakCounter = 0;
 
 /*Att göra:
-funktion till editknappen
+funktion till editknappen. Vart ska den ligga?
 påbygga completedknappen
 curentUser
 */
@@ -47,6 +47,29 @@ let createHabitListItem = (habitText, index) => {
     li.append(editHabitBtn);
 
     //funktion för att redigera habit
+    editHabitBtn.addEventListener("click", () => {
+        li.innerHTML = `
+        <label for="">Change Habit:</label>
+        <input type="text" id="editHabitInput" placeholder="${habitText}">
+        <label for="">Change priority:</label>
+        <input type="radio" name="priority" id="highPriority" value="High">
+        <label for="priority">High</label>
+        <input type="radio" name="priority" id="mediumPriority" value="Medium">
+        <label for="priority">Medium</label>
+        <input type="radio" name="priority" id="lowPriority" value="Low">
+        <label for="priority">Low</label>
+        `;
+        let saveChangesBtn = document.createElement("button");
+        saveChangesBtn.innerText = "Save Changes";
+        li.append(saveChangesBtn);
+
+        //funktion för att spara ny ändringar. Hur når jag denna?
+        //Räcker det att jag anropar funktionen här eller måste hela funktionen ligga här inne?
+        //saveChangesBtn.addEventListener("click", () => {
+
+        //};
+
+    });
 
 
     //skapar ny deleteknapp
@@ -68,6 +91,7 @@ let createHabitListItem = (habitText, index) => {
 
     return li;
 };
+
 
 
 let onRender = () => {

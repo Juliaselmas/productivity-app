@@ -5,7 +5,11 @@ let habitInput = document.getElementById("habitInput");
 let addHabitBtn = document.getElementById("addHabitBtn");
 let habitStreakCounter = 0;
 
-
+/*Att göra:
+funktion till editknappen
+påbygga completedknappen
+curentUser
+*/
 
 
 let createHabitListItem = (habitText, index) => {
@@ -32,6 +36,8 @@ let createHabitListItem = (habitText, index) => {
     completedHabitBtn.addEventListener("click", () => {
         habitStreakCounter++;
         streakNumber.innerText = "Streak: " + habitStreakCounter;
+
+        //lägga till att knappen ändrar text eller hela habit ändrar utseende?
     });
 
 
@@ -39,6 +45,8 @@ let createHabitListItem = (habitText, index) => {
     let editHabitBtn = document.createElement("button");
     editHabitBtn.innerText = "Edit Habit";
     li.append(editHabitBtn);
+
+    //funktion för att redigera habit
 
 
     //skapar ny deleteknapp

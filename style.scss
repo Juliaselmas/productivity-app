@@ -32,7 +32,8 @@ h5 {
 p,
 button,
 li,
-label {
+label,
+input {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -47,6 +48,11 @@ h1 {
 
 button {
     margin: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-radius: 3px;
+    border: 1px solid rgb(108, 108, 108);
+    
 }
 
 nav {

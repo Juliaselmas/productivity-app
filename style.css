@@ -11,11 +11,18 @@ body {
   margin: 0;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: Helvetica, sans-serif;
 }
 
-p, button, li, label {
+p,
+button,
+li,
+label {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -74,7 +81,10 @@ main #userContentContainer #quoteParagraph {
   margin-top: 0;
   color: grey;
 }
-main #userContentContainer input[type=text], main #userContentContainer textarea, main #userContentContainer input[type=number], main #userContentContainer input[type=date] {
+main #userContentContainer input[type=text],
+main #userContentContainer textarea,
+main #userContentContainer input[type=number],
+main #userContentContainer input[type=date] {
   color: grey;
   margin-bottom: 10px;
 }
@@ -130,6 +140,13 @@ main #userContentContainer .addBtn {
   font-weight: 600;
   margin-left: none;
   padding: 3%;
+}
+main #taskTitle,
+main #taskDescription {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  resize: vertical;
+  max-height: 200px;
 }
 
 footer {

@@ -134,7 +134,7 @@ function addTask() {
     
 
 
-    // OBS ej klart /S
+    // OBS nedan ej klart /S
 
 
     //lägga till tasks inuti currentUser
@@ -150,6 +150,12 @@ function addTask() {
     //hämta motsvarande user frånusers array och uppdatera den med nya tasks, stoppa sedan tillbaka den i users arrayn
 
     let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
+
+    //tittar i arrayn med users och väljer den användaren
+    let thisUserInTheArray = users.find(
+        (user) => user.username === currentUser.username && user.password === currentUser.password
+        );
+
     let previousUser = users.find(
         (user) => user.username === currentUser.username && user.password === currentUser.password
         );
@@ -339,25 +345,33 @@ document.getElementById('applyFiltersButton').addEventListener('click', function
 });
 
 
-// Funktion för att filtrera uppgifter baserat på kategorierna som är markerade
-function filterTasksByCategory() {
-    let selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
-        .map(checkbox => checkbox.id.replace("CategoryCheckbox", "").toLowerCase());
 
-    if (selectedCategories.length === 0) {
-        showAllTasks();
-        return;
-    }
+// 4 Funktioner som ser likadana ut. De sorterar bara på olika variabler 
 
-    let filteredTasks = tasks.filter(task => selectedCategories.includes(task.category.toLowerCase()));
-
-    taskList.innerHTML = ''; // Rensa den aktuella uppgiftslistan
-    filteredTasks.forEach((task, index) => { // Lägg till de filtrerade uppgifterna i listan
-        const taskElement = createTaskElement(task, index);
-        taskList.appendChild(taskElement);
-    });
+// Funktionalitet  för att sortera uppgifter baserat på DEADLINE i stigande ordning. Ser exakt likadon ut som nästa funktion. (Hittade logiken på stackoverflow) 
+function sortByDeadlineAscending() {
+    tasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+    showAllTasks(); // Visa de sorterade uppgifterna
 }
 
+// Funktionalitet  för att sortera uppgifter baserat på deadline i fallande ordning
+function sortByDeadlineDescending() {
+    tasks.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
+    showAllTasks();
+
+}
+
+// Funktion för att sortera uppgifter baserat på TIDSESTIMAT i stigande ordning
+function sortByEstimateAscending() {
+    tasks.sort((a, b) => a.estimate - b.estimate);
+    showAllTasks(); // Visa de sorterade uppgifterna
+}
+
+// Funktion för att sortera uppgifter baserat på tidsestimat i fallande ordning
+function sortByEstimateDescending() {
+    tasks.sort((a, b) => b.estimate - a.estimate);
+    showAllTasks();
+}
 
 // Ladda uppgifter från localStorage när sidan laddas
 loadTasksFromLocalStorage();

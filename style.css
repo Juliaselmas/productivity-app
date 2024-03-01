@@ -121,9 +121,15 @@ main #userContentContainer .listColumn {
   border-radius: 4px;
   box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
 }
-main #userContentContainer .listColumn .card {
+main #userContentContainer .listColumn ul {
+  list-style-type: none;
+}
+main #userContentContainer .listColumn ul li {
   width: 90%;
   background-color: white;
+  padding: 4%;
+  border-radius: 4px;
+  box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
 }
 main #userContentContainer .addBtn {
   background-color: #766BB5;

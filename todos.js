@@ -135,16 +135,14 @@ function addTask() {
 
     let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
 
-    //tittar i arrayn med users och väljer den användaren som legat i arrayn
+    //tittar i arrayn med users och väljer den användaren
     let thisUserInTheArray = users.find(
         (user) => user.username === currentUser.username && user.password === currentUser.password
         );
 
-    
-
-    // let previousUser = users.find(
-    //     (user) => user.username === currentUser.username && user.password === currentUser.password
-    //     );
+    let previousUser = users.find(
+        (user) => user.username === currentUser.username && user.password === currentUser.password
+        );
     let updatedUser = currentUser; //uppdaterar så att updatedUser matchar currentUser
 
 
@@ -358,10 +356,6 @@ function sortByEstimateDescending() {
     tasks.sort((a, b) => b.estimate - a.estimate);
     showAllTasks();
 }
-
-
-
-
 
 // Ladda uppgifter från localStorage när sidan laddas
 loadTasksFromLocalStorage();

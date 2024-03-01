@@ -154,7 +154,9 @@ let showSortingBtnsNodes = document.querySelectorAll(".showSortingBtn");
 showFiltersBtnsNodes.forEach(function(button) {
     button.addEventListener('click', function() {
         //välja rutan
-        let parentColumn = this.parentNode;
+        let parentBox = this.parentNode;
+        let parentColumn = parentBox.parentNode;//tekniskt sett väljer detta grandparent till knappen, men ändå
+
         let closestFilterBox = parentColumn.querySelector('.filterBox');
 
         //toggla klassen .hide när man klickar
@@ -166,7 +168,8 @@ showFiltersBtnsNodes.forEach(function(button) {
 showSortingBtnsNodes.forEach(function(button) {
     button.addEventListener('click', function() {
         //välja rutan
-        let parentColumn = this.parentNode;
+        let parentBox = this.parentNode;
+        let parentColumn = parentBox.parentNode;
         let closestSortingBox = parentColumn.querySelector('.sortingBox');
 
         //toggla klassen .hide när man klickar

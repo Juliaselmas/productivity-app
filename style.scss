@@ -1,5 +1,6 @@
 //variabler
-
+$backgroundGradient: linear-gradient(164deg, #310056 4.01%, #8E69FF 55.23%, #A215B5 99.09%);
+$buttonPurple: #8E69FF;
 
 
 .hide {
@@ -12,7 +13,8 @@
 }
 
 body {
-    background-image: linear-gradient(#A7A0CE 0%, #302185 100%);
+    //background-image: linear-gradient(#A7A0CE 0%, #302185 100%);
+    background: $backgroundGradient;
     margin: 0;
     //height: 100vh;
 }
@@ -30,12 +32,13 @@ h5 {
 p,
 button,
 li,
-label {
+label,
+input {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h2 {
-    font-size: 1.25em;
+    font-size: 1.43em;
 }
 
 h1 {
@@ -45,10 +48,15 @@ h1 {
 
 button {
     margin: 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-radius: 3px;
+    border: 1px solid rgb(108, 108, 108);
+    
 }
 
 nav {
-    background-color: #A7A0CE;
+    background-color: #310056;
     box-shadow: 0px 2px 10px 10px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: row;
@@ -60,6 +68,7 @@ nav {
     }
 
     #logoutBtn {
+        height: 70%;
         display: flex;
         flex-direction: row;
         border-radius: 3px;
@@ -111,29 +120,39 @@ main {
             margin-bottom: 10px;
         }
 
-
+        
         label {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 14px;
             
         }
-
+        
         select {
             color: grey;
             margin-bottom: 10px;
         }
+        
+        #taskTitle,
+        #taskDescription {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            resize: vertical;  // För att förhindra att vyn görändras. Kan ändras till annan höjd om så önskas
+            max-height: 200px
+        }
 
 
-
-        #leftColumnContainer {
+        #leftColumn {
             box-sizing: border-box;
             width: 27%;
+            padding-top: none;
         }
 
 
         .mainColumn {
             display: flex;
             flex-direction: column;
+            padding: 2%;
+            width: 27%;
 
             section {
                 background-color: white;
@@ -150,15 +169,26 @@ main {
         }
 
         .listColumn {
+            padding: 2%;
             width: 27%;
             background-color: #eeeeee;
-            padding: 2%;
             border-radius: 4px;
             box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
+
+            .filterSortingBtnContainer{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .showFiltersBtn, .showSortingBtn {
+                    width:45%;
+                }
+            }
 
 
             ul{
                 list-style-type: none;
+                padding-left: 0;
 
                 li{
                     width:90%;
@@ -178,7 +208,7 @@ main {
         }
         .addBtn {
             //lös bredden på dessa
-            background-color: #766BB5;
+            background-color: #8E69FF;
             color: white;
             border: none;
             border-radius: 3px;
@@ -189,13 +219,6 @@ main {
 
 
         }
-    }
-    #taskTitle,
-    #taskDescription {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 14px;
-        resize: vertical;  // För att förhindra att vyn görändras. Kan ändras till annan höjd om så önskas
-        max-height: 200px
     }
 }
 

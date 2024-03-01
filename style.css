@@ -7,7 +7,7 @@
 }
 
 body {
-  background-image: linear-gradient(#A7A0CE 0%, #302185 100%);
+  background: linear-gradient(164deg, #310056 4.01%, #8E69FF 55.23%, #A215B5 99.09%);
   margin: 0;
 }
 
@@ -22,12 +22,13 @@ h5 {
 p,
 button,
 li,
-label {
+label,
+input {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h2 {
-  font-size: 1.25em;
+  font-size: 1.43em;
 }
 
 h1 {
@@ -37,10 +38,14 @@ h1 {
 
 button {
   margin: 3px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-radius: 3px;
+  border: 1px solid rgb(108, 108, 108);
 }
 
 nav {
-  background-color: #A7A0CE;
+  background-color: #310056;
   box-shadow: 0px 2px 10px 10px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: row;
@@ -50,6 +55,7 @@ nav #navLogoText {
   color: white;
 }
 nav #logoutBtn {
+  height: 70%;
   display: flex;
   flex-direction: row;
   border-radius: 3px;
@@ -96,13 +102,23 @@ main #userContentContainer select {
   color: grey;
   margin-bottom: 10px;
 }
-main #userContentContainer #leftColumnContainer {
+main #userContentContainer #taskTitle,
+main #userContentContainer #taskDescription {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  resize: vertical;
+  max-height: 200px;
+}
+main #userContentContainer #leftColumn {
   box-sizing: border-box;
   width: 27%;
+  padding-top: none;
 }
 main #userContentContainer .mainColumn {
   display: flex;
   flex-direction: column;
+  padding: 2%;
+  width: 27%;
 }
 main #userContentContainer .mainColumn section {
   background-color: white;
@@ -115,14 +131,23 @@ main #userContentContainer .mainColumn section {
   flex-direction: column;
 }
 main #userContentContainer .listColumn {
+  padding: 2%;
   width: 27%;
   background-color: #eeeeee;
-  padding: 2%;
   border-radius: 4px;
   box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
 }
+main #userContentContainer .listColumn .filterSortingBtnContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+main #userContentContainer .listColumn .filterSortingBtnContainer .showFiltersBtn, main #userContentContainer .listColumn .filterSortingBtnContainer .showSortingBtn {
+  width: 45%;
+}
 main #userContentContainer .listColumn ul {
   list-style-type: none;
+  padding-left: 0;
 }
 main #userContentContainer .listColumn ul li {
   width: 90%;
@@ -131,8 +156,12 @@ main #userContentContainer .listColumn ul li {
   border-radius: 4px;
   box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
 }
+main #userContentContainer .listColumn .card {
+  width: 90%;
+  background-color: white;
+}
 main #userContentContainer .addBtn {
-  background-color: #766BB5;
+  background-color: #8E69FF;
   color: white;
   border: none;
   border-radius: 3px;
@@ -140,13 +169,6 @@ main #userContentContainer .addBtn {
   font-weight: 600;
   margin-left: none;
   padding: 3%;
-}
-main #taskTitle,
-main #taskDescription {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 14px;
-  resize: vertical;
-  max-height: 200px;
 }
 
 footer {

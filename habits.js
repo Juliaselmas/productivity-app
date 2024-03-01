@@ -3,53 +3,115 @@ let habitList = document.getElementById("habitList");
 let habitContainer = document.getElementById("habit-container");
 let habitInput = document.getElementById("habitInput");
 let addHabitBtn = document.getElementById("addHabitBtn");
+let habitStreakCounter = 0;
 
-addHabitBtn.addEventListener("click", () => {
-    //if-sats för att säkerställa att prio är vald?
+/*Att göra:
+funktion till editknappen
+påbygga completedknappen
+curentUser
+*/
 
-    //ny Habit
+
+let createHabitListItem = (habitText, index) => {
+    let priorityBtn = document.querySelector("input[name='priority']:checked").value;
+
     let li = document.createElement("li");
-    let newHabit = habitInput.value;
-    li.innertext = newHabit;
+    li.innerHTML = ` <h3>${habitText}</h3> `;
 
-    //ny completedknapp
+    let selectedPriority = document.createElement("p");
+    selectedPriority.innerText = priorityBtn + " Priority";
+    li.append(selectedPriority);
+
+    let streakNumber = document.createElement("p");
+    streakNumber.innerText = "Streak: " + index;
+    li.append(streakNumber);
+
+
+    //skapar ny completedknapp
     let completedHabitBtn = document.createElement("button");
     completedHabitBtn.innerText = "Mark as Completed";
     li.append(completedHabitBtn);
 
-    //ny deleteknapp
+    //funktion för att öka index på streak
+    completedHabitBtn.addEventListener("click", () => {
+        habitStreakCounter++;
+        streakNumber.innerText = "Streak: " + habitStreakCounter;
+
+        //lägga till att knappen ändrar text eller hela habit ändrar utseende?
+    });
+
+
+    //skapar ny editknapp
+    let editHabitBtn = document.createElement("button");
+    editHabitBtn.innerText = "Edit Habit";
+    li.append(editHabitBtn);
+
+    //funktion för att redigera habit
+
+
+    //skapar ny deleteknapp
     let deleteHabitBtn = document.createElement("button");
     deleteHabitBtn.innerText = "Delete Habit";
     li.append(deleteHabitBtn);
 
-    //hittar och tar bort index för habit i array
-    let currentIndex = habits.length;
-
+    //funktion för att ta bort habit
     deleteHabitBtn.addEventListener("click", () => {
         li.remove();
-        let newHabitList = todos.filter((habit, i) => i !== currentIndex);
-        habits = [...newHabitList];
-        localStorage.setItem("habit", JSON.stringify(habits));
+
+        //tar bort habit med rätt index från arrayen
+        let habitIndex = habits.indexOf(habitText);
+        habits.splice(habitIndex, 1);
+        localStorage.setItem("habits", JSON.stringify(habits));
     });
 
-    habitList.append("li");
-    habitInput.value = "";
+    habitList.append(li);
+
+    return li;
+};
+
+
+let onRender = () => {
+    //kollar om det finns data i localStorage
+    if (localStorage.getItem("habits")) {
+        habits = JSON.parse(localStorage.getItem("habits"));
+        //skapar li för varje habit
+
+        habits.forEach((habit, i) => {
+           
+            let li = createHabitListItem(habit);
+            habitList.append(li);
+
+        });
+    };
+};
+
+
+addHabitBtn.addEventListener("click", () => {
+    
+    //säkerställer att prio är vald
+    let priorityBtn = document.querySelectorAll('input[name="priority"]');
+    let prioritySelected = false;
+    priorityBtn.forEach(radio => {
+        if (radio.checked) {
+            prioritySelected = true;
+        }
+    });
+
+    if (!prioritySelected) {
+        alert("Please select a priority for your new habit.");
+        return;
+    };
+
+    let newHabit = habitInput.value;
+    let li = createHabitListItem(newHabit, 0);
+    habitList.append(li);
 
     //sparar värden i localStorage
     habits.push(newHabit);
-    console.log(habits);
+    
     localStorage.setItem("habits", JSON.stringify(habits));
+    habitInput.value = "";
 
 });
 
-
-
-
-
-//behövs detta?
-//const fetchData = async (url) => {
-    //let response = await fetch(url);
-    //let json = await response.json();
-    //return json;
-  //};
-
+onRender();

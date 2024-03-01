@@ -31,6 +31,7 @@ function createTaskElement(task, index) {
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
         <h3>${task.title}</h3>
+        
         <p>${task.description}</p>
         <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
         <p>Deadline: ${task.deadline}</p>
@@ -132,7 +133,7 @@ function addTask() {
     localStorage.setItem("currentUser" , currentUser); // uppdaterar currentUser till det nya som har skapats
 
     //hämta motsvarande user frånusers array och uppdatera den med nya tasks, stoppa sedan tillbaka den i users arrayn
-    //let users = JSON.parse(localStorage.getItem ("users")) || []; 
+    let users = JSON.parse(localStorage.getItem ("users")) || []; 
     //let users = JSON.stringify(localStorage.getItem ("users")) || []; 
     // hämta tidigare data alternativt skapa en tom array
 

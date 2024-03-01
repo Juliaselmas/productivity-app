@@ -111,18 +111,25 @@ main {
             margin-bottom: 10px;
         }
 
-
+        
         label {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 14px;
-
+            
         }
-
+        
         select {
             color: grey;
             margin-bottom: 10px;
         }
-
+        
+        #taskTitle,
+        #taskDescription {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            resize: vertical;  // För att förhindra att vyn görändras. Kan ändras till annan höjd om så önskas
+            max-height: 200px
+        }
 
 
         #leftColumnContainer {
@@ -190,13 +197,6 @@ main {
 
 
         }
-    }
-    #taskTitle,
-    #taskDescription {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 14px;
-        resize: vertical;  // För att förhindra att vyn görändras. Kan ändras till annan höjd om så önskas
-        max-height: 200px
     }
 }
 

@@ -27,7 +27,7 @@ label {
 }
 
 h2 {
-  font-size: 1.39em;
+  font-size: 1.43em;
 }
 
 h1 {
@@ -153,7 +153,7 @@ main #userContentContainer .listColumn .card {
   background-color: white;
 }
 main #userContentContainer .addBtn {
-  background-color: #766BB5;
+  background-color: #8E69FF;
   color: white;
   border: none;
   border-radius: 3px;

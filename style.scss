@@ -1,5 +1,6 @@
 //variabler
 $backgroundGradient: linear-gradient(164deg, #310056 4.01%, #8E69FF 55.23%, #A215B5 99.09%);
+$buttonPurple: #8E69FF;
 
 
 .hide {
@@ -36,7 +37,7 @@ label {
 }
 
 h2 {
-    font-size: 1.39em;
+    font-size: 1.43em;
 }
 
 h1 {
@@ -198,7 +199,7 @@ main {
         }
         .addBtn {
             //lös bredden på dessa
-            background-color: #766BB5;
+            background-color: #8E69FF;
             color: white;
             border: none;
             border-radius: 3px;

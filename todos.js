@@ -31,6 +31,7 @@ function createTaskElement(task, index) {
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
         <h3>${task.title}</h3>
+        
         <p>${task.description}</p>
         <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
         <p>Deadline: ${task.deadline}</p>
@@ -115,52 +116,43 @@ function addTask() {
     taskCategory.value = '';
     
 
-    
 
 
-    // OBS nedan ej klart /S
 
+
+
+    //SOFIAS KOD - användardata
 
     //lägga till tasks inuti currentUser
     let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
-    currentUserObject.tasks = tasks;
+    currentUserObject.tasks = tasks; //lägger in tasks som ett key-value par i objektet currentuser
     console.log(currentUserObject);
     currentUser = JSON.stringify(currentUserObject); //konverterar tillbaka till en sträng
 
 
     localStorage.setItem("currentUser" , currentUser); // uppdaterar currentUser till det nya som har skapats
 
-
     //hämta motsvarande user frånusers array och uppdatera den med nya tasks, stoppa sedan tillbaka den i users arrayn
+    let users = JSON.parse(localStorage.getItem ("users")) || []; 
+    //let users = JSON.stringify(localStorage.getItem ("users")) || []; 
+    // hämta tidigare data alternativt skapa en tom array
 
-    let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
+    console.log(users);
+    
 
     //tittar i arrayn med users och väljer den användaren som legat i arrayn
     let thisUserInTheArray = users.find(
-        (user) => user.username === currentUser.username && user.password === currentUser.password
-        );
+        (user) => user.username === currentUser.username);
 
-    
+        console.log(thisUserInTheArray); //WHY ARE YOU UNDEFINED!!!!!!!!!!
+        console.log(currentUserObject);
+    //byta ut tasks i användaren i users mot currentusers tasks        
 
-    // let previousUser = users.find(
-    //     (user) => user.username === currentUser.username && user.password === currentUser.password
-    //     );
-    let updatedUser = currentUser; //uppdaterar så att updatedUser matchar currentUser
+    thisUserInTheArray.tasks =  currentUserObject.tasks;
 
 
-    let index = users.findIndex(
-    (user) => user.username === previousUser.username && user.password === previousUser.password
-    ); // skapa ett index för var i users arrayen som användaren vi jobbar med ligger
+    //Slut på sofias kodblock
 
-    if (index !== -1) {
-        // ersätta previousUser med updatedUser med hjälp av indexet
-        users[index] = updatedUser;
-
-    // spara den uppdaterade användaren tillbaka till localStorage
-    localStorage.setItem("users", JSON.stringify(users));
-    }
-    
-    //slut på sofias kodblock
 
 
 

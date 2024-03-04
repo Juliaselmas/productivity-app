@@ -151,7 +151,9 @@ let showSortingBtnsNodes = document.querySelectorAll(".showSortingBtn");
 showFiltersBtnsNodes.forEach(function(button) {
     button.addEventListener('click', function() {
         //välja rutan
-        let parentColumn = this.parentNode;
+        let parentBox = this.parentNode;
+        let parentColumn = parentBox.parentNode;//tekniskt sett väljer detta grandparent till knappen, men ändå
+
         let closestFilterBox = parentColumn.querySelector('.filterBox');
 
         //toggla klassen .hide när man klickar
@@ -163,7 +165,8 @@ showFiltersBtnsNodes.forEach(function(button) {
 showSortingBtnsNodes.forEach(function(button) {
     button.addEventListener('click', function() {
         //välja rutan
-        let parentColumn = this.parentNode;
+        let parentBox = this.parentNode;
+        let parentColumn = parentBox.parentNode;
         let closestSortingBox = parentColumn.querySelector('.sortingBox');
 
         //toggla klassen .hide när man klickar
@@ -178,3 +181,61 @@ showSortingBtnsNodes.forEach(function(button) {
 
 
 
+//     // OBS nedan ej klart /S
+
+
+//     //lägga till tasks inuti currentUser
+//     let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
+//     currentUserObject.tasks = tasks;
+//     console.log(currentUserObject);
+//     currentUser = JSON.stringify(currentUserObject); //konverterar tillbaka till en sträng
+
+
+//     localStorage.setItem("currentUser" , currentUser); // uppdaterar currentUser till det nya som har skapats
+
+
+//     //hämta motsvarande user frånusers array och uppdatera den med nya tasks, stoppa sedan tillbaka den i users arrayn
+
+//     let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
+
+//     //tittar i arrayn med users och väljer den användaren som legat i arrayn
+//     let thisUserInTheArray = users.find(
+//         (user) => user.username === currentUser.username && user.password === currentUser.password
+//         );
+
+//         console.log(currentUserObject.tasks);        
+//     //byta ut tasks i användaren i users mot currentusers tasks
+//     thisUserInTheArray.tasks = currentUserObject.tasks;
+    
+//     console.log(thisUserInTheArray);
+    
+    
+//         // let previousUser = users.find(
+//     //     (user) => user.username === currentUser.username && user.password === currentUser.password
+//     //     );
+//     // let updatedUser = currentUser; //uppdaterar så att updatedUser matchar currentUser
+
+
+//     // let index = users.findIndex(
+//     // (user) => user.username === previousUser.username && user.password === previousUser.password
+//     // ); // skapa ett index för var i users arrayen som användaren vi jobbar med ligger
+
+//     // if (index !== -1) {
+//     //     // ersätta previousUser med updatedUser med hjälp av indexet
+//     //     users[index] = updatedUser;
+    
+//         // spara den uppdaterade användaren tillbaka till localStorage
+//     localStorage.setItem("users", JSON.stringify(users));
+//     }
+
+
+//     //hämta tasks[ ] och lägg in dem i currentUser
+
+//     //lägga in updated version av currentUser i users
+
+//     // uppdatera currentuser och users när man raderar en task från tasks[]
+
+//     //uppdatera currentUser och users när man redigerar en task från tasks []
+
+
+//     //slut på sofias kodblock

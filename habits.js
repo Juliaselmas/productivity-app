@@ -6,7 +6,7 @@ let addHabitBtn = document.getElementById("addHabitBtn");
 let habitStreakCounter = 0;
 
 /*Att göra:
-funktion till editknappen. Vart ska den ligga?
+funktion till editknappen. Appenda uppdateringar?
 påbygga completedknappen
 curentUser
 */
@@ -48,26 +48,64 @@ let createHabitListItem = (habitText, index) => {
 
     //funktion för att redigera habit
     editHabitBtn.addEventListener("click", () => {
-        li.innerHTML = `
-        <label for="">Change Habit:</label>
-        <input type="text" id="editHabitInput" placeholder="${habitText}">
-        <label for="">Change priority:</label>
-        <input type="radio" name="priority" id="highPriority" value="High">
-        <label for="priority">High</label>
-        <input type="radio" name="priority" id="mediumPriority" value="Medium">
-        <label for="priority">Medium</label>
-        <input type="radio" name="priority" id="lowPriority" value="Low">
-        <label for="priority">Low</label>
-        `;
-        let saveChangesBtn = document.createElement("button");
-        saveChangesBtn.innerText = "Save Changes";
-        li.append(saveChangesBtn);
+        let habitTextElement = li.querySelector('h3');
+        let selectedPriorityElement = li.querySelector('p');
 
-        //funktion för att spara ny ändringar. Hur når jag denna?
-        //Räcker det att jag anropar funktionen här eller måste hela funktionen ligga här inne?
-        //saveChangesBtn.addEventListener("click", () => {
+    let editedHabitInput = document.createElement("input");
+    editedHabitInput.type = "text";
+    editedHabitInput.value = habitTextElement.innerText;
+    li.insertBefore(editedHabitInput, habitTextElement);
+    habitTextElement.remove();
 
-        //};
+    //skapar radio-btns för att redigera prioritet
+    let highPriorityRadio = document.createElement("input");
+    highPriorityRadio.type = "radio";
+    highPriorityRadio.name = "editPriority";
+    highPriorityRadio.value = "High";
+    let highPriorityLabel = document.createElement("label");
+    highPriorityLabel.for = "editHighPriority";
+    highPriorityLabel.innerText = "High";
+    highPriorityLabel.appendChild(highPriorityRadio);
+    let mediumPriorityRadio = document.createElement("input");
+    mediumPriorityRadio.type = "radio";
+    mediumPriorityRadio.name = "editPriority";
+    mediumPriorityRadio.value = "Medium";
+    let mediumPriorityLabel = document.createElement("label");
+    mediumPriorityLabel.for = "editMediumPriority";
+    mediumPriorityLabel.innerText = "Medium";
+    mediumPriorityLabel.appendChild(mediumPriorityRadio);
+    let lowPriorityRadio = document.createElement("input");
+    lowPriorityRadio.type = "radio";
+    lowPriorityRadio.name = "editPriority";
+    lowPriorityRadio.value = "Low";
+    let lowPriorityLabel = document.createElement("label");
+    lowPriorityLabel.for = "editLowPriority";
+    lowPriorityLabel.innerText = "Low";
+    lowPriorityLabel.appendChild(lowPriorityRadio);
+    let priorityContainer = document.createElement("div");
+    priorityContainer.appendChild(highPriorityLabel);
+    priorityContainer.appendChild(mediumPriorityLabel);
+    priorityContainer.appendChild(lowPriorityLabel);
+    li.insertBefore(priorityContainer, selectedPriorityElement);
+    selectedPriorityElement.remove();
+
+    let saveChangesBtn = document.createElement("button");
+    saveChangesBtn.innerText = "Save Changes";
+    li.append(saveChangesBtn);
+
+    saveChangesBtn.addEventListener("click", () => {
+        let editedHabitText = editedHabitInput.value;
+        let editedPriorityBtn = document.querySelector('input[name="editPriority"]:checked').value;
+
+        //uppdaterar titel och prioritet
+        habitTextElement.innerText = editedHabitText;
+        selectedPriorityElement.innerText = editedPriorityBtn + " Priority";
+
+        //tar bort inputfältet för habit och saveChangesBtn
+        editedHabitInput.remove();
+        priorityContainer.remove();
+        saveChangesBtn.remove();
+    });
 
     });
 

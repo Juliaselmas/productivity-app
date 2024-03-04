@@ -83,9 +83,9 @@ let login = async () => {
 
 
     //Hämta rätt användares todos och rutiner och skriv ut dem 
-    if (user.tasks) { // varför reageras på detta? om det inte finns några tasks så bör den väl snarare bara gå till else satsen???
+    if (currentUser.tasks) { // varför reageras på detta? om det inte finns några tasks så bör den väl snarare bara gå till else satsen???
         let taskLi = document.createElement("li");
-        taskLi.innerHTML = '<p> ${user.tasks} </p>';
+        taskLi.innerHTML = '<p> ${currentUser.tasks} </p>';
         taskListUl.append(taskLi);
     } else {
         let paragraph = document.createElement("p");

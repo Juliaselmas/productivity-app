@@ -135,9 +135,6 @@ logOutBtn.addEventListener("click", () => {
     // nollställ nuvarande användare i Localstorage
     localStorage.setItem("currentUser", "none");
 
-    //nollställer tasks[]
-    localStorage.setItem("tasks", "none");
-
     //
 });
 
@@ -183,7 +180,6 @@ showSortingBtnsNodes.forEach(function(button) {
 
 
 
-// //BACKUP
 
 //     // OBS nedan ej klart /S
 

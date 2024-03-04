@@ -8,35 +8,23 @@ let taskCategory = document.getElementById('taskCategory');
 let taskList = document.getElementById('taskList');
 let tasks = [];
 
-// selecta nuvarande användaren -- detta behövs till användardatan
-let currentUser = localStorage.getItem("currentUser");
-
-
-
 // Deklaration av funktioner
 let saveTasksToLocalStorage = () => {
-    // Filtrera bort raderade uppgifter innan du sparar till localStorage
-    let tasksToSave = tasks.filter(task => !task.deleted);
-    localStorage.setItem('tasks', JSON.stringify(tasksToSave));
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 function createTaskElement(task, index) {
-    if (task.deleted) {
-        // Ignorera raderade uppgifter
-        return null;
-    }
     // Skapa ett nytt listelement
     let li = document.createElement('li');
 
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
         <h3>${task.title}</h3>
-        
         <p>${task.description}</p>
         <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
         <p>Deadline: ${task.deadline}</p>
-        <p>Estimated time: ${task.estimate} hours</p>
-        <p>category: ${task.category}</p>
+        <p>Estemated time: ${task.estimate} hours</p>
+        <p>catagory: ${task.category}</p>
         <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
         <button class="edit">Edit</button>
         <button class="delete">Delete</button>
@@ -51,43 +39,50 @@ function createTaskElement(task, index) {
     });
 
     // Lägg till en eventListener till "Radera" knappen
-    // I delete-eventet för uppgifter, använd data-attribut för att hämta indexet för uppgiften
+    // I delete-eventet för uppgifter, använd index för att ta bort uppgiften från arrayen tasks och från DOM:en
     li.querySelector('.delete').addEventListener('click', function () {
-        let taskIndex = parseInt(li.getAttribute('data-index'));
-        tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen baserat på index
+        let taskIndex = Array.from(taskList.children).indexOf(li); // Hitta indexet för det aktuella listelementet
+        tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen
         saveTasksToLocalStorage();
         taskList.removeChild(li); // Ta bort listelementet från DOM:en
-        updateTaskIndices(); // Uppdatera data-index attributen för alla uppgifter efter borttagning
     });
+
 
     // Lägg till en eventListener till "Redigera" knappen
     li.querySelector('.edit').addEventListener('click', function () {
         openTaskEdit(task, index);
     });
 
-    // Sätt data-index attributet för att lagra indexet för uppgiften
-    li.setAttribute('data-index', index);
-
     // Returnera listelementet
     return li;
 }
 
-// Funktion för att uppdatera data-index attributen för alla uppgifter i listan
-function updateTaskIndices() {
-    Array.from(taskList.children).forEach((taskElement, index) => {
-        taskElement.setAttribute('data-index', index);
-    });
-}
-
 // Funktion för att lägga till en ny uppgift
 function addTask() {
-    /* kontrollerar att man som användare har fyllt i alla uppgifter. */
+    /* kontrollerar att man som användare har fyllt i alla uppgifter. Just nu är det en "alert", men jag tycker att vi ska se om det finns en mer användarvänlig metod att meddela användaren om att hen inte fyllt i korrekt .
+    Jag är medveten om att man kan skriva en bättre if sats, men har ej gjort det än */
 
-    if (!taskTitle.value || !taskDescription.value || !taskDeadline.value || !taskEstimate.value || !taskCategory.value) {
-        let errorMessage = 'Fill in all the information to add a task';
+    if (!taskTitle.value) {
+        alert('Please enter a task title');
+        return;
+    }
+    if (!taskDescription.value) {
+        alert('Please enter a task description');
+        return;
+    }
+    if (!taskDeadline.value) {
+        alert('Please provide a deadline for the task');
+        return;
+    }
+    if (!taskEstimate.value) {
+        alert('Please provide an estimated time for the task');
+        return;
+    }
+    if (!taskCategory.value) {
+        alert('Please enter a category for the task');
+        return;
+    }
 
-    alert(errorMessage);
-    return;}
 
     // Skapa ett nytt uppgifts-objekt med värdena från inmatningsfälten
     let task = {
@@ -96,17 +91,13 @@ function addTask() {
         status: taskStatus.checked,
         deadline: taskDeadline.value,
         estimate: taskEstimate.value,
-        category: taskCategory.value,
-        deleted: false // indikera om uppgiften är raderad
+        category: taskCategory.value
     };
 
-    if (!task.deleted) {
-        tasks.push(task);
-        const taskElement = createTaskElement(task, tasks.length - 1); // Använd tasks.length - 1 som index
-        taskList.appendChild(taskElement);
-        taskElement.setAttribute('data-index', tasks.length - 1); // Sätt data-index attributet för att lagra indexet
-    }
-
+    // Lägg till den nya uppgiften i uppgiftslistan
+    tasks.push(task);
+    const taskElement = createTaskElement(task, tasks.length - 1); // Använd tasks.length - 1 som index
+    taskList.appendChild(taskElement);
     // Rensa inmatningsfälten
     taskTitle.value = '';
     taskDescription.value = '';
@@ -114,53 +105,6 @@ function addTask() {
     taskDeadline.value = '';
     taskEstimate.value = '';
     taskCategory.value = '';
-    
-
-
-
-
-
-
-    //SOFIAS KOD - användardata
-
-    //lägga till tasks inuti currentUser
-    let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
-    currentUserObject.tasks = tasks; //lägger in tasks som ett key-value par i objektet currentuser
-    console.log(currentUserObject);
-    currentUser = JSON.stringify(currentUserObject); //konverterar tillbaka till en sträng
-
-
-    localStorage.setItem("currentUser" , currentUser); // uppdaterar currentUser till det nya som har skapats
-
-    //hämta motsvarande user frånusers array och uppdatera den med nya tasks, stoppa sedan tillbaka den i users arrayn
-    let users = JSON.parse(localStorage.getItem ("users")) || []; 
-    //let users = JSON.stringify(localStorage.getItem ("users")) || []; 
-    // hämta tidigare data alternativt skapa en tom array
-
-    console.log(users);
-    
-
-    //tittar i arrayn med users och väljer den användaren som legat i arrayn
-    let thisUserInTheArray = users.find(
-        (user) => user.username === currentUser.username);
-
-        console.log(thisUserInTheArray); //WHY ARE YOU UNDEFINED!!!!!!!!!!
-        console.log(currentUserObject);
-    //byta ut tasks i användaren i users mot currentusers tasks        
-
-    thisUserInTheArray.tasks =  currentUserObject.tasks;
-
-
-    //Slut på sofias kodblock
-
-
-
-
-
-
-
-    
-    
 
     // Spara uppgifterna till localStorage
     saveTasksToLocalStorage();
@@ -176,9 +120,7 @@ function loadTasksFromLocalStorage() {
             tasks = loadedTasks;
             tasks.forEach((task, index) => {
                 const taskElement = createTaskElement(task, index);
-                if (taskElement) {
-                    taskList.appendChild(taskElement);
-                }
+                taskList.appendChild(taskElement);
             });
         }
     } catch (error) {
@@ -186,15 +128,13 @@ function loadTasksFromLocalStorage() {
         // Man kan också visa ett felmeddelande till användaren här.
     }
 }
+
 // Funktion för att ladda uppgifter från localStorage vid sidans laddning
 loadTasksFromLocalStorage();
-
 // Funktion för att filtrera uppgifter baserat på deras status
 function filterTasksByStatus(status) {
     return tasks.filter(task => task.status === status);
 }
-
-
 
 
 // Funktion för att visa uppgifter baserat på deras status
@@ -213,8 +153,6 @@ function displayTasksByStatus(status) {
 }
 
 //Funktion för att visa samtliga tasks utan sortering. 
-
-
 function showAllTasks() {
     // Rensa taskList
     taskList.innerHTML = '';
@@ -223,9 +161,7 @@ function showAllTasks() {
     tasks.forEach((task, index) => {
         // Skapa ett nytt uppgiftselement och lägg till det i taskList
         const taskElement = createTaskElement(task, index);
-        if (taskElement) {
-            taskList.appendChild(taskElement);
-        }
+        taskList.appendChild(taskElement);
     });
 }
 
@@ -318,9 +254,10 @@ function openTaskEdit(task, index) {
 }
 
 // Lägg till en eventlistener för knappen "Apply Filters"
-document.getElementById('applyFiltersButton').addEventListener('click', function() {
+document.getElementById('applyFiltersButton').addEventListener('click', function () {
     filterTasksByCategory();
 });
+
 
 // Funktion för att filtrera uppgifter baserat på kategorierna som är markerade
 function filterTasksByCategory() {
@@ -340,9 +277,6 @@ function filterTasksByCategory() {
         taskList.appendChild(taskElement);
     });
 }
-
-
-// Ladda uppgifter från localStorage när sidan laddas
 
 // 4 Funktioner som ser likadana ut. De sorterar bara på olika variabler 
 
@@ -370,10 +304,6 @@ function sortByEstimateDescending() {
     tasks.sort((a, b) => b.estimate - a.estimate);
     showAllTasks();
 }
-
-
-
-
 
 // Ladda uppgifter från localStorage när sidan laddas
 loadTasksFromLocalStorage();

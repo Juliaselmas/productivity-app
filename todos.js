@@ -31,7 +31,7 @@ function createTaskElement(task, index) {
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
         <h3>${task.title}</h3>
-        
+
         <p>${task.description}</p>
         <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
         <p>Deadline: ${task.deadline}</p>
@@ -139,12 +139,14 @@ function addTask() {
 
     console.log(users);
     
-
     //tittar i arrayn med users och väljer den användaren som legat i arrayn
     let thisUserInTheArray = users.find(
-        (user) => user.username === currentUser.username);
+        (user) => {
+            console.log("checking user", user.username, currentUserObject.username)
+            return user.username === currentUserObject.username}
+        );
 
-        console.log(thisUserInTheArray); //WHY ARE YOU UNDEFINED!!!!!!!!!!
+        console.log(thisUserInTheArray); 
         console.log(currentUserObject);
     //byta ut tasks i användaren i users mot currentusers tasks        
 

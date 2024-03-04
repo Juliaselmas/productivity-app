@@ -146,11 +146,23 @@ function addTask() {
             return user.username === currentUserObject.username}
         );
 
-        console.log(thisUserInTheArray); 
-        console.log(currentUserObject);
-    //byta ut tasks i användaren i users mot currentusers tasks        
+        console.log(thisUserInTheArray);  //såhär ser användaren ut i users innan vi upppdaterat den
+        console.log(currentUserObject); //såhär vill vi att den ska se ut
 
-    thisUserInTheArray.tasks =  currentUserObject.tasks;
+
+   
+    
+    // hitta index för objektet i arrayen
+    let indexOfUser = users.indexOf(thisUserInTheArray);
+    thisUserInTheArray.tasks =  currentUserObject.tasks;  //byta ut tasks i användaren i users mot currentusers tasks 
+    console.log("uppdaterade användaren: " + thisUserInTheArray); //nu är den uppdaterad
+
+    //lägga in den uppdaterade versionen av användaren i users
+    users[indexOfUser] = thisUserInTheArray;
+    
+    //lägga in nya versionen av users i LocalStorage
+    localStorage.setItem('users', JSON.stringify(users));
+    
 
 
     //Slut på sofias kodblock

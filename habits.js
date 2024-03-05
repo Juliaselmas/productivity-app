@@ -14,6 +14,7 @@ curentUser
 
 let createHabitListItem = (habitText, index) => {
     let priorityBtn = document.querySelector("input[name='priority']:checked").value;
+    //.value
 
     let li = document.createElement("li");
     li.innerHTML = ` <h3>${habitText}</h3> `;
@@ -50,12 +51,13 @@ let createHabitListItem = (habitText, index) => {
     editHabitBtn.addEventListener("click", () => {
         let habitTextElement = li.querySelector('h3');
         let selectedPriorityElement = li.querySelector('p');
+        //console.log(habitTextElement);
 
     let editedHabitInput = document.createElement("input");
     editedHabitInput.type = "text";
     editedHabitInput.value = habitTextElement.innerText;
     li.insertBefore(editedHabitInput, habitTextElement);
-    habitTextElement.remove();
+    //habitTextElement.remove();
 
     //skapar radio-btns för att redigera prioritet
     let highPriorityRadio = document.createElement("input");
@@ -86,8 +88,8 @@ let createHabitListItem = (habitText, index) => {
     priorityContainer.appendChild(highPriorityLabel);
     priorityContainer.appendChild(mediumPriorityLabel);
     priorityContainer.appendChild(lowPriorityLabel);
-    li.insertBefore(priorityContainer, selectedPriorityElement);
-    selectedPriorityElement.remove();
+    li.insertBefore(priorityContainer, editedHabitInput.nextSibling);
+    //selectedPriorityElement.remove();
 
     let saveChangesBtn = document.createElement("button");
     saveChangesBtn.innerText = "Save Changes";
@@ -97,14 +99,18 @@ let createHabitListItem = (habitText, index) => {
         let editedHabitText = editedHabitInput.value;
         let editedPriorityBtn = document.querySelector('input[name="editPriority"]:checked').value;
 
-        //uppdaterar titel och prioritet
-        habitTextElement.innerText = editedHabitText;
-        selectedPriorityElement.innerText = editedPriorityBtn + " Priority";
+    // Uppdatera titel och prioritet
+    habitTextElement.innerText = editedHabitText;
+    selectedPriorityElement.innerText = editedPriorityBtn + " Priority";
 
-        //tar bort inputfältet för habit och saveChangesBtn
-        editedHabitInput.remove();
-        priorityContainer.remove();
-        saveChangesBtn.remove();
+    // Uppdatera habitText och priorityBtn med de nya värdena
+    //habitText = editedHabitText;
+    //priorityBtn = editedPriorityBtn;
+
+    // Ta bort inputfältet för habit och saveChangesBtn
+    editedHabitInput.remove();
+    priorityContainer.remove();
+    saveChangesBtn.remove();
     });
 
     });
@@ -130,8 +136,13 @@ let createHabitListItem = (habitText, index) => {
     return li;
 };
 
+let saveToLocalStorage = () => {
+    // Filtrera bort raderade uppgifter innan du sparar till localStorage
+    let habitsToSave = habits.filter(habit => !habit.deleted);
+    localStorage.setItem('habits', JSON.stringify(habitsToSave));
+};
 
-
+/*
 let onRender = () => {
     //kollar om det finns data i localStorage
     if (localStorage.getItem("habits")) {
@@ -146,6 +157,7 @@ let onRender = () => {
         });
     };
 };
+*/
 
 
 addHabitBtn.addEventListener("click", () => {
@@ -176,4 +188,4 @@ addHabitBtn.addEventListener("click", () => {
 
 });
 
-onRender();
+//onRender();

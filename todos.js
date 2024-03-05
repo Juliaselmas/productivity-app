@@ -155,6 +155,8 @@ function addTask() {
     
     // hitta index för objektet i arrayen
     let indexOfUser = users.indexOf(thisUserInTheArray);
+    console.log(indexOfUser);
+    console.log(thisUserInTheArray.tasks + currentUserObject.tasks);
     thisUserInTheArray.tasks =  currentUserObject.tasks;  //byta ut tasks i användaren i users mot currentusers tasks 
     console.log("uppdaterade användaren: " + thisUserInTheArray); //nu är den uppdaterad
 

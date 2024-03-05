@@ -8,8 +8,8 @@ let taskCategory = document.getElementById('taskCategory');
 let taskList = document.getElementById('taskList');
 let tasks = [];
 
-// selecta nuvarande användaren -- detta behövs till användardatan
-let currentUser = localStorage.getItem("currentUser");
+
+
 
 
 
@@ -123,6 +123,9 @@ function addTask() {
 
     //SOFIAS KOD - användardata
 
+    // selecta nuvarande användaren 
+    let currentUser = localStorage.getItem("currentUser");
+
     //lägga till tasks inuti currentUser
     let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
     currentUserObject.tasks = tasks; //lägger in tasks som ett key-value par i objektet currentuser
@@ -146,11 +149,9 @@ function addTask() {
             return user.username === currentUserObject.username}
         );
 
-        console.log(thisUserInTheArray);  //såhär ser användaren ut i users innan vi upppdaterat den
-        console.log(currentUserObject); //såhär vill vi att den ska se ut
+    console.log(thisUserInTheArray);  //såhär ser användaren ut i users innan vi upppdaterat den
+    console.log(currentUserObject); //såhär vill vi att den ska se ut
 
-
-   
     
     // hitta index för objektet i arrayen
     let indexOfUser = users.indexOf(thisUserInTheArray);

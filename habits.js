@@ -52,13 +52,15 @@ let createHabitListItem = (title, index) => {
     editHabitBtn.addEventListener("click", () => {
         let habitTextElement = li.querySelector('h3');
         let selectedPriorityElement = li.querySelector('p');
+        let streakNumberElement = li.querySelector('p:nth-of-type(2)');
         //console.log(habitTextElement);
 
-    let editedHabitInput = document.createElement("input");
-    editedHabitInput.type = "text";
-    editedHabitInput.value = habitTextElement.innerText;
-    li.insertBefore(editedHabitInput, habitTextElement);
-    //habitTextElement.remove();
+        let editedHabitInput = document.createElement("input");
+        editedHabitInput.type = "text";
+        editedHabitInput.value = habitTextElement.innerText;
+        li.insertBefore(editedHabitInput, habitTextElement);
+        //habitTextElement.remove();
+
 
     //skapar radio-btns för att redigera prioritet
     let highPriorityRadio = document.createElement("input");
@@ -92,6 +94,15 @@ let createHabitListItem = (title, index) => {
     li.insertBefore(priorityContainer, editedHabitInput.nextSibling);
     //selectedPriorityElement.remove();
 
+    //skapar input för att kunna ändra habit streak
+    let editedStreakLabel = document.createElement("label");
+    editedStreakLabel.innerText = "Change Streak:";
+    li.insertBefore(editedStreakLabel, priorityContainer.nextSibling);
+    let editedStreakInput = document.createElement("input");
+    editedStreakInput.type = "number";
+    editedStreakInput.value = habitStreakCounter;
+    li.insertBefore(editedStreakInput, editedStreakLabel.nextSibling);
+
     let saveChangesBtn = document.createElement("button");
     saveChangesBtn.innerText = "Save Changes";
     li.append(saveChangesBtn);
@@ -99,25 +110,32 @@ let createHabitListItem = (title, index) => {
     saveChangesBtn.addEventListener("click", () => {
         let editedHabitText = editedHabitInput.value;
         let editedPriorityBtn = document.querySelector('input[name="editPriority"]:checked').value;
+        let editedStreakCounter = parseInt(editedStreakInput.value);
 
         // Hitta habiten baserat på habitText
-    let habitIndex = habits.findIndex(habit => habit.Habit === title);
-    if (habitIndex !== -1) {
+        let habitIndex = habits.findIndex(habit => habit.Habit === title);
+        if (habitIndex !== -1) {
+
         // Uppdatera habiten med nya värden
         habits[habitIndex].Habit= editedHabitText;
         habits[habitIndex].Priority = editedPriorityBtn;
+        habitStreakCounter = editedStreakCounter;
 
         // Uppdatera DOM med de nya värdena
         habitTextElement.innerText = editedHabitText;
         selectedPriorityElement.innerText = editedPriorityBtn + " Priority";
+        streakNumberElement.innerText = "Streak: " + editedStreakCounter;
 
         // Ta bort inputfältet för habit och saveChangesBtn
         editedHabitInput.remove();
         priorityContainer.remove();
         saveChangesBtn.remove();
+        editedStreakInput.remove();
+        editedStreakLabel.remove();
 
         // Spara den uppdaterade habiten till local storage
         saveToLocalStorage();
+
     } else {
         console.error("Habit not found in habits array.");
     }

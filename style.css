@@ -112,13 +112,18 @@ main #userContentContainer #taskDescription {
 main #userContentContainer #leftColumn {
   box-sizing: border-box;
   width: 27%;
-  padding-top: none;
+  padding-top: 0;
+}
+main #userContentContainer #todo-container,
+main #userContentContainer #habitsContainer {
+  box-sizing: border-box;
 }
 main #userContentContainer .mainColumn {
+  align-items: center;
   display: flex;
   flex-direction: column;
+  box-sizing: content-box;
   padding: 2%;
-  width: 27%;
 }
 main #userContentContainer .mainColumn section {
   background-color: white;

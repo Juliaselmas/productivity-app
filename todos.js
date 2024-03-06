@@ -174,9 +174,6 @@ function addTask() {
 
 
 
-
-
-    
     
 
     // Spara uppgifterna till localStorage
@@ -199,12 +196,14 @@ function loadTasksFromLocalStorage() {
             });
         }
     } catch (error) {
+        // Logga felet eller visa ett felmeddelande till användaren om något går fel vid parsning av JSON-data
         console.error('Failed to parse tasks from localStorage:', error);
-        // Man kan också visa ett felmeddelande till användaren här.
+        // Visar ett felmeddelande  till användaren ''
+        alert('Failed to load tasks from localStorage. Please try again later.');
     }
 }
-// Funktion för att ladda uppgifter från localStorage vid sidans laddning
-loadTasksFromLocalStorage();
+////bör ej vata kvar 
+// loadTasksFromLocalStorage();
 
 // Funktion för att filtrera uppgifter baserat på deras status
 function filterTasksByStatus(status) {

@@ -12,12 +12,11 @@ curentUser
 */
 
 
-let createHabitListItem = (habitText, index) => {
+let createHabitListItem = (title, index) => {
     let priorityBtn = document.querySelector("input[name='priority']:checked").value;
-    //.value
 
     let li = document.createElement("li");
-    li.innerHTML = ` <h3>${habitText}</h3> `;
+    li.innerHTML = ` <h3>${title}</h3> `;
 
     let selectedPriority = document.createElement("p");
     selectedPriority.innerText = priorityBtn + " Priority";
@@ -37,6 +36,8 @@ let createHabitListItem = (habitText, index) => {
     completedHabitBtn.addEventListener("click", () => {
         habitStreakCounter++;
         streakNumber.innerText = "Streak: " + habitStreakCounter;
+
+        saveToLocalStorage();
 
         //lägga till att knappen ändrar text eller hela habit ändrar utseende?
     });
@@ -99,18 +100,28 @@ let createHabitListItem = (habitText, index) => {
         let editedHabitText = editedHabitInput.value;
         let editedPriorityBtn = document.querySelector('input[name="editPriority"]:checked').value;
 
-    // Uppdatera titel och prioritet
-    habitTextElement.innerText = editedHabitText;
-    selectedPriorityElement.innerText = editedPriorityBtn + " Priority";
+        // Hitta habiten baserat på habitText
+    let habitIndex = habits.findIndex(habit => habit.Habit === title);
+    if (habitIndex !== -1) {
+        // Uppdatera habiten med nya värden
+        habits[habitIndex].Habit= editedHabitText;
+        habits[habitIndex].Priority = editedPriorityBtn;
 
-    // Uppdatera habitText och priorityBtn med de nya värdena
-    //habitText = editedHabitText;
-    //priorityBtn = editedPriorityBtn;
+        // Uppdatera DOM med de nya värdena
+        habitTextElement.innerText = editedHabitText;
+        selectedPriorityElement.innerText = editedPriorityBtn + " Priority";
 
-    // Ta bort inputfältet för habit och saveChangesBtn
-    editedHabitInput.remove();
-    priorityContainer.remove();
-    saveChangesBtn.remove();
+        // Ta bort inputfältet för habit och saveChangesBtn
+        editedHabitInput.remove();
+        priorityContainer.remove();
+        saveChangesBtn.remove();
+
+        // Spara den uppdaterade habiten till local storage
+        saveToLocalStorage();
+    } else {
+        console.error("Habit not found in habits array.");
+    }
+
     });
 
     });
@@ -126,19 +137,45 @@ let createHabitListItem = (habitText, index) => {
         li.remove();
 
         //tar bort habit med rätt index från arrayen
-        let habitIndex = habits.indexOf(habitText);
+        /*let habitIndex = habits.indexOf(habitText);
         habits.splice(habitIndex, 1);
         localStorage.setItem("habits", JSON.stringify(habits));
+        */
+        let habitIndex = habits.findIndex(habit => habit.Title === title);
+        if (habitIndex !== -1) {
+            habits.splice(habitIndex, 1);
+            saveToLocalStorage();
+        }
     });
 
     habitList.append(li);
 
+    saveToLocalStorage();
+
     return li;
+
+    
 };
 
 let saveToLocalStorage = () => {
+    //localStorage.setItem('habits', JSON.stringify(habits));
+    let existingHabits = JSON.parse(localStorage.getItem('habits')) || [];
+
+    let latestHabit = {
+        title: habitInput.value, 
+        priority: document.querySelector("input[name='priority']:checked").value,
+        streak: habitStreakCounter,
+        deleted: false
+    };
+
+    //Kan man lägga in ett nytt objekt för de uppdaterade habits här?
+    //Hur får jag habitStreakCounter att uppdateras även i localStorage?
+
+    existingHabits.push(latestHabit);
+
     // Filtrera bort raderade uppgifter innan du sparar till localStorage
-    let habitsToSave = habits.filter(habit => !habit.deleted);
+    let habitsToSave = existingHabits.filter(habit => !habit.deleted);
+
     localStorage.setItem('habits', JSON.stringify(habitsToSave));
 };
 
@@ -159,33 +196,61 @@ let onRender = () => {
 };
 */
 
-
 addHabitBtn.addEventListener("click", () => {
     
     //säkerställer att prio är vald
     let priorityBtn = document.querySelectorAll('input[name="priority"]');
     let prioritySelected = false;
-    priorityBtn.forEach(radio => {
-        if (radio.checked) {
-            prioritySelected = true;
-        }
-    });
-
-    if (!prioritySelected) {
+    if (!priorityBtn) {
         alert("Please select a priority for your new habit.");
         return;
+    }
+
+    let newHabitText = habitInput.value;
+    if (newHabitText.trim() === "") {
+        alert("Please enter a habit.");
+        return;
+    }
+
+    let newHabit = {
+        Habit: newHabitText,
+        Priority: priorityBtn.value,
+        streak: 0
     };
 
-    let newHabit = habitInput.value;
-    let li = createHabitListItem(newHabit, 0);
-    habitList.append(li);
-
-    //sparar värden i localStorage
     habits.push(newHabit);
-    
-    localStorage.setItem("habits", JSON.stringify(habits));
-    habitInput.value = "";
+    createHabitListItem(newHabitText, 0);
+    //saveToLocalStorage();
 
+    habitInput.value = "";
 });
 
-//onRender();
+// Funktion för att initialisera habitStreakCounter från localStorage när sidan laddas
+let initStreakCounterFromLocalStorage = () => {
+    let storedStreakCounter = localStorage.getItem("habitStreakCounter");
+    if (storedStreakCounter) {
+        habitStreakCounter = parseInt(storedStreakCounter);
+    }
+};
+
+// Kör funktionen när sidan laddas
+initStreakCounterFromLocalStorage();
+
+
+/*
+// Funktion för att initialisera habits från localStorage när sidan laddas
+let initHabitsFromLocalStorage = () => {
+    let storedHabits = localStorage.getItem("habits");
+    if (storedHabits) {
+        habits = JSON.parse(storedHabits);
+        habits.forEach(habit => {
+            createHabitListItem(habit.habitText, habit.streak);
+        });
+    }
+};
+
+// Ladda habits från localStorage när sidan laddas
+initHabitsFromLocalStorage();
+//onRender()
+*/
+

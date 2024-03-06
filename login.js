@@ -2,17 +2,16 @@ let usernameInput = document.querySelector("#usernameInput");
 let passwordInput = document.querySelector("#passwordInput");
 
 let logInBtn = document.querySelector('#logInBtn');
-
 let registerBtn = document.querySelector('#registerBtn');
 
 let main = document.querySelector("main");
-
 let userContentContainer = document.querySelector("#userContentContainer");
 
-
-
-
 let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
+
+
+
+
 
 let register = async () => {
     //hämta inputs
@@ -44,6 +43,8 @@ let register = async () => {
     
         // sätt nuvarande användare i Localstorage
         localStorage.setItem("currentUser", JSON.stringify(user))
+
+        //lägga in inloggning här? så att man får öppna allt och blir inloggad?
 
     }; // här slutar else satsen
     
@@ -79,13 +80,28 @@ let login = async () => {
         console.log("Lol u failed"); 
     } 
      
+    
+    // sätt nuvarande användare i Localstorage
+    localStorage.setItem("currentUser", JSON.stringify(user));
 
+
+    //HÄR BÖRJAR PROBLEMEN
+    //hitta användaren i arrayen och skriva ut rätt data
+    let thisUserInTheArray = users.find(
+        (user) => {
+            return user.username === user.username}
+        );
+    console.log(thisUserInTheArray); // denna körs inte ens???
 
 
     //Hämta rätt användares todos och rutiner och skriv ut dem 
-    if (currentUser.tasks) { // varför reageras på detta? om det inte finns några tasks så bör den väl snarare bara gå till else satsen???
+
+    //Börja med att ta bort tidigare användares tasks
+    taskListUl.innerHTML = " "; // varför funkar inte det här???
+
+    if (thisUserInTheArray.tasks) { // verkar ej fungera nu längre?
         let taskLi = document.createElement("li");
-        taskLi.innerHTML = '<p> ${currentUser.tasks} </p>';
+        taskLi.innerHTML = `<p> ${thisUserInTheArray.tasks} </p> `;
         taskListUl.append(taskLi);
     } else {
         let paragraph = document.createElement("p");
@@ -113,8 +129,6 @@ let login = async () => {
 
 
 
-    // sätt nuvarande användare i Localstorage
-    localStorage.setItem("currentUser", JSON.stringify(user))
    
     //lämna hälsningsmeddelande
     let h1 = document.querySelector("#h1");

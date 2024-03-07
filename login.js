@@ -2,17 +2,16 @@ let usernameInput = document.querySelector("#usernameInput");
 let passwordInput = document.querySelector("#passwordInput");
 
 let logInBtn = document.querySelector('#logInBtn');
-
 let registerBtn = document.querySelector('#registerBtn');
 
 let main = document.querySelector("main");
-
 let userContentContainer = document.querySelector("#userContentContainer");
 
-
-
-
 let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
+
+
+
+
 
 let register = async () => {
     //hämta inputs
@@ -45,6 +44,8 @@ let register = async () => {
         // sätt nuvarande användare i Localstorage
         localStorage.setItem("currentUser", JSON.stringify(user))
 
+        //lägga in inloggning här? så att man får öppna allt och blir inloggad?
+
     }; // här slutar else satsen
     
 };
@@ -69,6 +70,8 @@ let login = async () => {
     let user = users.find(
         (user) => user.username === username && user.password === password
         );
+
+        console.log(user);
         
     // Bekräftelsemeddelande på success
         
@@ -79,20 +82,50 @@ let login = async () => {
         console.log("Lol u failed"); 
     } 
      
-
-
-
-    //Hämta rätt användares todos och rutiner och skriv ut dem 
-    if (currentUser.tasks) { // varför reageras på detta? om det inte finns några tasks så bör den väl snarare bara gå till else satsen???
-        let taskLi = document.createElement("li");
-        taskLi.innerHTML = '<p> ${currentUser.tasks} </p>';
-        taskListUl.append(taskLi);
-    } else {
-        let paragraph = document.createElement("p");
-        paragraph.innerText = "Create your first task!";
-        taskListUl.append(paragraph);
-    }
     
+    // sätt nuvarande användare i Localstorage
+    localStorage.setItem("currentUser", JSON.stringify(user));
+
+
+    //HÄR BÖRJAR PROBLEMEN
+    //hitta användaren i arrayen och skriva ut rätt data
+    // let thisUserInTheArray = users.find(
+    //     (user) => {
+    //         return user.username === user.username}
+    //     );
+    //     console.log(thisUserInTheArray); // denna körs inte ens???
+        
+        
+        //Hämta rätt användares todos och rutiner och skriv ut dem 
+        
+        //Börja med att ta bort tidigare användares tasks
+        taskListUl.innerHTML = " "; // varför funkar inte det här???
+        console.log(user.tasks);
+        if (user.tasks) { // verkar ej fungera nu längre?
+            
+            user.tasks.forEach(task => {
+                let taskLi = document.createElement("li");
+                taskLi.innerHTML = `
+                <h3>${task.title}</h3>
+        
+                <p>${task.description}</p>
+                <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
+                <p>Deadline: ${task.deadline}</p>
+                <p>Estimated time: ${task.estimate} hours</p>
+                <p>category: ${task.category}</p>
+                <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
+                <button class="edit">Edit</button>
+                <button class="delete">Delete</button>
+            `;  
+            taskListUl.append(taskLi);
+            });
+            
+        } else {
+            let paragraph = document.createElement("p");
+            paragraph.innerText = "Create your first task!";
+            taskListUl.append(paragraph);
+        }
+        console.log(user.tasks);
 
 
 
@@ -113,8 +146,6 @@ let login = async () => {
 
 
 
-    // sätt nuvarande användare i Localstorage
-    localStorage.setItem("currentUser", JSON.stringify(user))
    
     //lämna hälsningsmeddelande
     let h1 = document.querySelector("#h1");

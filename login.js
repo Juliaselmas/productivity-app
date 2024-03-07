@@ -2,17 +2,16 @@ let usernameInput = document.querySelector("#usernameInput");
 let passwordInput = document.querySelector("#passwordInput");
 
 let logInBtn = document.querySelector('#logInBtn');
-
 let registerBtn = document.querySelector('#registerBtn');
 
 let main = document.querySelector("main");
-
 let userContentContainer = document.querySelector("#userContentContainer");
 
-
-
-
 let users = JSON.parse(localStorage.getItem ("users")) || []; // hämta tidigare data alternativt skapa en tom array
+
+
+
+
 
 let register = async () => {
     //hämta inputs
@@ -45,6 +44,8 @@ let register = async () => {
         // sätt nuvarande användare i Localstorage
         localStorage.setItem("currentUser", JSON.stringify(user))
 
+        //lägga in inloggning här? så att man får öppna allt och blir inloggad?
+
     }; // här slutar else satsen
     
 };
@@ -69,6 +70,8 @@ let login = async () => {
     let user = users.find(
         (user) => user.username === username && user.password === password
         );
+
+        console.log(user);
         
     // Bekräftelsemeddelande på success
         
@@ -76,23 +79,46 @@ let login = async () => {
         //successful login
         console.log("Welcome " + user.username + "!");
     } else {
-        console.log("Lol u failed"); 
+        console.log("User not found, please register a new user."); 
     } 
      
+    
+    // sätt nuvarande användare i Localstorage
+    localStorage.setItem("currentUser", JSON.stringify(user));
 
 
 
     //Hämta rätt användares todos och rutiner och skriv ut dem 
-    if (user.tasks) { // varför reageras på detta? om det inte finns några tasks så bör den väl snarare bara gå till else satsen???
-        let taskLi = document.createElement("li");
-        taskLi.innerHTML = '<p> ${user.tasks} </p>';
+    
+    //Börja med att ta bort tidigare användares tasks
+    taskListUl.innerHTML = " "; // varför funkar inte det här???
+    console.log('Om det inte finns några tasks så är detta undefined - > ' + user.tasks);
+    if (user.tasks) { // verkar ej fungera nu längre?
+        
+        user.tasks.forEach(task => {
+            let taskLi = document.createElement("li");
+            taskLi.innerHTML = `
+            <h3>${task.title}</h3>
+    
+            <p>${task.description}</p>
+            <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
+            <p>Deadline: ${task.deadline}</p>
+            <p>Estimated time: ${task.estimate} hours</p>
+            <p>category: ${task.category}</p>
+            <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
+            <button class="edit">Edit</button>
+            <button class="delete">Delete</button>
+        `;  
+
+
         taskListUl.append(taskLi);
+        });
+        
     } else {
         let paragraph = document.createElement("p");
         paragraph.innerText = "Create your first task!";
         taskListUl.append(paragraph);
     }
-    
 
 
 
@@ -113,8 +139,6 @@ let login = async () => {
 
 
 
-    // sätt nuvarande användare i Localstorage
-    localStorage.setItem("currentUser", JSON.stringify(user))
    
     //lämna hälsningsmeddelande
     let h1 = document.querySelector("#h1");
@@ -135,9 +159,6 @@ logOutBtn.addEventListener("click", () => {
     // nollställ nuvarande användare i Localstorage
     localStorage.setItem("currentUser", "none");
 
-    //nollställer tasks[]
-    localStorage.setItem("tasks", "none");
-
     //
 });
 
@@ -145,45 +166,8 @@ logOutBtn.addEventListener("click", () => {
 
 
 
-//dölj eller visa sorting och filter knappar, flytta till todo sen
-//välja knapparna
-let showFiltersBtnsNodes = document.querySelectorAll(".showFiltersBtn");
-let showSortingBtnsNodes = document.querySelectorAll(".showSortingBtn");
-
-//eventlisteners på knapparna
-showFiltersBtnsNodes.forEach(function(button) {
-    button.addEventListener('click', function() {
-        //välja rutan
-        let parentBox = this.parentNode;
-        let parentColumn = parentBox.parentNode;//tekniskt sett väljer detta grandparent till knappen, men ändå
-
-        let closestFilterBox = parentColumn.querySelector('.filterBox');
-
-        //toggla klassen .hide när man klickar
-        closestFilterBox.classList.toggle('hide');
-    });
-});
-
-//sortering
-showSortingBtnsNodes.forEach(function(button) {
-    button.addEventListener('click', function() {
-        //välja rutan
-        let parentBox = this.parentNode;
-        let parentColumn = parentBox.parentNode;
-        let closestSortingBox = parentColumn.querySelector('.sortingBox');
-
-        //toggla klassen .hide när man klickar
-        closestSortingBox.classList.toggle('hide');
-    });
-});
 
 
-
-
-
-
-
-// //BACKUP
 
 //     // OBS nedan ej klart /S
 

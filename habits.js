@@ -241,34 +241,7 @@ addHabitBtn.addEventListener("click", () => {
     //saveToLocalStorage();
 
     habitInput.value = "";
+
 });
 
-// Funktion för att initialisera habitStreakCounter från localStorage när sidan laddas
-let initStreakCounterFromLocalStorage = () => {
-    let storedStreakCounter = localStorage.getItem("habitStreakCounter");
-    if (storedStreakCounter) {
-        habitStreakCounter = parseInt(storedStreakCounter);
-    }
-};
-
-// Kör funktionen när sidan laddas
-initStreakCounterFromLocalStorage();
-
-
-/*
-// Funktion för att initialisera habits från localStorage när sidan laddas
-let initHabitsFromLocalStorage = () => {
-    let storedHabits = localStorage.getItem("habits");
-    if (storedHabits) {
-        habits = JSON.parse(storedHabits);
-        habits.forEach(habit => {
-            createHabitListItem(habit.habitText, habit.streak);
-        });
-    }
-};
-
-// Ladda habits från localStorage när sidan laddas
-initHabitsFromLocalStorage();
-//onRender()
-*/
 

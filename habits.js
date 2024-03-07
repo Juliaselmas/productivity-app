@@ -4,15 +4,20 @@ let habitContainer = document.getElementById("habit-container");
 let habitInput = document.getElementById("habitInput");
 let addHabitBtn = document.getElementById("addHabitBtn");
 let habitStreakCounter = 0;
+let id = Date.now().toString(); // Generera ett unikt ID baserat på aktuell tid
+
 
 /*Att göra:
-funktion till editknappen. Rätt värden ska sparas i LocalStorage och ersätta det gamla objektet?
+varför visas id som placeholder till streak i redigeringsläget??
 påbygga completedknappen
-curentUser
+curentUser och user!!
 */
 
 
-let createHabitListItem = (title, index) => {
+let createHabitListItem = (title, streak) => {
+    //lägger till index som argument för att säkerställa att habitStreakCounter får rätt värde
+    //habitStreakCounter = streak;
+
     let priorityBtn = document.querySelector("input[name='priority']:checked").value;
 
     let li = document.createElement("li");
@@ -23,7 +28,7 @@ let createHabitListItem = (title, index) => {
     li.append(selectedPriority);
 
     let streakNumber = document.createElement("p");
-    streakNumber.innerText = "Streak: " + index;
+    streakNumber.innerText = "Streak: " + habitStreakCounter;
     li.append(streakNumber);
 
 
@@ -34,13 +39,20 @@ let createHabitListItem = (title, index) => {
 
     //funktion för att öka index på streak
     completedHabitBtn.addEventListener("click", () => {
+        streak++;
         habitStreakCounter++;
         streakNumber.innerText = "Streak: " + habitStreakCounter;
 
-        saveToLocalStorage();
+          // Uppdatera streaken i localStorage för den specifika vanan
+          updateStreakInLocalStorage(title, streak);
+
+          saveToLocalStorage(title, priorityBtn, habitStreakCounter, id);
+        });
+
+        //saveToLocalStorage();
 
         //lägga till att knappen ändrar text eller hela habit ändrar utseende?
-    });
+    
 
 
     //skapar ny editknapp
@@ -100,7 +112,8 @@ let createHabitListItem = (title, index) => {
     li.insertBefore(editedStreakLabel, priorityContainer.nextSibling);
     let editedStreakInput = document.createElement("input");
     editedStreakInput.type = "number";
-    editedStreakInput.value = habitStreakCounter;
+    editedStreakInput.value = streak;
+    editedStreakInput.placeholder = "";
     li.insertBefore(editedStreakInput, editedStreakLabel.nextSibling);
 
     let saveChangesBtn = document.createElement("button");
@@ -109,7 +122,14 @@ let createHabitListItem = (title, index) => {
 
     saveChangesBtn.addEventListener("click", () => {
         let editedHabitText = editedHabitInput.value;
-        let editedPriorityBtn = document.querySelector('input[name="editPriority"]:checked').value;
+        let editedPriorityBtn = document.querySelector('input[name="editPriority"]:checked');
+        //let editedStreakCounter = parseInt(editedStreakInput.value);
+
+        if (!editedPriorityBtn) {
+            alert("Please select a priority for the edited habit.");
+            return;
+        }
+        let editedPriorityValue = editedPriorityBtn.value;
         let editedStreakCounter = parseInt(editedStreakInput.value);
 
         // Hitta habiten baserat på habitText
@@ -118,12 +138,12 @@ let createHabitListItem = (title, index) => {
 
         // Uppdatera habiten med nya värden
         habits[habitIndex].Habit= editedHabitText;
-        habits[habitIndex].Priority = editedPriorityBtn;
+        habits[habitIndex].Priority = editedPriorityValue;
         habitStreakCounter = editedStreakCounter;
 
         // Uppdatera DOM med de nya värdena
         habitTextElement.innerText = editedHabitText;
-        selectedPriorityElement.innerText = editedPriorityBtn + " Priority";
+        selectedPriorityElement.innerText = editedPriorityValue + " Priority";
         streakNumberElement.innerText = "Streak: " + editedStreakCounter;
 
         // Ta bort inputfältet för habit och saveChangesBtn
@@ -134,15 +154,15 @@ let createHabitListItem = (title, index) => {
         editedStreakLabel.remove();
 
         // Spara den uppdaterade habiten till local storage
-        saveToLocalStorage();
-
+        saveToLocalStorage(editedHabitText, editedPriorityValue, editedStreakCounter, id);
     } else {
         console.error("Habit not found in habits array.");
     }
 
     });
+});
 
-    });
+    
 
 
     //skapar ny deleteknapp
@@ -175,21 +195,41 @@ let createHabitListItem = (title, index) => {
     
 };
 
-let saveToLocalStorage = () => {
-    //localStorage.setItem('habits', JSON.stringify(habits));
+let updateStreakInLocalStorage = (title, streak) => {
     let existingHabits = JSON.parse(localStorage.getItem('habits')) || [];
 
-    let latestHabit = {
-        title: habitInput.value, 
-        priority: document.querySelector("input[name='priority']:checked").value,
-        streak: habitStreakCounter,
-        deleted: false
-    };
+    // Hitta den specifika vanan och uppdatera streaken
+    let habitToUpdate = existingHabits.find(habit => habit.Title === title);
+    if (habitToUpdate) {
+        habitToUpdate.streak = streak;
+    }
 
-    //Kan man lägga in ett nytt objekt för de uppdaterade habits här?
-    //Hur får jag habitStreakCounter att uppdateras även i localStorage?
+    // Spara den uppdaterade listan till localStorage
+    localStorage.setItem('habits', JSON.stringify(existingHabits));
+};
 
-    existingHabits.push(latestHabit);
+let saveToLocalStorage = (title, priority, streak, id) => {
+    let existingHabits = JSON.parse(localStorage.getItem('habits')) || [];
+
+    /// Hitta befintlig habit med samma ID
+    let existingHabit = existingHabits.find(habit => habit.id === id);
+    
+    if (existingHabit) {
+        // Uppdatera den befintliga habiten
+        existingHabit.title = title;
+        existingHabit.priority = priority;
+        existingHabit.streak = streak;
+    } else {
+        // Skapa en ny habit om ingen matchande hittades
+        let latestHabit = {
+            title: title, 
+            priority: priority,
+            streak: streak,
+            id: id,
+            deleted: false
+        };
+        existingHabits.push(latestHabit);
+    }
 
     // Filtrera bort raderade uppgifter innan du sparar till localStorage
     let habitsToSave = existingHabits.filter(habit => !habit.deleted);
@@ -215,33 +255,37 @@ let onRender = () => {
 */
 
 addHabitBtn.addEventListener("click", () => {
-    
-    //säkerställer att prio är vald
-    let priorityBtn = document.querySelectorAll('input[name="priority"]');
+    let priorityBtn = document.querySelectorAll('input[name="priority"]:checked');
     let prioritySelected = false;
-    if (!priorityBtn) {
-        alert("Please select a priority for your new habit.");
-        return;
+    let priorityValue = "Medium"; // Standardprioritet om ingen väljs
+    //let id = Date.now().toString(); // Generera ett unikt ID baserat på aktuell tid
+
+    if (priorityBtn.length > 0) {
+        prioritySelected = true;
+        priorityValue = priorityBtn[0].value; // Hämta det första valda värdet
     }
 
-    let newHabitText = habitInput.value;
-    if (newHabitText.trim() === "") {
+    if (!prioritySelected) {
+        alert("Please select a priority for your new habit. Defaulting to Medium.");
+    }
+
+    let newHabitText = habitInput.value.trim();
+
+    if (newHabitText === "") {
         alert("Please enter a habit.");
         return;
     }
 
+    // Spara den nya vanan till local storage
+    saveToLocalStorage(newHabitText, priorityValue, 0, id);
+
     let newHabit = {
         Habit: newHabitText,
-        Priority: priorityBtn.value,
+        Priority: priorityValue,
         streak: 0
     };
 
     habits.push(newHabit);
-    createHabitListItem(newHabitText, 0);
-    //saveToLocalStorage();
-
+    createHabitListItem(newHabitText, id); // Skicka med id till createHabitListItem
     habitInput.value = "";
-
 });
-
-

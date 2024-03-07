@@ -30,7 +30,7 @@ function createTaskElement(task, index) {
 
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
-        <h3>${task.title}</h3>
+        <h3 class="taskTitle">${task.title}</h3>
 
         <p>${task.description}</p>
         <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>
@@ -392,4 +392,68 @@ function sortByEstimateDescending() {
 
 
 // Ladda uppgifter från localStorage när sidan laddas
-loadTasksFromLocalStorage();
+//loadTasksFromLocalStorage();
+
+
+
+
+//sätta funktionalitet på knappar i tasks
+
+
+
+let currentUser = localStorage.getItem("currentUser");
+let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
+
+
+    // Lägg till en eventListener till "Markera som slutförd" / "Ångra" knappen. 
+    //skapar nodelista
+    let completedBtnNodes = document.querySelectorAll('.toggle');
+    //loopa igenom nodelista och sätta funktionalitet på alla completedknappar
+    completedBtnNodes.forEach((button) => {
+        button.addEventListener('click', function () {
+    
+            console.log('eventlistener körs!');
+            let thisTaskLi = this.parentNode;
+            let taskTitle = thisTaskLi.querySelector('.taskTitle').textContent;
+    
+            let tasksFromCurrentUser = currentUserObject.tasks;
+    
+            let task = tasksFromCurrentUser.find((task) => task.title === taskTitle);
+            console.log(task);
+    
+    
+            task.status = !task.status;
+            li.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';
+            this.textContent = task.status ? 'Undo' : 'Mark as complete';
+            saveTasksToLocalStorage();
+            });
+    }); 
+
+
+
+
+
+
+//DET HÄR UNDER ÄR DET INNEHÅLL SOM SKA SKRIVAS OM FÖR ATT MATCHA FORMATET OVAN OCH SEN TAS BORT
+
+
+
+
+
+// Lägg till en eventListener till "Radera" knappen
+// I delete-eventet för uppgifter, använd data-attribut för att hämta indexet för uppgiften
+li.querySelector('.delete').addEventListener('click', function () {
+    let taskIndex = parseInt(li.getAttribute('data-index'));
+    tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen baserat på index
+    saveTasksToLocalStorage();
+    taskList.removeChild(li); // Ta bort listelementet från DOM:en
+    updateTaskIndices(); // Uppdatera data-index attributen för alla uppgifter efter borttagning
+});
+
+// Lägg till en eventListener till "Redigera" knappen
+li.querySelector('.edit').addEventListener('click', function () {
+    openTaskEdit(task, index);
+});
+
+// Sätt data-index attributet för att lagra indexet för uppgiften
+li.setAttribute('data-index', index);

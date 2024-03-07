@@ -98,7 +98,7 @@ let login = async () => {
         user.tasks.forEach(task => {
             let taskLi = document.createElement("li");
             taskLi.innerHTML = `
-            <h3>${task.title}</h3>
+            <h3 class="taskTitle">${task.title}</h3>
     
             <p>${task.description}</p>
             <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>

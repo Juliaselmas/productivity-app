@@ -79,7 +79,7 @@ let login = async () => {
         //successful login
         console.log("Welcome " + user.username + "!");
     } else {
-        console.log("Lol u failed"); 
+        console.log("User not found, please register a new user."); 
     } 
      
     
@@ -87,12 +87,12 @@ let login = async () => {
     localStorage.setItem("currentUser", JSON.stringify(user));
 
 
-    //HÄR BÖRJAR PROBLEMEN
+
     //Hämta rätt användares todos och rutiner och skriv ut dem 
     
     //Börja med att ta bort tidigare användares tasks
     taskListUl.innerHTML = " "; // varför funkar inte det här???
-    console.log(user.tasks);
+    console.log('Om det inte finns några tasks så är detta undefined - > ' + user.tasks);
     if (user.tasks) { // verkar ej fungera nu längre?
         
         user.tasks.forEach(task => {
@@ -109,6 +109,8 @@ let login = async () => {
             <button class="edit">Edit</button>
             <button class="delete">Delete</button>
         `;  
+
+
         taskListUl.append(taskLi);
         });
         
@@ -117,7 +119,6 @@ let login = async () => {
         paragraph.innerText = "Create your first task!";
         taskListUl.append(paragraph);
     }
-    console.log(user.tasks);
 
 
 

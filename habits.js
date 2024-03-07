@@ -6,7 +6,7 @@ let addHabitBtn = document.getElementById("addHabitBtn");
 let habitStreakCounter = 0;
 
 /*Att göra:
-funktion till editknappen. Appenda uppdateringar?
+funktion till editknappen. Rätt värden ska sparas i LocalStorage och ersätta det gamla objektet?
 påbygga completedknappen
 curentUser
 */

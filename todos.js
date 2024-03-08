@@ -316,7 +316,7 @@ function openTaskEdit(task, index) {
         <button class="delete">Delete</button>
     `;
 
-        // Tog hjälp av chatGpt (fastnade) när jag gjorde detta. Behöver kolla igenom detta innan vi fastställer denna lösning... Den återställer evetlistner  för "Markera som slutförd" / "Ångra" och "Radera" knappar
+        // Den återställer evetlistner  för "Markera som slutförd" / "Ångra" och "Radera" knappar
         taskElement.querySelector('.toggle').addEventListener('click', function () {
             task.status = !task.status;
             taskElement.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';
@@ -460,8 +460,6 @@ deleteBtnNodes.forEach((button) => {
 //SLUTADE HÄR 7/3 
 
 // Välj alla knappar med klassen 'EDIT'
-const runCodeButton = document.getElementById('runCodeButton'); //temporärt
-runCodeButton.addEventListener('click', function () { //temporärt 
     let editBtnNodes = document.querySelectorAll('.edit');
     // Loopa igenom nodlistan och lägg till händelselyssnare på varje edit-knapp
     editBtnNodes.forEach((button) => {
@@ -481,7 +479,7 @@ runCodeButton.addEventListener('click', function () { //temporärt
             openTaskEdit(task, taskIndex);
         });
     });
-}); // temporärt
+
 
 
 //DET HÄR UNDER ÄR DET INNEHÅLL SOM SKA SKRIVAS OM FÖR ATT MATCHA FORMATET OVAN OCH SEN TAS BORT

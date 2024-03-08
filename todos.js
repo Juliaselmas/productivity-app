@@ -460,8 +460,6 @@ deleteBtnNodes.forEach((button) => {
 //SLUTADE HÄR 7/3 
 
 // Välj alla knappar med klassen 'EDIT'
-const runCodeButton = document.getElementById('runCodeButton'); //temporärt
-runCodeButton.addEventListener('click', function () { //temporärt 
     let editBtnNodes = document.querySelectorAll('.edit');
     // Loopa igenom nodlistan och lägg till händelselyssnare på varje edit-knapp
     editBtnNodes.forEach((button) => {
@@ -481,7 +479,7 @@ runCodeButton.addEventListener('click', function () { //temporärt
             openTaskEdit(task, taskIndex);
         });
     });
-}); // temporärt
+
 
 
 //DET HÄR UNDER ÄR DET INNEHÅLL SOM SKA SKRIVAS OM FÖR ATT MATCHA FORMATET OVAN OCH SEN TAS BORT

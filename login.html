@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html2">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,18 +17,26 @@
       <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   
 </head>
-<body>
-  <h1 id="h1">Welcome to Productivity App</h1>
+<body id="body2">
 
-  <div id="loginContainer">
-      <input type="text" name="usernameInput" id="usernameInput" placeholder="Username">
-      <input type="text" name="passwordInput" id="passwordInput" placeholder="Password">
-
-
-
-      <button id="logInBtn">Log in</button>
-      <button id="registerBtn">Sign up</button>
-
-  </div>
+  <main>
+    <h1 id="h1">Welcome to Productivity App</h1>
+  
+    <div id="loginContainer">
+  
+      <div class="columnDivs">
+        <input type="text" name="usernameInput" id="usernameInput" placeholder="Username">
+        <input type="text" name="passwordInput" id="passwordInput" placeholder="Password">
+      </div>
+  
+  
+      <div class="rowDivs">
+        <button id="logInBtn">Log in</button>
+        <button id="registerBtn">Sign up</button>
+      </div>
+  
+    </div>
+  </main>
+  
 </body>
 </html>

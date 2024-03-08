@@ -189,4 +189,33 @@ footer {
   bottom: 0px;
   display: flex;
   justify-content: center;
+}
+
+#html2 {
+  height: 100vh;
+}
+#html2 main {
+  padding: 5%;
+  padding-top: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#html2 main h1 {
+  font-size: 2em;
+}
+#html2 main #loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+}
+#html2 main #loginContainer .rowDivs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#html2 main #loginContainer .columnDivs {
+  display: flex;
+  flex-direction: column;
 }/*# sourceMappingURL=style.css.map */

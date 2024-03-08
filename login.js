@@ -167,6 +167,9 @@ logOutBtn.addEventListener("click", () => {
     // nollställ nuvarande användare i Localstorage
     localStorage.setItem("currentUser", "none");
 
+     //skicka användaren till startsidan
+     window.location.href = "login.html";
+
     //
 });
 

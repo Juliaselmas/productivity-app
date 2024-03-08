@@ -30,7 +30,7 @@ function createTaskElement(task, index) {
 
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
     li.innerHTML = `
-        <h3>${task.title}</h3>
+        <h3 class="taskTitle">${task.title}</h3>
 
         <p>${task.description}</p>
         <p>Status: <span class="status">${task.status ? 'completed' : 'Not completed'}</span></p>

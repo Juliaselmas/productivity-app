@@ -151,7 +151,7 @@ let login = async () => {
     //lämna hälsningsmeddelande
     let h1 = document.querySelector("#h1");
     h1.innerText = 'Welcome ' + user.username + "!";
-   
+    
 };
 
 logInBtn.addEventListener("click", login);

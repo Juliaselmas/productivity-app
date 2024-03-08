@@ -86,8 +86,9 @@ function addTask() {
     if (!taskTitle.value || !taskDescription.value || !taskDeadline.value || !taskEstimate.value || !taskCategory.value) {
         let errorMessage = 'Fill in all the information to add a task';
 
-    alert(errorMessage);
-    return;}
+        alert(errorMessage);
+        return;
+    }
 
     // Skapa ett nytt uppgifts-objekt med värdena från inmatningsfälten
     let task = {
@@ -114,7 +115,7 @@ function addTask() {
     taskDeadline.value = '';
     taskEstimate.value = '';
     taskCategory.value = '';
-    
+
 
 
 
@@ -133,39 +134,40 @@ function addTask() {
     currentUser = JSON.stringify(currentUserObject); //konverterar tillbaka till en sträng
 
 
-    localStorage.setItem("currentUser" , currentUser); // uppdaterar currentUser till det nya som har skapats
+    localStorage.setItem("currentUser", currentUser); // uppdaterar currentUser till det nya som har skapats
 
     //hämta motsvarande user frånusers array och uppdatera den med nya tasks, stoppa sedan tillbaka den i users arrayn
-    let users = JSON.parse(localStorage.getItem ("users")) || []; 
+    let users = JSON.parse(localStorage.getItem("users")) || [];
     //let users = JSON.stringify(localStorage.getItem ("users")) || []; 
     // hämta tidigare data alternativt skapa en tom array
 
     console.log(users);
-    
+
     //tittar i arrayn med users och väljer den användaren som legat i arrayn
     let thisUserInTheArray = users.find(
         (user) => {
             console.log("checking user", user.username, currentUserObject.username)
-            return user.username === currentUserObject.username}
-        );
+            return user.username === currentUserObject.username
+        }
+    );
 
     console.log(thisUserInTheArray);  //såhär ser användaren ut i users innan vi upppdaterat den
     console.log(currentUserObject); //såhär vill vi att den ska se ut
 
-    
+
     // hitta index för objektet i arrayen
     let indexOfUser = users.indexOf(thisUserInTheArray);
     console.log(indexOfUser);
     console.log(thisUserInTheArray.tasks + currentUserObject.tasks);
-    thisUserInTheArray.tasks =  currentUserObject.tasks;  //byta ut tasks i användaren i users mot currentusers tasks 
+    thisUserInTheArray.tasks = currentUserObject.tasks;  //byta ut tasks i användaren i users mot currentusers tasks 
     console.log("uppdaterade användaren: " + thisUserInTheArray); //nu är den uppdaterad
 
     //lägga in den uppdaterade versionen av användaren i users
     users[indexOfUser] = thisUserInTheArray;
-    
+
     //lägga in nya versionen av users i LocalStorage
     localStorage.setItem('users', JSON.stringify(users));
-    
+
 
 
     //Slut på sofias kodblock
@@ -174,7 +176,7 @@ function addTask() {
 
 
 
-    
+
 
     // Spara uppgifterna till localStorage
     saveTasksToLocalStorage();
@@ -334,7 +336,7 @@ function openTaskEdit(task, index) {
 }
 
 // Lägg till en eventlistener för knappen "Apply Filters"
-document.getElementById('applyFiltersButton').addEventListener('click', function() {
+document.getElementById('applyFiltersButton').addEventListener('click', function () {
     filterTasksByCategory();
 });
 
@@ -405,33 +407,81 @@ let currentUser = localStorage.getItem("currentUser");
 let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
 
 
-    // Lägg till en eventListener till "Markera som slutförd" / "Ångra" knappen. 
-    //skapar nodelista
-    let completedBtnNodes = document.querySelectorAll('.toggle');
-    //loopa igenom nodelista och sätta funktionalitet på alla completedknappar
-    completedBtnNodes.forEach((button) => {
+// Lägg till en eventListener till "MARKERA SOM SLUTFÖRD" / "Ångra" knappen. 
+//skapar nodelista
+let completedBtnNodes = document.querySelectorAll('.toggle');
+//loopa igenom nodelista och sätta funktionalitet på alla completedknappar
+completedBtnNodes.forEach((button) => {
+    button.addEventListener('click', function () {
+
+        console.log('eventlistener  TOGGLE körs!');
+        let thisTaskLi = this.parentNode;
+        let taskTitle = thisTaskLi.querySelector('.taskTitle').textContent;
+
+        let tasksFromCurrentUser = currentUserObject.tasks;
+
+        let task = tasksFromCurrentUser.find((task) => task.title === taskTitle);
+        console.log(task);
+
+
+        task.status = !task.status;
+        li.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';
+        this.textContent = task.status ? 'Undo' : 'Mark as complete';
+        saveTasksToLocalStorage();
+    });
+});
+
+
+
+// Välj alla knappar med klassen 'DELETE'
+let deleteBtnNodes = document.querySelectorAll('.delete');
+
+// Loopa igenom nodlistan och lägg till händelselyssnare på varje delete-knapp
+deleteBtnNodes.forEach((button) => {
+    button.addEventListener('click', function () {
+        console.log('Event listener DELETE körs!'); // Logga att händelselyssnaren körs
+
+        // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
+        let thisTaskLi = this.parentNode;
+
+        // Hämta index för uppgiften från dess data-index attribut
+        let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
+
+        tasks.splice(taskIndex, 1);      // Ta b¨ort uppgiften från arrayen tasks baserat på dess index
+
+        saveTasksToLocalStorage();        // Spara ändringarna till localStorage
+        taskList.removeChild(thisTaskLi);        // Ta bort listelementet från DOM:en
+
+        // Uppdatera index
+        updateTaskIndices();
+    });
+});
+
+//SLUTADE HÄR 7/3 
+
+// Välj alla knappar med klassen 'EDIT'
+const runCodeButton = document.getElementById('runCodeButton'); //temporärt
+runCodeButton.addEventListener('click', function () { //temporärt 
+    let editBtnNodes = document.querySelectorAll('.edit');
+    // Loopa igenom nodlistan och lägg till händelselyssnare på varje edit-knapp
+    editBtnNodes.forEach((button) => {
         button.addEventListener('click', function () {
-    
-            console.log('eventlistener körs!');
+            console.log('Event listener EDIT  körs!'); // Logga att händelselyssnaren körs
+
+            // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
             let thisTaskLi = this.parentNode;
-            let taskTitle = thisTaskLi.querySelector('.taskTitle').textContent;
-    
-            let tasksFromCurrentUser = currentUserObject.tasks;
-    
-            let task = tasksFromCurrentUser.find((task) => task.title === taskTitle);
-            console.log(task);
-    
-    
-            task.status = !task.status;
-            li.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';
-            this.textContent = task.status ? 'Undo' : 'Mark as complete';
-            saveTasksToLocalStorage();
-            });
-    }); 
 
+            // Hämta index för uppgiften från dess data-index attribut
+            let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
 
+            // Hämta uppgiften från tasks-arrayen baserat på indexet
+            let task = tasks[taskIndex];
 
-
+            // Öppna redigeringsläge för uppgiften
+            openTaskEdit(task, taskIndex);
+        });
+    });
+}); // temporärt
 
 
 //DET HÄR UNDER ÄR DET INNEHÅLL SOM SKA SKRIVAS OM FÖR ATT MATCHA FORMATET OVAN OCH SEN TAS BORT
@@ -440,20 +490,20 @@ let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett ob
 
 
 
-// Lägg till en eventListener till "Radera" knappen
-// I delete-eventet för uppgifter, använd data-attribut för att hämta indexet för uppgiften
-li.querySelector('.delete').addEventListener('click', function () {
-    let taskIndex = parseInt(li.getAttribute('data-index'));
-    tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen baserat på index
-    saveTasksToLocalStorage();
-    taskList.removeChild(li); // Ta bort listelementet från DOM:en
-    updateTaskIndices(); // Uppdatera data-index attributen för alla uppgifter efter borttagning
-});
+// // Lägg till en eventListener till "Radera" knappen
+// // I delete-eventet för uppgifter, använd data-attribut för att hämta indexet för uppgiften
+// li.querySelector('.delete').addEventListener('click', function () {
+//     let taskIndex = parseInt(li.getAttribute('data-index'));
+//     tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen baserat på index
+//     saveTasksToLocalStorage();
+//     taskList.removeChild(li); // Ta bort listelementet från DOM:en
+//     updateTaskIndices(); // Uppdatera data-index attributen för alla uppgifter efter borttagning
+// });
 
-// Lägg till en eventListener till "Redigera" knappen
-li.querySelector('.edit').addEventListener('click', function () {
-    openTaskEdit(task, index);
-});
+// // Lägg till en eventListener till "Redigera" knappen
+// li.querySelector('.edit').addEventListener('click', function () {
+//     openTaskEdit(task, index);
+// });
 
-// Sätt data-index attributet för att lagra indexet för uppgiften
-li.setAttribute('data-index', index);
+// // Sätt data-index attributet för att lagra indexet för uppgiften
+// li.setAttribute('data-index', index);

@@ -10,9 +10,6 @@ let tasks = [];
 
 
 
-
-
-
 // Deklaration av funktioner
 let saveTasksToLocalStorage = () => {
     // Filtrera bort raderade uppgifter innan du sparar till localStorage
@@ -403,13 +400,15 @@ function sortByEstimateDescending() {
 
 
 
-let currentUser = localStorage.getItem("currentUser");
-let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
+// let currentUser = localStorage.getItem("currentUser"); // DET ÄR DESSA SOM BLOCKERAR NEDAN GREJERNA FRÅN ATT FUNGERA - DE TRIGGAR ETT FELMEDDELANDE OM ATT CURRENTUSER DEKLARERAS TVÅ GÅNGER. DEN TIDIGARE DEKLARATIONEN LIGGER DOCK INUTI ADD TASK OCH ÄR EJ GLOBAL. DÄRFÖR TROR JAG ATT DE BEHÖVER DEKLARERAS NÅGONSTANS HÄR NERE FÖR ATT EN DEL AV FUNKTIONALITETEN NEDAN SKA FUNGERA, MEN VEM VET
+// let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
 
 
 // Lägg till en eventListener till "MARKERA SOM SLUTFÖRD" / "Ångra" knappen. 
 //skapar nodelista
 let completedBtnNodes = document.querySelectorAll('.toggle');
+
+
 //loopa igenom nodelista och sätta funktionalitet på alla completedknappar
 completedBtnNodes.forEach((button) => {
     button.addEventListener('click', function () {
@@ -432,35 +431,48 @@ completedBtnNodes.forEach((button) => {
 });
 
 
+document.addEventListener('DOMContentLoaded', function() { //DOMContentLoaded ser till så att detta inte körs förrns allt annat har laddats in
+    // Välj alla knappar med klassen 'DELETE' 
+    let deleteBtnNodes = document.querySelectorAll('.delete');
 
-// Välj alla knappar med klassen 'DELETE'
-let deleteBtnNodes = document.querySelectorAll('.delete');
-
-// Loopa igenom nodlistan och lägg till händelselyssnare på varje delete-knapp
-deleteBtnNodes.forEach((button) => {
-    button.addEventListener('click', function () {
-        console.log('Event listener DELETE körs!'); // Logga att händelselyssnaren körs
-
-        // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
-        let thisTaskLi = this.parentNode;
-
-        // Hämta index för uppgiften från dess data-index attribut
-        let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
-
-        tasks.splice(taskIndex, 1);      // Ta b¨ort uppgiften från arrayen tasks baserat på dess index
-
-        saveTasksToLocalStorage();        // Spara ändringarna till localStorage
-        taskList.removeChild(thisTaskLi);        // Ta bort listelementet från DOM:en
-
-        // Uppdatera index
-        updateTaskIndices();
+    console.log('dessa är delete nodes:' + deleteBtnNodes);
+    
+    // Loopa igenom nodlistan och lägg till händelselyssnare på varje delete-knapp
+    deleteBtnNodes.forEach((button) => {
+        button.addEventListener('click', function () {
+            console.log('Event listener DELETE körs!'); // Logga att händelselyssnaren körs
+    
+            // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
+            let thisTaskLi = this.parentNode;
+    
+            // Hämta index för uppgiften från dess data-index attribut
+            let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
+    
+            tasks.splice(taskIndex, 1);      // Ta b¨ort uppgiften från arrayen tasks baserat på dess index
+    
+            saveTasksToLocalStorage();        // Spara ändringarna till localStorage
+            taskList.removeChild(thisTaskLi);        // Ta bort listelementet från DOM:en
+    
+            // Uppdatera index
+            updateTaskIndices();
+        });
     });
+    
+
 });
 
-//SLUTADE HÄR 7/3 
+
 
 // Välj alla knappar med klassen 'EDIT'
-    let editBtnNodes = document.querySelectorAll('.edit');
+
+// try {
+//     let editBtnNodes = document.querySelectorAll('.edit');
+
+//     console.log('dessa är edit nodes:' + editBtnNodes);
+// } catch (err) {
+//     console.log('det går inte att göra ne nodelista av edit btns');
+// }
+
     // Loopa igenom nodlistan och lägg till händelselyssnare på varje edit-knapp
     editBtnNodes.forEach((button) => {
         button.addEventListener('click', function () {

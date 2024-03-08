@@ -316,7 +316,7 @@ function openTaskEdit(task, index) {
         <button class="delete">Delete</button>
     `;
 
-        // Tog hjälp av chatGpt (fastnade) när jag gjorde detta. Behöver kolla igenom detta innan vi fastställer denna lösning... Den återställer evetlistner  för "Markera som slutförd" / "Ångra" och "Radera" knappar
+        // Den återställer evetlistner  för "Markera som slutförd" / "Ångra" och "Radera" knappar
         taskElement.querySelector('.toggle').addEventListener('click', function () {
             task.status = !task.status;
             taskElement.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';

@@ -249,3 +249,49 @@ footer {
     display: flex;
     justify-content: center;
 }
+
+
+
+
+
+//styling för loginsida
+
+#html2{
+    height: 100vh;
+
+    #body2 {
+    }
+    
+    main {
+        padding: 5%;
+        padding-top: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        h1{
+            font-size: 2em;
+        }
+
+        #loginContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        
+            width: 25%;
+            
+            .rowDivs{
+                display:flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .columnDivs{
+                display:flex;
+                flex-direction: column;
+            }
+        }
+    }
+}
+
+
+

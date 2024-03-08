@@ -163,6 +163,9 @@ main #userContentContainer .listColumn ul li {
   margin-top: 5%;
   margin-bottom: 5%;
 }
+main #userContentContainer .listColumn ul li p, main #userContentContainer .listColumn ul li span {
+  font-size: 12px;
+}
 main #userContentContainer .listColumn .card {
   width: 90%;
   background-color: white;

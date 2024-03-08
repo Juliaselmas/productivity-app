@@ -88,6 +88,14 @@ let login = async () => {
 
 
 
+
+    //skicka användaren till startsidan
+    window.location.href = "index.html";
+
+
+
+
+
     //Hämta rätt användares todos och rutiner och skriv ut dem 
     
     //Börja med att ta bort tidigare användares tasks

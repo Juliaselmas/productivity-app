@@ -26,6 +26,7 @@ function createTaskElement(task, index) {
     let li = document.createElement('li');
 
     // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
+
     li.innerHTML = `
         <h3 class="taskTitle">${task.title}</h3>
 
@@ -34,9 +35,10 @@ function createTaskElement(task, index) {
         <p>Deadline: ${task.deadline}</p>
         <p>Estimated time: ${task.estimate} hours</p>
         <p>category: ${task.category}</p>
-        <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
-        <button class="edit">Edit</button>
-        <button class="delete">Delete</button>
+        <button class="toggle">${task.status ? 'Undo ' : 'Mark as complete'}</button>
+        <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="delete"><i class="far fa-trash-can"></i>
+        </button> 
     `;
 
     // Lägg till en eventListener till "Markera som slutförd" / "Ångra" knappen. 
@@ -357,35 +359,33 @@ function filterTasksByCategory() {
 }
 
 
+
+
 // Ladda uppgifter från localStorage när sidan laddas
 
 // 4 Funktioner som ser likadana ut. De sorterar bara på olika variabler 
 
 // Funktionalitet  för att sortera uppgifter baserat på DEADLINE i stigande ordning. Ser exakt likadon ut som nästa funktion. (Hittade logiken på stackoverflow) 
-function sortByDeadlineAscending() {
-    tasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
-    showAllTasks(); // Visa de sorterade uppgifterna
-}
-
-// Funktionalitet  för att sortera uppgifter baserat på deadline i fallande ordning
-function sortByDeadlineDescending() {
-    tasks.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
-    showAllTasks();
-
-}
-
-// Funktion för att sortera uppgifter baserat på TIDSESTIMAT i stigande ordning
-function sortByEstimateAscending() {
-    tasks.sort((a, b) => a.estimate - b.estimate);
-    showAllTasks(); // Visa de sorterade uppgifterna
-}
-
-// Funktion för att sortera uppgifter baserat på tidsestimat i fallande ordning
-function sortByEstimateDescending() {
-    tasks.sort((a, b) => b.estimate - a.estimate);
+function sortTasks(sortType) {
+    switch (sortType) {
+        case 'deadlineAscending':
+            tasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+            break;
+        case 'deadlineDescending':
+            tasks.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
+            break;
+        case 'estimateAscending':
+            tasks.sort((a, b) => a.estimate - b.estimate);
+            break;
+        case 'estimateDescending':
+            tasks.sort((a, b) => b.estimate - a.estimate);
+            break;
+        default:
+            console.log('Invalid sort type');
+            return;
+    }
     showAllTasks();
 }
-
 
 
 
@@ -431,33 +431,33 @@ completedBtnNodes.forEach((button) => {
 });
 
 
-document.addEventListener('DOMContentLoaded', function() { //DOMContentLoaded ser till så att detta inte körs förrns allt annat har laddats in
+document.addEventListener('DOMContentLoaded', function () { //DOMContentLoaded ser till så att detta inte körs förrns allt annat har laddats in
     // Välj alla knappar med klassen 'DELETE' 
     let deleteBtnNodes = document.querySelectorAll('.delete');
 
     console.log('dessa är delete nodes:' + deleteBtnNodes);
-    
+
     // Loopa igenom nodlistan och lägg till händelselyssnare på varje delete-knapp
     deleteBtnNodes.forEach((button) => {
         button.addEventListener('click', function () {
             console.log('Event listener DELETE körs!'); // Logga att händelselyssnaren körs
-    
+
             // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
             let thisTaskLi = this.parentNode;
-    
+
             // Hämta index för uppgiften från dess data-index attribut
             let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
-    
+
             tasks.splice(taskIndex, 1);      // Ta b¨ort uppgiften från arrayen tasks baserat på dess index
-    
+
             saveTasksToLocalStorage();        // Spara ändringarna till localStorage
             taskList.removeChild(thisTaskLi);        // Ta bort listelementet från DOM:en
-    
+
             // Uppdatera index
             updateTaskIndices();
         });
     });
-    
+
 
 });
 
@@ -473,24 +473,24 @@ document.addEventListener('DOMContentLoaded', function() { //DOMContentLoaded se
 //     console.log('det går inte att göra ne nodelista av edit btns');
 // }
 
-    // Loopa igenom nodlistan och lägg till händelselyssnare på varje edit-knapp
-    editBtnNodes.forEach((button) => {
-        button.addEventListener('click', function () {
-            console.log('Event listener EDIT  körs!'); // Logga att händelselyssnaren körs
+// Loopa igenom nodlistan och lägg till händelselyssnare på varje edit-knapp
+editBtnNodes.forEach((button) => {
+    button.addEventListener('click', function () {
+        console.log('Event listener EDIT  körs!'); // Logga att händelselyssnaren körs
 
-            // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
-            let thisTaskLi = this.parentNode;
+        // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
+        let thisTaskLi = this.parentNode;
 
-            // Hämta index för uppgiften från dess data-index attribut
-            let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
+        // Hämta index för uppgiften från dess data-index attribut
+        let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
 
-            // Hämta uppgiften från tasks-arrayen baserat på indexet
-            let task = tasks[taskIndex];
+        // Hämta uppgiften från tasks-arrayen baserat på indexet
+        let task = tasks[taskIndex];
 
-            // Öppna redigeringsläge för uppgiften
-            openTaskEdit(task, taskIndex);
-        });
+        // Öppna redigeringsläge för uppgiften
+        openTaskEdit(task, taskIndex);
     });
+});
 
 
 

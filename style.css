@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .hide {
   display: none;
 }
@@ -7,7 +8,7 @@
 }
 
 body {
-  background: linear-gradient(164deg, #310056 4.01%, #8E69FF 55.23%, #A215B5 99.09%);
+  background: linear-gradient(164deg, #310056 4.01%, #8e69ff 55.23%, #a215b5 99.09%);
   margin: 0;
 }
 
@@ -123,6 +124,64 @@ main #userContentContainer #todo-container,
 main #userContentContainer #habitsContainer {
   box-sizing: border-box;
 }
+main #userContentContainer #todo-container #applyFiltersButton,
+main #userContentContainer #todo-container #restoreTasksBtn,
+main #userContentContainer #habitsContainer #applyFiltersButton,
+main #userContentContainer #habitsContainer #restoreTasksBtn {
+  background-color: #8e69ff;
+  color: white;
+  font-weight: 600;
+  border: none;
+}
+main #userContentContainer #todo-container #applyFiltersButton:hover,
+main #userContentContainer #todo-container #restoreTasksBtn:hover,
+main #userContentContainer #habitsContainer #applyFiltersButton:hover,
+main #userContentContainer #habitsContainer #restoreTasksBtn:hover {
+  background-color: #7255c9;
+}
+main #userContentContainer #todo-container .sortingBox,
+main #userContentContainer #habitsContainer .sortingBox {
+  background-color: white;
+  padding: 4px;
+  border-radius: 4px;
+}
+main #userContentContainer #todo-container .sortingBox p,
+main #userContentContainer #habitsContainer .sortingBox p {
+  font-size: 14px;
+}
+main #userContentContainer #todo-container .sortingBox button,
+main #userContentContainer #habitsContainer .sortingBox button {
+  background-color: #8e69ff;
+  color: white;
+  font-weight: 600;
+  border: none;
+}
+main #userContentContainer #todo-container .sortingBox button:hover,
+main #userContentContainer #habitsContainer .sortingBox button:hover {
+  background-color: #7255c9;
+}
+main #userContentContainer #todo-container .filterBox,
+main #userContentContainer #habitsContainer .filterBox {
+  background-color: white;
+  padding: 4px;
+  border-radius: 4px;
+}
+main #userContentContainer .delete i {
+  color: #e70909;
+}
+main #userContentContainer button.delete {
+  border: none;
+}
+main #userContentContainer .edit i {
+  color: #310056;
+}
+main #userContentContainer button.edit {
+  border: none;
+}
+main #userContentContainer .toggle {
+  background-color: F0F0F0;
+  border: none;
+}
 main #userContentContainer .mainColumn {
   align-items: center;
   display: flex;
@@ -152,14 +211,22 @@ main #userContentContainer .listColumn .filterSortingBtnContainer {
   flex-direction: row;
   justify-content: space-between;
 }
-main #userContentContainer .listColumn .filterSortingBtnContainer .showFiltersBtn, main #userContentContainer .listColumn .filterSortingBtnContainer .showSortingBtn {
+main #userContentContainer .showSortingBtn,
+main #userContentContainer .showFiltersBtn {
   width: 45%;
+  border: none;
+  background-color: #d3d0d0;
 }
-main #userContentContainer .listColumn ul {
+main #userContentContainer .showSortingBtn:hover,
+main #userContentContainer .showFiltersBtn:hover {
+  background-color: #b3b1b1;
+}
+
+ul {
   list-style-type: none;
   padding-left: 0;
 }
-main #userContentContainer .listColumn ul li {
+ul li {
   width: 90%;
   background-color: white;
   padding: 4%;
@@ -168,22 +235,35 @@ main #userContentContainer .listColumn ul li {
   margin-top: 5%;
   margin-bottom: 5%;
 }
-main #userContentContainer .listColumn ul li p, main #userContentContainer .listColumn ul li span {
+ul li p,
+ul li span {
   font-size: 12px;
 }
-main #userContentContainer .listColumn .card {
+
+.card {
   width: 90%;
-  background-color: white;
+  background-color: #ffffff;
 }
-main #userContentContainer .addBtn {
-  background-color: #8E69FF;
+
+#newTaskSection {
+  text-align: center; /* Centrera knappens innehåll vertikalt */
+}
+
+.addBtn {
+  background-color: #8e69ff;
   color: white;
   border: none;
   border-radius: 3px;
   box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
   font-weight: 600;
-  margin-left: none;
-  padding: 3%;
+  width: 10rem;
+  margin: auto; /* Centrera knappen horisontellt */
+  margin-top: 10px; /* Lägg till lite toppmarginal */
+  padding: 0.5rem 1rem;
+}
+
+.addBtn:hover {
+  background-color: #7255c9;
 }
 
 footer {
@@ -209,19 +289,49 @@ footer {
 }
 #html2 main h1 {
   font-size: 2em;
+  transform: rotate(-10deg);
+  font-weight: 800;
 }
 #html2 main #loginContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 25%;
+  width: 30%;
+  height: 15rem;
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
 }
 #html2 main #loginContainer .rowDivs {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+  margin-top: 14px;
+}
+#html2 main #loginContainer .rowDivs #registerBtn,
+#html2 main #loginContainer .rowDivs #logInBtn {
+  background-color: #8e69ff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
+  font-weight: 600;
+  margin-left: none;
+  width: 10rem;
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+#html2 main #loginContainer .rowDivs #registerBtn:hover,
+#html2 main #loginContainer .rowDivs #logInBtn:hover {
+  background-color: #7255c9;
 }
 #html2 main #loginContainer .columnDivs {
   display: flex;
   flex-direction: column;
+  padding: 20px;
+}
+#html2 main #loginContainer .columnDivs input {
+  margin: 5px;
+  border-radius: 4px;
+  border: 0.5px solid #717171;
 }/*# sourceMappingURL=style.css.map */

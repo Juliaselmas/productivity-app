@@ -149,6 +149,7 @@ main {
       font-size: 14px;
       resize: vertical; // För att förhindra att vyn görändras. Kan ändras till annan höjd om så önskas
       max-height: 200px;
+      
     }
 
     #leftColumn {
@@ -197,9 +198,16 @@ main {
         background-color: white;
         padding: 4px;
         border-radius: 4px;
-       } 
 
-    }
+        input[type="checkbox"] {
+          margin-right: 5px;
+          // Ändra färgen på kryssrutorna till lila
+          &:checked {
+           accent-color: $buttonPurple;
+          }
+        }
+       } 
+      }
 
 
     .delete i {
@@ -217,6 +225,7 @@ main {
     .toggle {
       background-color: F0F0F0;
       border: none;
+      
     }
     .mainColumn {
       align-items: center; // Ändrat 5/3
@@ -297,6 +306,17 @@ main {
     //Tillagd css 9/3 , ändra om ni önskar behöver
     #newTaskSection {
       text-align: center; /* Centrera knappens innehåll vertikalt */
+
+      #taskStatusContainer{
+        input[type="checkbox"] {
+          margin-right: 5px;
+          // Ändra färgen på kryssrutorna till lila
+          &:checked {
+           accent-color: $buttonPurple;
+          }
+        }
+
+      }
     }
 
     .addBtn {
@@ -359,7 +379,7 @@ footer {
 
     h1 {
       font-size: 2em;
-      transform: rotate(-10deg); //Ändrar graden på texten
+      transform: rotate(-8deg); //Ändrar graden på texten
       font-weight: 800;
     }
 
@@ -382,6 +402,7 @@ footer {
 
         #registerBtn,
         #logInBtn {
+    
           background-color: $buttonPurple;
           color: white;
           border: none;

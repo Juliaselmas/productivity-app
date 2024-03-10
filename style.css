@@ -166,6 +166,14 @@ main #userContentContainer #habitsContainer .filterBox {
   padding: 4px;
   border-radius: 4px;
 }
+main #userContentContainer #todo-container .filterBox input[type=checkbox],
+main #userContentContainer #habitsContainer .filterBox input[type=checkbox] {
+  margin-right: 5px;
+}
+main #userContentContainer #todo-container .filterBox input[type=checkbox]:checked,
+main #userContentContainer #habitsContainer .filterBox input[type=checkbox]:checked {
+  accent-color: #8e69ff;
+}
 main #userContentContainer .delete i {
   color: #e70909;
 }
@@ -248,6 +256,12 @@ ul li span {
 #newTaskSection {
   text-align: center; /* Centrera knappens innehåll vertikalt */
 }
+#newTaskSection #taskStatusContainer input[type=checkbox] {
+  margin-right: 5px;
+}
+#newTaskSection #taskStatusContainer input[type=checkbox]:checked {
+  accent-color: #8e69ff;
+}
 
 .addBtn {
   background-color: #8e69ff;
@@ -289,7 +303,7 @@ footer {
 }
 #html2 main h1 {
   font-size: 2em;
-  transform: rotate(-10deg);
+  transform: rotate(-8deg);
   font-weight: 800;
 }
 #html2 main #loginContainer {

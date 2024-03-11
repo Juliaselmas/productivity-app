@@ -11,11 +11,14 @@ let id = Date.now().toString(); // Generera ett unikt ID baserat på aktuell tid
 varför visas id som placeholder till streak i redigeringsläget??
 påbygga completedknappen - tidsgräns på streak? nollställs efter 24h?
 curentUser och user - liten bugg med unikt id som gör att ett nytt objekt skapas när en habit redigeras. annars funkar det!
+ska objekten skickas till habits[] också? inte bara currentUser??
 */
 
+/*
 function generateUniqueId() {
     return Date.now().toString();
 }
+*/
 
 let createHabitListItem = (title, streak) => {
     //lägger till index som argument för att säkerställa att habitStreakCounter får rätt värde
@@ -45,8 +48,8 @@ let createHabitListItem = (title, streak) => {
         streak++;
         habitStreakCounter++;
         streakNumber.innerText = "Streak: " + streak;
-        updateStreakInLocalStorage(title, streak);
-        saveHabitToLocalStorage(id, title, priority, streak);
+        updateStreakInLocalStorage(title, streak,);
+        saveToLocalStorage(title, streak, id);
     });
 
         //saveToLocalStorage();

@@ -14,7 +14,7 @@ $greybackgroundColorBtnFilterSort: #d3d0d0;
 $greybackgroundColorBtnFilterSortHover:#b3b1b1; 
 
 //Bakgrunsfärg på containrar login, habit, tasks
-$backroundColorContainer: #eeeeee;
+$backgroundColorContainer: #eeeeee;
 $bg-primary: #ffffff;
 
 .hide {
@@ -76,6 +76,7 @@ nav {
 
   text-align: center;
   justify-content: space-between;
+  align-items: center;
   padding: 0 20px; ////padding på sidorna kannske inte ska läggas
 
   #navLogoText {
@@ -84,7 +85,7 @@ nav {
     text-align: center;
   }
 
-  #logoutBtn {
+  #logOutBtn {
     height: 70%;
     display: flex;
     flex-direction: row;
@@ -154,7 +155,7 @@ main {
 
     #leftColumn {
       box-sizing: border-box;
-      width: 27%;
+      width: 29%;
       padding-top: 0;
     }
     #todo-container,
@@ -251,8 +252,8 @@ main {
 
     .listColumn {
       padding: 2%;
-      width: 27%;
-      background-color: $backroundColorContainer;
+      width: 29%;
+      background-color: $backgroundColorContainer;
       border-radius: 4px;
       box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
 
@@ -282,7 +283,7 @@ main {
         padding-left: 0;
 
         li {
-          width: 90%;
+          
           background-color: white;
           padding: 4%;
           border-radius: 4px;

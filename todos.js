@@ -181,7 +181,7 @@ function addTask() {
 
 
     // Spara uppgifterna till localStorage
-    saveTasksToLocalStorage();
+    //saveTasksToLocalStorage();
 }
 
 // Funktion för att ladda uppgifter från localStorage (Fungerar ej ?)
@@ -431,6 +431,8 @@ completedBtnNodes.forEach((button) => {
         task.status = !task.status;
         li.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';
         this.textContent = task.status ? 'Undo' : 'Mark as complete';
+
+
         saveTasksToLocalStorage();
     });
 });
@@ -523,3 +525,7 @@ editBtnNodes.forEach((button) => {
 
 // // Sätt data-index attributet för att lagra indexet för uppgiften
 // li.setAttribute('data-index', index);
+
+
+
+//olika styling för tasks som skapas och tasks som laddas in

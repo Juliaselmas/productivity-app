@@ -13,8 +13,6 @@
     <script src="habits.js" defer></script>
     <script src="miscellaneous.js" defer></script>
 
-    <!-- länk till fontawesom script -->
-    <script src="https://kit.fontawesome.com/ce8c6a5a73.js" crossorigin="anonymous"></script>
     <!-- länka in axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -74,7 +72,7 @@
 
                     <div id="taskStatusContainer">
                         <input type="checkbox" id="taskStatus">
-                        <label for="taskStatus">Completed</label>
+                        <label for="#taskStatus">Completed</label>
                     </div>
 
 
@@ -97,7 +95,8 @@
                 <section>
                     <h2>Add a habit</h2>
                     <input type="text" id="habitInput" placeholder="Add a new habit">
-
+                    <button id="addHabitBtn" class="addBtn">Add Habit</button>
+                    </br>
                     <label for="">Choose a priority:</label>
                     <div>
                         <input type="radio" name="priority" id="highPriority" value="High">
@@ -111,22 +110,7 @@
                         <input type="radio" name="priority" id="lowPriority" value="Low">
                         <label for="priority">Low</label>
                     </div>
-                    <button id="addHabitBtn" class="addBtn">Add Habit</button>
-                    </br>
                 </section>
-                <!-- Förslag på ändring Julia, för att man ska kunna trycka på texten Height osv och inte endast behöva träffa radioButton. Ändra om du önskar // Nina  : <div>
-    <input type="radio" name="priority" id="highPriority" value="High">
-    <label for="highPriority">High</label>
-</div>
-<div>
-    <input type="radio" name="priority" id="mediumPriority" value="Medium">
-    <label for="mediumPriority">Medium</label>
-</div>
-<div>
-    <input type="radio" name="priority" id="lowPriority" value="Low">
-    <label for="lowPriority">Low</label>
-</div>
- -->
 
 
             </div> <!-- här slutar den vänstra kolumnen -->
@@ -134,12 +118,12 @@
 
 
             <div id="todo-container" class="mainColumn listColumn todo-container">
-                <h2>My tasks</h2>
+                <h2>My to-dos</h2>
 
                 <!-- filtrering & sortering här -->
                 <div class="filterSortingBtnContainer">
-                    <button class="showFiltersBtn"><i class="fa-solid fa-sliders"></i></button>
-                    <button class="showSortingBtn"><i class="fa-solid fa-sort"></i></button>
+                    <button class="showFiltersBtn">Filters</button>
+                    <button class="showSortingBtn">Sorting</button>
                 </div>
 
                 <div class="filterBox hide">
@@ -155,9 +139,7 @@
 
 
 
-                    <button id="applyFiltersButton">Apply Filters <i class="fa-solid fa-filter"></i></button>
-                    <button id="restoreTasksBtn">Restore All Tasks</button>
-
+                    <button id="applyFiltersButton">Apply Filters</button>
 
 
                 </div>
@@ -167,18 +149,10 @@
 
                     <button onclick="displayTasksByStatus(false)">Show Not Completed Tasks</button>
                     <button onclick="showAllTasks()">Show All Tasks</button>
-                    <!-- Ändrad 9/3 -->
-                    <p>Sort by following </p>
-                    <select onchange="sortTasks(this.value)">
-                        <!-- Ska det vara en tom ruta ist för text? -->
-                        <option value="default" selected> Make a choice</option>
-
-                        <option value="deadlineAscending">Sort by deadline&uarr; (ascending order) </option>
-                        <option value="deadlineDescending">Sort by deadline &darr; (descending order)</option>
-                        <option value="estimateAscending">Sort by estimated time &uarr; (ascending order)</option>
-                        <option value="estimateDescending">Sort by estimated time &darr; (descending order)</option>
-                    </select>
-
+                    <button onclick="sortByDeadlineAscending()">Sort by Deadline (stigande)</button>
+                    <button onclick="sortByDeadlineDescending()">Sort by Deadline (fallande )</button>
+                    <button onclick="sortByEstimateAscending()">Sort by Estimated time (stigande)</button>
+                    <button onclick="sortByEstimateDescending()">Sort by Estimated time (Fallande)</button>
                 </div>
 
                 <ul id="taskList"></ul> <!--denna ska ligga här, utanför filterbox-->
@@ -190,8 +164,8 @@
                 <h2>My habits</h2>
                 <!-- filtrering & sortering här -->
                 <div class="filterSortingBtnContainer">
-                    <button class="showFiltersBtn"><i class="fa-solid fa-sliders"></i></button>
-                    <button class="showSortingBtn"><i class="fa-solid fa-sort"></i></button>
+                    <button class="showFiltersBtn">Filters</button>
+                    <button class="showSortingBtn">Sorting</button>
                 </div>
 
                 <div class="filterBox hide">

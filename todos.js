@@ -38,8 +38,10 @@ function createTaskElement(task, index) {
         <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
         <button class="delete"><i class="far fa-trash-can"></i>
         </button>
+        </button>
     `;
 
+    // Lägg till en eventListener till "Markera som slutförd" / "Ångra" knappen.
     // Lägg till en eventListener till "Markera som slutförd" / "Ångra" knappen.
     li.querySelector('.toggle').addEventListener('click', function () {
         task.status = !task.status;
@@ -158,6 +160,7 @@ function addTask() {
     console.log(indexOfUser);
     console.log(thisUserInTheArray.tasks + currentUserObject.tasks);
     thisUserInTheArray.tasks = currentUserObject.tasks;  //byta ut tasks i användaren i users mot currentusers tasks
+    thisUserInTheArray.tasks = currentUserObject.tasks;  //byta ut tasks i användaren i users mot currentusers tasks
     console.log("uppdaterade användaren: " + thisUserInTheArray); //nu är den uppdaterad
 
     //lägga in den uppdaterade versionen av användaren i users
@@ -203,6 +206,7 @@ function loadTasksFromLocalStorage() {
     }
 }
 ////bör ej vata kvar
+////bör ej vata kvar
 // loadTasksFromLocalStorage();
 
 // Funktion för att filtrera uppgifter baserat på deras status
@@ -229,6 +233,7 @@ function displayTasksByStatus(status) {
 }
 
 //Funktion för att visa samtliga tasks utan sortering.
+//Funktion för att visa samtliga tasks utan sortering.
 
 
 function showAllTasks() {
@@ -246,7 +251,9 @@ function showAllTasks() {
 }
 
 // Funktion för att öppna redigeringsläge för en uppgift. Den tar in två argument, task och index.
+// Funktion för att öppna redigeringsläge för en uppgift. Den tar in två argument, task och index.
 function openTaskEdit(task, index) {
+    // Skapa nya inputs för redigering av varje uppgiftsdel.
     // Skapa nya inputs för redigering av varje uppgiftsdel.
     let newTitleInput = document.createElement("input");
     newTitleInput.type = "text";
@@ -274,6 +281,7 @@ function openTaskEdit(task, index) {
     newCategoryInput.value = task.category.toLowerCase();
 
     // Skapa en knapp--> uppdatera
+    // Skapa en knapp--> uppdatera
     let updateButton = document.createElement("button");
     updateButton.textContent = "Update";
 
@@ -289,6 +297,7 @@ function openTaskEdit(task, index) {
     taskElement.appendChild(updateButton);
 
     // eventListener för Uppdatera knappen/funktionen
+    // eventListener för Uppdatera knappen/funktionen
     updateButton.addEventListener('click', function () {
         // Uppdatera objektet med de nya inputen som användaren gör i input-fälten
         task.title = newTitleInput.value;
@@ -301,6 +310,7 @@ function openTaskEdit(task, index) {
         // Sparar
         saveTasksToLocalStorage();
 
+        // UPdaterad lista vid ändring
         // UPdaterad lista vid ändring
         taskElement.innerHTML = `
         <h3>${task.title}</h3>
@@ -404,6 +414,7 @@ let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett ob
 
 
 // Lägg till en eventListener till "MARKERA SOM SLUTFÖRD" / "Ångra" knappen.
+// Lägg till en eventListener till "MARKERA SOM SLUTFÖRD" / "Ångra" knappen.
 //skapar nodelista
 let completedBtnNodes = document.querySelectorAll('.toggle');
 
@@ -431,6 +442,7 @@ completedBtnNodes.forEach((button) => {
 
 
 document.addEventListener('DOMContentLoaded', function () { //DOMContentLoaded ser till så att detta inte körs förrns allt annat har laddats in
+    // Välj alla knappar med klassen 'DELETE'
     // Välj alla knappar med klassen 'DELETE'
     let deleteBtnNodes = document.querySelectorAll('.delete');
 

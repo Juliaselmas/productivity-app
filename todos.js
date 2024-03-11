@@ -11,10 +11,36 @@ let tasks = [];
 
 
 // Deklaration av funktioner
-let saveTasksToLocalStorage = () => {
+let saveTasksToLocalStorage = (task) => {
+    console.log("saving to local storage..", task)
+    //delete
     // Filtrera bort raderade uppgifter innan du sparar till localStorage
     let tasksToSave = tasks.filter(task => !task.deleted);
     localStorage.setItem('tasks', JSON.stringify(tasksToSave));
+
+    //edit
+    //Gör så den hamnar i currentUser.task och ersätter den tidigare tasken.
+let currentUser =localStorage.getItem('currentUser');
+let currentUserObject=JSON.parse(currentUser);
+let users = JSON.parse(localStorage.getItem('users')) || [];
+let thisUserInTheArray = users.find(
+(user) =>{ return user.username === currentUserObject.username}
+);
+let indexOfUser = users.indexOf(thisUserInTheArray)
+
+//Skriv mer här 
+
+
+
+users[indexOfUser] = thisUserInTheArray;
+localStorage.setItem('users', JSON.stringify(users))
+    //completed
+
+
+
+    // tasks ----> currentUser
+
+    //currentUser ----> users
 }
 
 function createTaskElement(task, index) {
@@ -303,7 +329,7 @@ function openTaskEdit(task, index) {
         task.category = newCategoryInput.value;
 
         // Sparar
-        saveTasksToLocalStorage();
+        saveTasksToLocalStorage(task);
 
         // UPdaterad lista vid ändring 
         taskElement.innerHTML = `
@@ -404,7 +430,7 @@ function sortTasks(sortType) {
 
 
 
-let currentUser = localStorage.getItem("currentUser"); 
+let currentUser = localStorage.getItem("currentUser");
 let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
 
 
@@ -472,34 +498,26 @@ document.addEventListener('DOMContentLoaded', function () { //DOMContentLoaded s
 
 
 // Välj alla knappar med klassen 'EDIT'
+document.addEventListener('DOMContentLoaded', function () {
+    try {
+        let editBtnNodes = document.querySelectorAll('.edit');
+        console.log('dessa är edit nodes:' + editBtnNodes);
 
-// try {
-//     let editBtnNodes = document.querySelectorAll('.edit');
+        // Loopa igenom nodlistan och lägg till händelselyssnare på varje edit-knapp
+        editBtnNodes.forEach((button) => {
+            button.addEventListener('click', function () {
+                console.log('Event listener EDIT körs!'); // tillfällig Loggar att händelselyssnaren körs
 
-//     console.log('dessa är edit nodes:' + editBtnNodes);
-// } catch (err) {
-//     console.log('det går inte att göra ne nodelista av edit btns');
-// }
-
-// Loopa igenom nodlistan och lägg till händelselyssnare på varje edit-knapp
-editBtnNodes.forEach((button) => {
-    button.addEventListener('click', function () {
-        console.log('Event listener EDIT  körs!'); // Logga att händelselyssnaren körs
-
-        // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
-        let thisTaskLi = this.parentNode;
-
-        // Hämta index för uppgiften från dess data-index attribut
-        let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
-
-        // Hämta uppgiften från tasks-arrayen baserat på indexet
-        let task = tasks[taskIndex];
-
-        // Öppna redigeringsläge för uppgiften
-        openTaskEdit(task, taskIndex);
-    });
+                let thisTaskLi = this.parentNode;
+                let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
+                let task = currentUserObject.tasks[taskIndex];
+                openTaskEdit(task, taskIndex);
+            });
+        });
+    } catch (err) {
+        console.log('det går inte att göra en nodelista av edit btns');
+    }
 });
-
 
 
 //DET HÄR UNDER ÄR DET INNEHÅLL SOM SKA SKRIVAS OM FÖR ATT MATCHA FORMATET OVAN OCH SEN TAS BORT

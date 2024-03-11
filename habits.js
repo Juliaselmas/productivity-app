@@ -20,7 +20,7 @@ function generateUniqueId() {
 }
 */
 
-let createHabitListItem = (title, streak) => {
+let createHabitListItem = (title, priority, streak) => {
     //lägger till index som argument för att säkerställa att habitStreakCounter får rätt värde
     //habitStreakCounter = streak;
 
@@ -40,7 +40,7 @@ let createHabitListItem = (title, streak) => {
 
     //skapar ny completedknapp
     let completedHabitBtn = document.createElement("button");
-    completedHabitBtn.innerText = "Mark as Completed";
+    completedHabitBtn.innerText = "Done for the day!";
     li.append(completedHabitBtn);
 
     // Eventlyssnare för att öka streak och spara i localStorage vid klick på completedHabitBtn
@@ -49,7 +49,7 @@ let createHabitListItem = (title, streak) => {
         habitStreakCounter++;
         streakNumber.innerText = "Streak: " + streak;
         updateStreakInLocalStorage(title, streak,);
-        saveToLocalStorage(title, streak, id);
+        saveToLocalStorage(title, priority, streak, id);
     });
 
         //saveToLocalStorage();
@@ -276,7 +276,7 @@ addHabitBtn.addEventListener("click", () => {
     };
 
     habits.push(newHabit);
-    createHabitListItem(newHabitText, newId); // Skicka med id till createHabitListItem
+    createHabitListItem(newHabitText, priorityValue, 0, id); // Skicka med id till createHabitListItem
     habitInput.value = "";
 });
 

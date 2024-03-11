@@ -39,9 +39,12 @@ function createTaskElement(task, index) {
         <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
         <button class="delete"><i class="far fa-trash-can"></i>
         </button> 
+
+        </button>
     `;
 
     // Lägg till en eventListener till "Markera som slutförd" / "Ångra" knappen. 
+
     li.querySelector('.toggle').addEventListener('click', function () {
         task.status = !task.status;
         li.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';
@@ -400,8 +403,10 @@ function sortTasks(sortType) {
 
 
 
-// let currentUser = localStorage.getItem("currentUser"); // DET ÄR DESSA SOM BLOCKERAR NEDAN GREJERNA FRÅN ATT FUNGERA - DE TRIGGAR ETT FELMEDDELANDE OM ATT CURRENTUSER DEKLARERAS TVÅ GÅNGER. DEN TIDIGARE DEKLARATIONEN LIGGER DOCK INUTI ADD TASK OCH ÄR EJ GLOBAL. DÄRFÖR TROR JAG ATT DE BEHÖVER DEKLARERAS NÅGONSTANS HÄR NERE FÖR ATT EN DEL AV FUNKTIONALITETEN NEDAN SKA FUNGERA, MEN VEM VET
-// let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
+
+let currentUser = localStorage.getItem("currentUser"); 
+let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
+
 
 
 // Lägg till en eventListener till "MARKERA SOM SLUTFÖRD" / "Ångra" knappen. 
@@ -433,6 +438,7 @@ completedBtnNodes.forEach((button) => {
 
 document.addEventListener('DOMContentLoaded', function () { //DOMContentLoaded ser till så att detta inte körs förrns allt annat har laddats in
     // Välj alla knappar med klassen 'DELETE' 
+
     let deleteBtnNodes = document.querySelectorAll('.delete');
 
     console.log('dessa är delete nodes:' + deleteBtnNodes);

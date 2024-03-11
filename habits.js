@@ -20,9 +20,11 @@ function generateUniqueId() {
 }
 */
 
-let createHabitListItem = (title, priority, streak) => {
+let createHabitListItem = (title, priority, streak, id) => {
     //lägger till index som argument för att säkerställa att habitStreakCounter får rätt värde
     //habitStreakCounter = streak;
+    let newId = Date.now().toString(); // Generera ett unikt ID baserat på aktuell tid
+
 
     let priorityBtn = document.querySelector("input[name='priority']:checked").value;
 
@@ -48,7 +50,7 @@ let createHabitListItem = (title, priority, streak) => {
         streak++;
         habitStreakCounter++;
         streakNumber.innerText = "Streak: " + streak;
-        updateStreakInLocalStorage(title, streak,);
+        //updateStreakInLocalStorage(title, streak,);
         saveToLocalStorage(title, priority, streak, id);
     });
 
@@ -190,7 +192,7 @@ let createHabitListItem = (title, priority, streak) => {
 
     
 };
-
+/*
 let updateStreakInLocalStorage = (title, streak) => {
     let existingHabits = JSON.parse(localStorage.getItem('habits')) || [];
 
@@ -203,6 +205,7 @@ let updateStreakInLocalStorage = (title, streak) => {
     // Spara den uppdaterade listan till localStorage
     localStorage.setItem('habits', JSON.stringify(existingHabits));
 };
+*/
 
 let saveToLocalStorage = (title, priority, streak, id) => {
     let existingHabits = JSON.parse(localStorage.getItem('habits')) || [];
@@ -276,7 +279,7 @@ addHabitBtn.addEventListener("click", () => {
     };
 
     habits.push(newHabit);
-    createHabitListItem(newHabitText, priorityValue, 0, id); // Skicka med id till createHabitListItem
+    createHabitListItem(newHabitText, priorityValue, 0, newId); // Skicka med id till createHabitListItem
     habitInput.value = "";
 });
 

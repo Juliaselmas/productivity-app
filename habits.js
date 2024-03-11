@@ -218,8 +218,8 @@ let saveToLocalStorage = (title, priority, streak, id) => {
     // Hitta befintlig vana med samma ID
     let existingHabit = currentUserObject.habits.find(habit => habit.id === id);
 
-    /// Hitta befintlig habit med samma ID
-    //let existingHabit = existingHabits.find(habit => habit.id === id);
+    /// Hitta befintlig habit med samma ID i habits[]
+    let existingHabitIndex = habits.findIndex(habit => habit.id === id);
     
     if (existingHabit) {
         // Uppdatera den befintliga habiten
@@ -227,7 +227,7 @@ let saveToLocalStorage = (title, priority, streak, id) => {
         existingHabit.priority = priority;
         existingHabit.streak = streak;
     } else {
-        // Skapa en ny habit om ingen matchande hittades
+        // Skapa en ny habit om ingen matchande hittades i currentUserObject
         let latestHabit = {
             title: title, 
             priority: priority,
@@ -235,14 +235,33 @@ let saveToLocalStorage = (title, priority, streak, id) => {
             id: id,
             deleted: false
         };
-        //existingHabits.push(latestHabit);
+        
         currentUserObject.habits.push(latestHabit);
     }
 
     // Filtrera bort raderade uppgifter innan du sparar till localStorage
-    let habitsToSave = existingHabits.filter(habit => !habit.deleted);
+    //let habitsToSave = existingHabits.filter(habit => !habit.deleted);
+
+    // Uppdatera habits[] oavsett om en befintlig habit hittades eller inte
+    if (existingHabitIndex !== -1) {
+        // Uppdatera den befintliga habiten i habits[]
+        habits[existingHabitIndex].title = title;
+        habits[existingHabitIndex].priority = priority;
+        habits[existingHabitIndex].streak = streak;
+    } else {
+        // Skapa en ny habit om ingen matchande hittades i habits[]
+        let latestHabit = {
+            title: title, 
+            priority: priority,
+            streak: streak,
+            id: id,
+            deleted: false
+        };
+        habits.push(latestHabit);
+    }
 
     localStorage.setItem("currentUser", JSON.stringify(currentUserObject));
+    localStorage.setItem("habits", JSON.stringify(habits));
 };
 
 

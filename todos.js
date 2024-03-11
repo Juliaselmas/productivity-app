@@ -18,22 +18,40 @@ let saveTasksToLocalStorage = (task) => {
     let tasksToSave = tasks.filter(task => !task.deleted);
     localStorage.setItem('tasks', JSON.stringify(tasksToSave));
 
-    //edit
+    
+    
+    
     //Gör så den hamnar i currentUser.task och ersätter den tidigare tasken.
-let currentUser =localStorage.getItem('currentUser');
-let currentUserObject=JSON.parse(currentUser);
-let users = JSON.parse(localStorage.getItem('users')) || [];
-let thisUserInTheArray = users.find(
-(user) =>{ return user.username === currentUserObject.username}
-);
-let indexOfUser = users.indexOf(thisUserInTheArray)
+    let currentUser =localStorage.getItem('currentUser');
+    let currentUserObject= JSON.parse(currentUser);
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    
+    
+    //edit
+    //Här emellan ska tasken uppdateras baserat på nya edit 
+    let currentUserObjectsTasks = currentUserObject.tasks;
+    let currentTask = task;
 
-//Skriv mer här 
+    let thisTaskInTheArray = currentUserObjectsTasks.find(
+        (task) =>{ return task.title === currentTask.title}
+        );
+    let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
+    currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
+    currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
 
 
+    //lägga in de ändringar som vi har gjort med tasks och sedan även currentuser in i users
 
-users[indexOfUser] = thisUserInTheArray;
-localStorage.setItem('users', JSON.stringify(users))
+    // users[indexOfUser].tasks[indexOfTask] = 
+
+    let thisUserInTheArray = users.find(
+    (user) =>{ return user.username === currentUserObject.username}
+    );
+    let indexOfUser = users.indexOf(thisUserInTheArray);
+
+    users[indexOfUser] = currentUserObject;
+    localStorage.setItem('users', JSON.stringify(users))
+
     //completed
 
 
@@ -41,6 +59,9 @@ localStorage.setItem('users', JSON.stringify(users))
     // tasks ----> currentUser
 
     //currentUser ----> users
+
+
+    // vi behöver skapa if satser så att funktionen körs vid rätt tillfälle (edit,delete)
 }
 
 function createTaskElement(task, index) {

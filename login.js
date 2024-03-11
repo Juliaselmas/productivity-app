@@ -101,16 +101,16 @@ logInBtn.addEventListener("click", login);
 
 //Hitta rätt användare från users
 
-let currentUser = localStorage.getItem("currentUser");
-let currentUserObject = JSON.parse(currentUser);
+let currentUserLogin = localStorage.getItem("currentUser");
+let currentUserObjectLogin = JSON.parse(currentUserLogin);
 
 
 //Börja med att ta bort tidigare användares tasks
 taskListUl.innerHTML = " "; // varför funkar inte det här???
-console.log('Om det inte finns några tasks så är detta undefined - > ' + currentUserObject.tasks);
-if (currentUserObject.tasks) { // verkar ej fungera nu längre?
+console.log('Om det inte finns några tasks så är detta undefined - > ' + currentUserObjectLogin.tasks);
+if (currentUserObjectLogin.tasks) { // verkar ej fungera nu längre?
     
-    currentUserObject.tasks.forEach(task => {
+    currentUserObjectLogin.tasks.forEach(task => {
         let taskLi = document.createElement("li");
         taskLi.innerHTML = `
         <h3 class="taskTitle">${task.title}</h3>
@@ -154,14 +154,14 @@ let getQuote = async () =>{
     qotdSection.append(quoteParagraph);
     
 }
-
+getQuote();
 
 
 
 
 //lämna hälsningsmeddelande
 let h1 = document.querySelector("#h1");
-h1.innerText = 'Welcome ' + currentUserObject.username + "!";
+h1.innerText = 'Welcome ' + currentUserObjectLogin.username + "!";
 
 
 

@@ -399,7 +399,7 @@ function sortTasks(sortType) {
 
 
 
-let currentUser = localStorage.getItem("currentUser"); // DET ÄR DESSA SOM BLOCKERAR NEDAN GREJERNA FRÅN ATT FUNGERA - DE TRIGGAR ETT FELMEDDELANDE OM ATT CURRENTUSER DEKLARERAS TVÅ GÅNGER. DEN TIDIGARE DEKLARATIONEN LIGGER DOCK INUTI ADD TASK OCH ÄR EJ GLOBAL. DÄRFÖR TROR JAG ATT DE BEHÖVER DEKLARERAS NÅGONSTANS HÄR NERE FÖR ATT EN DEL AV FUNKTIONALITETEN NEDAN SKA FUNGERA, MEN VEM VET
+let currentUser = localStorage.getItem("currentUser"); 
 let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
 
 

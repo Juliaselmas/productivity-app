@@ -17,25 +17,26 @@ let saveTasksToLocalStorage = (task) => {
     //Gör så den hamnar i currentUser.task och ersätter den tidigare tasken.
     let currentUser =localStorage.getItem('currentUser');
     let currentUserObject= JSON.parse(currentUser);
-    // let users = JSON.parse(localStorage.getItem('users')) || [];
-    // let currentUserObjectsTasks = currentUserObject.tasks;
-    // let currentTask = task;
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    let currentUserObjectsTasks = currentUserObject.tasks;
+    let currentTask = task;
 
-    if( this.classList.contains('delete')) { //om det klickade objektet har klassen delete
+    if(/* om det klickadee objektets har klassen delete */ this.querySelector('.delete')) {
         //delete
         // Filtrera bort raderade uppgifter innan du sparar till localStorage
-        // let tasksToSave = tasks.filter(task => !task.deleted);
-        // localStorage.setItem('tasks', JSON.stringify(tasksToSave));
+        let tasksToSave = tasks.filter(task => !task.deleted);
+        localStorage.setItem('tasks', JSON.stringify(tasksToSave));
 
-        // let thisTaskInTheArray = currentUserObjectsTasks.find(
-        //     (task) =>{ return task.title === currentTask.title}
-        //     );
-        // let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
-        // currentUserObject.tasks.splice(indexOfTask, 1); //detta raderar tasken
-        // currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
+        let thisTaskInTheArray = currentUserObjectsTasks.find(
+            (task) =>{ return task.title === currentTask.title}
+            );
+        let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
+        currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
+        currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
     } else if(/* det klickade objektet har klassen edit*/ this.querySelector('.edit') ){
         
         //edit
+    
         let thisTaskInTheArray = currentUserObjectsTasks.find(
             (task) =>{ return task.title === currentTask.title}
             );
@@ -55,13 +56,13 @@ let saveTasksToLocalStorage = (task) => {
 
     // users[indexOfUser].tasks[indexOfTask] = 
 
-    // let thisUserInTheArray = users.find(
-    // (user) =>{ return user.username === currentUserObject.username}
-    // );
-    // let indexOfUser = users.indexOf(thisUserInTheArray);
+    let thisUserInTheArray = users.find(
+    (user) =>{ return user.username === currentUserObject.username}
+    );
+    let indexOfUser = users.indexOf(thisUserInTheArray);
 
-    // users[indexOfUser] = currentUserObject;
-    // localStorage.setItem('users', JSON.stringify(users))
+    users[indexOfUser] = currentUserObject;
+    localStorage.setItem('users', JSON.stringify(users))
 
     //completed
 
@@ -490,15 +491,12 @@ completedBtnNodes.forEach((button) => {
         this.textContent = task.status ? 'Undo' : 'Mark as complete';
 
 
-
-
-        })
-
-        //saveTasksToLocalStorage();
+        saveTasksToLocalStorage();
     });
+});
 
 
-
+document.addEventListener('DOMContentLoaded', function () { //DOMContentLoaded ser till så att detta inte körs förrns allt annat har laddats in
     // Välj alla knappar med klassen 'DELETE' 
 
     let deleteBtnNodes = document.querySelectorAll('.delete');
@@ -506,61 +504,29 @@ completedBtnNodes.forEach((button) => {
     console.log('dessa är delete nodes:' + deleteBtnNodes);
 
     // Loopa igenom nodlistan och lägg till händelselyssnare på varje delete-knapp
-deleteBtnNodes.forEach((button) => {
-    button.addEventListener('click', function () {
-        console.log('Event listener DELETE körs!'); // Logga att händelselyssnaren körs
+    deleteBtnNodes.forEach((button) => {
+        button.addEventListener('click', function () {
+            console.log('Event listener DELETE körs!'); // Logga att händelselyssnaren körs
 
-        // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
-        let thisTaskLi = this.parentNode;
-        let taskTitle = thisTaskLi.querySelector('.taskTitle').textContent;
+            // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
+            let thisTaskLi = this.parentNode;
 
-        let tasksFromCurrentUser = currentUserObject.tasks;
+            // Hämta index för uppgiften från dess data-index attribut
+            let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
 
-        let task = tasksFromCurrentUser.find((task) => task.title === taskTitle);
-        console.log(task);
+            tasks.splice(taskIndex, 1);      // Ta b¨ort uppgiften från arrayen tasks baserat på dess index
 
-        // Hämta index för uppgiften från dess data-index attribut
-        let taskIndex = parseInt(thisTaskLi.getAttribute('data-index'));
+            saveTasksToLocalStorage();        // Spara ändringarna till localStorage
+            taskList.removeChild(thisTaskLi);        // Ta bort listelementet från DOM:en
 
-        tasks.splice(taskIndex, 1);      // Ta b¨ort uppgiften från arrayen tasks baserat på dess index
-
-        saveTasksToLocalStorage();        // Spara ändringarna till localStorage
-        taskList.removeChild(thisTaskLi);        // Ta bort listelementet från DOM:en
-
-        // Uppdatera index
-        updateTaskIndices();
+            // Uppdatera index
+            updateTaskIndices();
+        });
+    });
 
 
-        let saveNonDeletedTasksToLocalStorage = () => {
-            //delete
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-            let currentUserObjectsTasks = currentUserObject.tasks;
-            let currentTask = task;
-
-            // Filtrera bort raderade uppgifter innan du sparar till localStorage
-            let tasksToSave = tasks.filter(task => !task.deleted);
-            localStorage.setItem('tasks', JSON.stringify(tasksToSave));
-    
-            let thisTaskInTheArray = currentUserObjectsTasks.find(
-                (task) =>{ return task.title === currentTask.title}
-                );
-            let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
-            currentUserObject.tasks.splice(indexOfTask, 1); //detta raderar tasken ifrån currentuser
-            currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
-
-
-            let thisUserInTheArray = users.find(
-                (user) =>{ return user.username === currentUserObject.username}
-                );
-            let indexOfUser = users.indexOf(thisUserInTheArray);
-            
-            users[indexOfUser] = currentUserObject; // ersätter currentuser i users med den uppdaterade versionen av currentuser
-            localStorage.setItem('users', JSON.stringify(users));
-            
-    
-        };
-        saveNonDeletedTasksToLocalStorage();
 });
+
 
 
 // Välj alla knappar med klassen 'EDIT'

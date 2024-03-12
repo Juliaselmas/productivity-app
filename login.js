@@ -145,7 +145,6 @@ quoteParagraph.setAttribute('id', 'quoteParagraph');
 let getQuote = async () =>{
     let response = await axios.get('https://api.quotable.io/quotes/random');
     let quote = response.data[0].content;
-    console.log(quote);
     
     quoteParagraph.innerText = quote;
     

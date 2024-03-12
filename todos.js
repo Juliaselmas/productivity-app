@@ -21,35 +21,35 @@ let saveTasksToLocalStorage = (task) => {
     let currentUserObjectsTasks = currentUserObject.tasks;
     let currentTask = task;
 
-    if(/* om det klickadee objektets har klassen delete */ */) {
-        //delete
-        // Filtrera bort raderade uppgifter innan du sparar till localStorage
-        let tasksToSave = tasks.filter(task => !task.deleted);
-        localStorage.setItem('tasks', JSON.stringify(tasksToSave));
+    // if(/* om det klickadee objektets har klassen delete */ */) {
+    //     //delete
+    //     // Filtrera bort raderade uppgifter innan du sparar till localStorage
+    //     let tasksToSave = tasks.filter(task => !task.deleted);
+    //     localStorage.setItem('tasks', JSON.stringify(tasksToSave));
         
-        let thisTaskInTheArray = currentUserObjectsTasks.find(
-            (task) =>{ return task.title === currentTask.title}
-            );
-        let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
-        currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
-        currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
-    } else if(/* det klickade objektet har klassen edit*/ ){
+    //     let thisTaskInTheArray = currentUserObjectsTasks.find(
+    //         (task) =>{ return task.title === currentTask.title}
+    //         );
+    //     let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
+    //     currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
+    //     currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
+    // } else if(/* det klickade objektet har klassen edit*/ ){
         
-        //edit
+    //     //edit
     
-        let thisTaskInTheArray = currentUserObjectsTasks.find(
-            (task) =>{ return task.title === currentTask.title}
-            );
-        let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
-        currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
-        currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
+    //     let thisTaskInTheArray = currentUserObjectsTasks.find(
+    //         (task) =>{ return task.title === currentTask.title}
+    //         );
+    //     let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
+    //     currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
+    //     currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
 
-    } else if (/* det klickade objektet har klassen toggle (för completed)*/){
+    // } else if (/* det klickade objektet har klassen toggle (för completed)*/){
 
 
-    } else if (/* add task - om den klickade knappen har idt addTaskBtn*/){
+    // } else if (/* add task - om den klickade knappen har idt addTaskBtn*/){
 
-    };
+    // };
 
     
     //lägga in de ändringar som vi har gjort med tasks och sedan även currentuser in i users
@@ -101,7 +101,7 @@ function createTaskElement(task, index) {
         </button>
     `;
 
-    // Lägg till en eventListener till "Markera som slutförd" / "Ångra" knappen. 
+    //eventListener till "Markera som slutförd" / "Ångra" knappen. 
 
     li.querySelector('.toggle').addEventListener('click', function () {
         task.status = !task.status;
@@ -110,7 +110,7 @@ function createTaskElement(task, index) {
         saveTasksToLocalStorage();
     });
 
-    // Lägg till en eventListener till "Radera" knappen
+    //  eventListener till "Radera" knappen
     // I delete-eventet för uppgifter, använd data-attribut för att hämta indexet för uppgiften
     li.querySelector('.delete').addEventListener('click', function () {
         let taskIndex = parseInt(li.getAttribute('data-index'));
@@ -125,7 +125,7 @@ function createTaskElement(task, index) {
         openTaskEdit(task, index);
     });
 
-    // Sätt data-index attributet för att lagra indexet för uppgiften
+    // data-index attributet för att lagra indexet för uppgiften
     li.setAttribute('data-index', index);
 
     // Returnera listelementet
@@ -335,7 +335,7 @@ function openTaskEdit(task, index) {
     });
     newCategoryInput.value = task.category.toLowerCase();
 
-    // Skapa en knapp--> uppdatera 
+    // Skapar en knapp--> uppdatera 
     let updateButton = document.createElement("button");
     updateButton.textContent = "Update";
 
@@ -372,8 +372,8 @@ function openTaskEdit(task, index) {
         <p>Estimated time: ${task.estimate} hours</p>
         <p>Category: ${task.category}</p>
         <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
-        <button class="edit">Edit</button>
-        <button class="delete">Delete</button>
+        <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="delete"><i class="far fa-trash-can"></i>
     `;
 
         // Den återställer evetlistner  för "Markera som slutförd" / "Ångra" och "Radera" knappar

@@ -4,14 +4,16 @@ let habitContainer = document.getElementById("habit-container");
 let habitInput = document.getElementById("habitInput");
 let addHabitBtn = document.getElementById("addHabitBtn");
 let habitStreakCounter = 0;
-let id = Date.now().toString(); // Generera ett unikt ID baserat på aktuell tid
+let id = Date.now().toString(); //genererar ett unikt ID baserat på aktuell tid
+let sortHabitsBtn = document.getElementById("showSortingBtnHabits");
+let sortHabitsDropdown = document.getElementById("sortHabitsDropdown");
 
 
 /*Att göra:
-varför visas id som placeholder till streak i redigeringsläget??
+Sortering - få ordning på funktion updateHabitListItem rad 417
+Filtrering
+Funktionalitet för att kunna ladda redan sparade habits från localstorage i DOM!
 påbygga completedknappen - tidsgräns på streak? nollställs efter 24h?
-curentUser och user - liten bugg med unikt id som gör att ett nytt objekt skapas när en habit redigeras. annars funkar det!
-ska objekten skickas till habits[] också? inte bara currentUser??
 */
 
 let createHabitListItem = (title, priority, streak, id) => {
@@ -41,19 +43,19 @@ let createHabitListItem = (title, priority, streak, id) => {
     completedHabitBtn.innerText = "Done for the day!";
     li.append(completedHabitBtn);
 
-    // Eventlyssnare för att öka streak och spara i localStorage vid klick på completedHabitBtn
+    //ökar streak och sparar i localStorage
     completedHabitBtn.addEventListener("click", () => {
         streak++;
         habitStreakCounter++;
         streakNumber.innerText = "Streak: " + streak;
 
-     // Uppdatera streak i habits[]
+     //uppdaterar streak i habits[]
     let habitIndex = habits.findIndex(habit => habit.id === id);
     if (habitIndex !== -1) {
         habits[habitIndex].streak = streak; // Uppdatera streak för habit i habits[]
     }
 
-    // Uppdatera streak i currentUserObject.habits[]
+    //uppdaterar streak i currentUserObject.habits[]
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     let currentUserHabits = currentUser.habits;
     let currentUserHabitIndex = currentUserHabits.findIndex(habit => habit.id === id);
@@ -61,7 +63,7 @@ let createHabitListItem = (title, priority, streak, id) => {
         currentUserHabits[currentUserHabitIndex].streak = streak; // Uppdatera streak för habit i currentUserObject.habits[]
     }
 
-    // Uppdatera streak i users[]
+    //uppdaterar streak i users[]
     let users = JSON.parse(localStorage.getItem("users")) || [];
     let currentUserIndex = users.findIndex(user => user.username === currentUser.username);
     if (currentUserIndex !== -1) {
@@ -160,51 +162,85 @@ let createHabitListItem = (title, priority, streak, id) => {
         }
         let editedPriorityValue = editedPriorityBtn.value;
     
-        // Hitta habiten baserat på ID
+        //hittar habit baserat på ID
         let habitIndex = habits.findIndex(habit => habit.id === id);
         if (habitIndex !== -1) {
-            // Uppdatera habiten med nya värden
+            //uppdaterar habit med nya värden
             habits[habitIndex].title = editedHabitText;
             habits[habitIndex].priority = editedPriorityValue;
             habits[habitIndex].streak = editedStreakCounter;
     
-            // Uppdatera DOM med de nya värdena
+            //uppdaterar DOM med de nya värdena
             habitTextElement.innerText = editedHabitText;
             selectedPriorityElement.innerText = editedPriorityValue + " Priority";
             streakNumberElement.innerText = "Streak: " + editedStreakCounter;
 
-              // Ta bort inputfältet för habit och saveChangesBtn
+              //ta bort inputfältet för habit och saveChangesBtn
         editedHabitInput.remove();
         priorityContainer.remove();
         saveChangesBtn.remove();
         editedStreakInput.remove();
         editedStreakLabel.remove();
     
-            // Spara den uppdaterade habiten till local storage
+            //sparar den uppdaterade habit till localstorage
             saveToLocalStorage(editedHabitText, editedPriorityValue, editedStreakCounter, id);
-            console.log("currentUserObject.habits after editing habit:", currentUserObject.habits);
-            console.log("habits after editing habit:", habits);
+            //console.log("currentUserObject.habits after editing habit:", currentUserObject.habits);
+            //console.log("habits after editing habit:", habits);
         } else {
             console.error("Habit not found in habits array.");
         }
     });
 });
 
-    
-
-
     //skapar ny deleteknapp
     let deleteHabitBtn = document.createElement("button");
     deleteHabitBtn.innerText = "Delete Habit";
     li.append(deleteHabitBtn);
 
-    // Eventlyssnare för att ta bort habit vid klick på deleteHabitBtn
+    
     deleteHabitBtn.addEventListener("click", () => {
-        li.remove();
-        deleteHabitFromLocalStorage(id);
-    });
+    //hitta indexet för habiten i habits[]
+    let habitIndex = habits.findIndex(habit => habit.id === id);
+    if (habitIndex !== -1) {
+        //tar bort habiten från habits[]
+        habits.splice(habitIndex, 1);
+        //uppdaterar localStorage för habits
+        localStorage.setItem("habits", JSON.stringify(habits));
+    }
 
-    // Spara det unika ID:t i ett attribut på habit-listpunkten
+    //uppdaterar currentUserObject i localStorage
+    let currentUserObject = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUserObject) {
+        //hittar indexet för habiten i currentUserObject.habits[]
+        let currentUserHabitIndex = currentUserObject.habits.findIndex(habit => habit.id === id);
+        if (currentUserHabitIndex !== -1) {
+            //tar bort habit från currentUserObject.habits[]
+            currentUserObject.habits.splice(currentUserHabitIndex, 1);
+            //uppdaterar localStorage för currentUserObject
+            localStorage.setItem("currentUser", JSON.stringify(currentUserObject));
+        }
+    }
+
+    //uppdaterar user-objektet i localStorage (om det behövs)
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    let currentUserIndex = users.findIndex(user => user.username === currentUser.username);
+    if (currentUserIndex !== -1) {
+        //hittar indexet för habiten i users[].habits[]
+        let userHabitIndex = users[currentUserIndex].habits.findIndex(habit => habit.id === id);
+        if (userHabitIndex !== -1) {
+            //tar bort habiten från users[].habits[]
+            users[currentUserIndex].habits.splice(userHabitIndex, 1);
+            //uppdaterar localStorage för users
+            localStorage.setItem("users", JSON.stringify(users));
+        }
+    }
+
+    //tar bort habit från DOM
+    li.remove();
+});
+
+    //sparar det unika ID:t i ett attribut på habit-listpunkten
     li.setAttribute("data-habit-id", id);
 
     habitList.append(li);
@@ -221,24 +257,24 @@ let saveHabitToUser = (habit) => {
     let users = JSON.parse(localStorage.getItem("users")) || [];
     let currentUserObject = JSON.parse(localStorage.getItem("currentUser")); // Deklarera currentUserObject baserat på localStorage
 
-    // Hitta användaren i users-arrayen
+    //hittar användaren i users[]
     let currentUserIndex = users.findIndex(user => user.username === currentUserObject.username);
 
     if (currentUserIndex !== -1) {
-        // Uppdatera vanor (habits) för den aktuella användaren
+        //uppdaterar habits för den aktuella användaren
         if (!users[currentUserIndex].habits) {
             users[currentUserIndex].habits = [];
         }
         let existingHabitIndex = users[currentUserIndex].habits.findIndex(item => item.id === habit.id);
         if (existingHabitIndex !== -1) {
-            // Uppdatera befintlig habit
+            //uppdaterar befintlig habit
             users[currentUserIndex].habits[existingHabitIndex] = habit;
         } else {
-            // Lägg till ny habit
+            //lägger till ny habit
             users[currentUserIndex].habits.push(habit);
         }
 
-        // Spara den uppdaterade användaren i users-arrayen
+        //sparar den uppdaterade användaren i users[]
         localStorage.setItem("users", JSON.stringify(users));
     } else {
         console.error("User not found in users array.");
@@ -250,22 +286,22 @@ let saveToLocalStorage = (title, priority, streak, id) => {
     let currentUser = localStorage.getItem("currentUser");
     let currentUserObject = JSON.parse(currentUser);
 
-    // Skapa en array för vanor (habits) om den inte redan finns
+    //skapar en array (habits) om den inte redan finns
     currentUserObject.habits = currentUserObject.habits || [];
 
-    // Hitta befintlig vana med samma ID
+    //hittar befintlig vana med samma ID
     let existingHabit = currentUserObject.habits.find(habit => habit.id === id);
 
-    /// Hitta befintlig habit med samma ID i habits[]
+    //hittar befintlig habit med samma ID i habits[]
     let existingHabitIndex = habits.findIndex(habit => habit.id === id);
     
     if (existingHabit) {
-        // Uppdatera den befintliga habiten
+        //uppdaterar den befintliga habiten
         existingHabit.title = title;
         existingHabit.priority = priority;
         existingHabit.streak = streak;
     } else {
-        // Skapa en ny habit om ingen matchande hittades i currentUserObject
+        //skapar en ny habit om ingen matchande hittades i currentUserObject
         let latestHabit = {
             title: title, 
             priority: priority,
@@ -278,7 +314,7 @@ let saveToLocalStorage = (title, priority, streak, id) => {
         habits.push(latestHabit);
     }
 
-    // Spara habit till users-arrayen
+    //sparar habit till users-arrayen
     saveHabitToUser({
         title: title,
         priority: priority,
@@ -286,21 +322,30 @@ let saveToLocalStorage = (title, priority, streak, id) => {
         id: id
     });
 
-    // Filtrera bort raderade uppgifter innan du sparar till localStorage
+    //filtrerar bort raderade uppgifter innan det sparar till localStorage
     localStorage.setItem("currentUser", JSON.stringify(currentUserObject));
     localStorage.setItem("habits", JSON.stringify(habits));
+};
+
+
+//funktion för att läsa in sparade habits från localStorage och skapa listelement för varje habit
+let loadHabitsFromLocalStorage = () => {
+    let habits = JSON.parse(localStorage.getItem('habits')) || [];
+    habits.forEach(habit => {
+        createHabitListItem(habit.title, priority, habit.streak, habit.id);
+    });
 };
 
 
 addHabitBtn.addEventListener("click", () => {
     let priorityBtn = document.querySelectorAll('input[name="priority"]:checked');
     //let prioritySelected = false;
-    let priorityValue = "Medium"; // Standardprioritet om ingen väljs
-    let newId = Date.now().toString(); // Generera ett unikt ID baserat på aktuell tid
+    let priorityValue = "Medium"; //standardprioritet om ingen väljs
+    let newId = Date.now().toString(); //genererar ett unikt ID baserat på aktuell tid
 
     if (priorityBtn.length > 0) {
         //prioritySelected = true;
-        priorityValue = priorityBtn[0].value; // Hämta det första valda värdet
+        priorityValue = priorityBtn[0].value; //hämtar det första valda värdet
     }
     /*
     if (!prioritySelected) {
@@ -314,14 +359,14 @@ addHabitBtn.addEventListener("click", () => {
         return;
     }
 
-    // Kontrollera om den nya vanan redan finns i habits arrayen baserat på ID
+    //kontrollerar om den nya vanan redan finns i habits arrayen baserat på ID
     let existingHabitIndex = habits.findIndex(habit => habit.id === newId);
     if (existingHabitIndex === -1) {
         // Spara den nya vanan till local storage
         saveToLocalStorage(newHabitText, priorityValue, 0, newId);
 
-        console.log("currentUserObject.habits after adding new habit:", currentUserObject.habits);
-        console.log("habits after adding new habit:", habits);
+        //console.log("currentUserObject.habits after adding new habit:", currentUserObject.habits);
+        //console.log("habits after adding new habit:", habits);
 
         let newHabit = {
             title: newHabitText,
@@ -332,20 +377,78 @@ addHabitBtn.addEventListener("click", () => {
         };
 
         //habits.push(newHabit);
-        createHabitListItem(newHabitText, priorityValue, 0, newId); // Skicka med id till createHabitListItem
+
+        //skickar med id till createHabitListItem
+        createHabitListItem(newHabitText, priorityValue, 0, newId); 
         habitInput.value = "";
     } else {
         console.log("Habit with ID " + newId + " already exists in habits array.");
     }
 });
 
-// Funktion för att läsa in sparade habits från localStorage och skapa listelement för varje habit
-let loadHabitsFromLocalStorage = () => {
-    let habits = JSON.parse(localStorage.getItem('habits')) || [];
-    habits.forEach(habit => {
-        createHabitListItem(habit.title, priority, habit.streak, habit.id);
+
+sortHabitsBtn.addEventListener("click", () => {
+    let selectedSortOption = sortHabitsDropdown.value;
+
+    let sortedHabits;
+    switch(selectedSortOption) {
+        case "priorityAscending":
+            sortedHabits = habits.slice().sort(sortByPriorityAscending);
+            break;
+        case "priorityDescending":
+            sortedHabits = habits.slice().sort(sortByPriorityDescending);
+            break;
+        case "streakAscending":
+            sortedHabits = habits.slice().sort(sortByStreakAscending);
+            break;
+        case "streakDescending":
+            sortedHabits = habits.slice().sort(sortByStreakDescending);
+            break;
+        default:
+            // Om inget valt alternativ matchar, använd standard-sorteringen (om det finns någon)
+            sortedHabits = habits;
+            break;
+    }
+
+    // Uppdatera DOM med den sorterade listan av vanor
+    updateHabitList(sortedHabits);
+});
+
+/* FUNGERAR EJ! SKRIVER ÖVER VÄRDEN FRÅN SKAPADE OBJEKT OCH GÖR DE IDENTISKA
+function updateHabitList(sortedHabits) {
+    // Rensa befintliga vanor från listan
+    habitList.innerHTML = '';
+
+    // Skapa nya listelement för varje habit i den sorterade listan
+    sortedHabits.forEach(habit => {
+        let habitItem = createHabitListItem(habit.title, habit.priority, habit.streak, habit.id);
+        habitList.appendChild(habitItem);
     });
-};
+}
+*/
 
 // Kalla på funktionen när sidan laddas eller användaren loggar in
 window.addEventListener('load', loadHabitsFromLocalStorage);
+
+
+//sorterar från high priority till low priority
+function sortByPriorityAscending(a, b) {
+    let priorityOrder = { "High": 3, "Medium": 2, "Low": 1 };
+    return priorityOrder[a.priority] - priorityOrder[b.priority];
+}
+
+//sorterar från low priority till high priority
+function sortByPriorityDescending(a, b) {
+    let priorityOrder = { "High": 3, "Medium": 2, "Low": 1 };
+    return priorityOrder[b.priority] - priorityOrder[a.priority];
+}
+
+//sorterar från högsta till lägsta streak
+function sortByStreakAscending(a, b) {
+    return a.streak - b.streak;
+}
+
+//sorterar från lägsta till högsta streak
+function sortByStreakDescending(a, b) {
+    return b.streak - a.streak;
+}

@@ -13,7 +13,7 @@ let tasks = [];
 // Deklaration av funktioner
 let saveTasksToLocalStorage = (task) => {
     console.log("saving to local storage..", task)
-
+ 
     //Gör så den hamnar i currentUser.task och ersätter den tidigare tasken.
     let currentUser =localStorage.getItem('currentUser');
     let currentUserObject= JSON.parse(currentUser);

@@ -13,7 +13,7 @@ let tasks = [];
 // Deklaration av funktioner
 let saveTasksToLocalStorage = (task) => {
     console.log("saving to local storage..", task)
-
+ 
     //Gör så den hamnar i currentUser.task och ersätter den tidigare tasken.
     let currentUser = localStorage.getItem('currentUser');
     let currentUserObject = JSON.parse(currentUser);
@@ -21,20 +21,21 @@ let saveTasksToLocalStorage = (task) => {
     let currentUserObjectsTasks = currentUserObject.tasks;
     let currentTask = task;
 
-    // if(/* om det klickadee objektets har klassen delete */ */) {
-    //     //delete
-    //     // Filtrera bort raderade uppgifter innan du sparar till localStorage
-    //     let tasksToSave = tasks.filter(task => !task.deleted);
-    //     localStorage.setItem('tasks', JSON.stringify(tasksToSave));
+    if(this.classList.contains('delete')) { // om det klickadee objektets har klassen delete 
+        //delete
+        // Filtrera bort raderade uppgifter innan du sparar till localStorage
+        let tasksToSave = tasks.filter(task => !task.deleted);
+        localStorage.setItem('tasks', JSON.stringify(tasksToSave));
 
-    //     let thisTaskInTheArray = currentUserObjectsTasks.find(
-    //         (task) =>{ return task.title === currentTask.title}
-    //         );
-    //     let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
-    //     currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
-    //     currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
-    // } else if(/* det klickade objektet har klassen edit*/ ){
-
+        let thisTaskInTheArray = currentUserObjectsTasks.find(
+            (task) =>{ return task.title === currentTask.title}
+            );
+        let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
+        currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
+        currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
+        
+    } else if(this.classList.contains('delete') ){ // det klickade objektet har klassen edit
+        
     //     //edit
 
     //     let thisTaskInTheArray = currentUserObjectsTasks.find(
@@ -44,10 +45,10 @@ let saveTasksToLocalStorage = (task) => {
     //     currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
     //     currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
 
-    // } else if (/* det klickade objektet har klassen toggle (för completed)*/){
+    } else if ( this.classList.contains('delete')){ ///det klickade objektet har klassen toggle (för completed)
 
 
-    // } else if (/* add task - om den klickade knappen har idt addTaskBtn*/){
+    } else if (/* add task - om den klickade knappen har idt addTaskBtn*/ this.querySelector('#addTaskBtn')){
 
     // };
 

@@ -106,9 +106,9 @@ let currentUserObjectLogin = JSON.parse(currentUserLogin);
 
 
 //Börja med att ta bort tidigare användares tasks
-taskListUl.innerHTML = " "; // varför funkar inte det här???
+taskListUl.innerHTML = " "; 
 console.log('Om det inte finns några tasks så är detta undefined - > ' + currentUserObjectLogin.tasks);
-if (currentUserObjectLogin.tasks) { // verkar ej fungera nu längre?
+if (currentUserObjectLogin.tasks) { 
     
     currentUserObjectLogin.tasks.forEach(task => {
         let taskLi = document.createElement("li"); 

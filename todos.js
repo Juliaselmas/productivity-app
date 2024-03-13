@@ -21,7 +21,7 @@ let saveTasksToLocalStorage = (task) => {
     let currentUserObjectsTasks = currentUserObject.tasks;
     let currentTask = task;
 
-    if(/* om det klickadee objektets har klassen delete */ this.querySelector('.delete')) {
+    if(this.classList.contains('delete')) { // om det klickadee objektets har klassen delete 
         //delete
         // Filtrera bort raderade uppgifter innan du sparar till localStorage
         let tasksToSave = tasks.filter(task => !task.deleted);
@@ -33,7 +33,8 @@ let saveTasksToLocalStorage = (task) => {
         let indexOfTask = currentUserObjectsTasks.indexOf(thisTaskInTheArray);
         currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
         currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
-    } else if(/* det klickade objektet har klassen edit*/ this.querySelector('.edit') ){
+        
+    } else if(this.classList.contains('delete') ){ // det klickade objektet har klassen edit
         
         //edit
     
@@ -44,7 +45,7 @@ let saveTasksToLocalStorage = (task) => {
         currentUserObject.tasks[indexOfTask] = thisTaskInTheArray;
         currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
 
-    } else if (/* det klickade objektet har klassen toggle (för completed)*/ this.querySelector('.toggle')){
+    } else if ( this.classList.contains('delete')){ ///det klickade objektet har klassen toggle (för completed)
 
 
     } else if (/* add task - om den klickade knappen har idt addTaskBtn*/ this.querySelector('#addTaskBtn')){

@@ -15,8 +15,8 @@ let saveTasksToLocalStorage = (task) => {
     console.log("saving to local storage..", task)
  
     //Gör så den hamnar i currentUser.task och ersätter den tidigare tasken.
-    let currentUser =localStorage.getItem('currentUser');
-    let currentUserObject= JSON.parse(currentUser);
+    let currentUser = localStorage.getItem('currentUser');
+    let currentUserObject = JSON.parse(currentUser);
     let users = JSON.parse(localStorage.getItem('users')) || [];
     let currentUserObjectsTasks = currentUserObject.tasks;
     let currentTask = task;
@@ -37,7 +37,7 @@ let saveTasksToLocalStorage = (task) => {
     } else if(this.classList.contains('delete') ){ // det klickade objektet har klassen edit
         
     //     //edit
-    
+
     //     let thisTaskInTheArray = currentUserObjectsTasks.find(
     //         (task) =>{ return task.title === currentTask.title}
     //         );
@@ -52,13 +52,13 @@ let saveTasksToLocalStorage = (task) => {
 
     // };
 
-    
+
     //lägga in de ändringar som vi har gjort med tasks och sedan även currentuser in i users
 
     // users[indexOfUser].tasks[indexOfTask] = 
 
     let thisUserInTheArray = users.find(
-    (user) =>{ return user.username === currentUserObject.username}
+        (user) => { return user.username === currentUserObject.username }
     );
     let indexOfUser = users.indexOf(thisUserInTheArray);
 
@@ -84,7 +84,7 @@ function createTaskElement(task, index) {
     // Skapa ett nytt listelement
     let li = document.createElement('li');
 
-    // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
+    // Lägger till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
 
     li.innerHTML = `
         <h3 class="taskTitle">${task.title}</h3>
@@ -121,7 +121,7 @@ function createTaskElement(task, index) {
         updateTaskIndices(); // Uppdatera data-index attributen för alla uppgifter efter borttagning
     });
 
-    // Lägg till en eventListener till "Redigera" knappen
+    // EventListener till "Redigera" knappen
     li.querySelector('.edit').addEventListener('click', function () {
         openTaskEdit(task, index);
     });
@@ -151,7 +151,7 @@ function addTask() {
         return;
     }
 
-    // Skapa ett nytt uppgifts-objekt med värdena från inmatningsfälten
+    // Skapar ett nytt uppgifts-objekt med värdena från inmatningsfälten
     let task = {
         title: taskTitle.value,
         description: taskDescription.value,
@@ -246,7 +246,7 @@ function addTask() {
 // Funktion för att ladda uppgifter från localStorage (Fungerar ej ?)
 function loadTasksFromLocalStorage() {
     try {
-        // Hämta uppgifterna från localStorage
+        // Hämtar uppgifterna från localStorage
         const loadedTasks = JSON.parse(localStorage.getItem('tasks'));
         // Om det finns några uppgifter, skapa ett nytt uppgiftselement för varje och lägg till det i uppgiftslistan
         if (loadedTasks) {
@@ -265,8 +265,7 @@ function loadTasksFromLocalStorage() {
         alert('Failed to load tasks from localStorage. Please try again later.');
     }
 }
-////bör ej vata kvar 
-// loadTasksFromLocalStorage();
+
 
 // Funktion för att filtrera uppgifter baserat på deras status
 function filterTasksByStatus(status) {
@@ -274,17 +273,15 @@ function filterTasksByStatus(status) {
 }
 
 
-
-
 // Funktion för att visa uppgifter baserat på deras status
 function displayTasksByStatus(status) {
     // Filtrera uppgifterna
     let filteredTasks = filterTasksByStatus(status);
 
-    // Rensa den nuvarande uppgiftslistan
+    // Rensar den nuvarande uppgiftslistan
     taskList.innerHTML = '';
 
-    // Skapa och lägg till ett nytt uppgiftselement för varje filtrerad uppgift
+    // Skapar och lägger till ett nytt uppgiftselement för varje filtrerad uppgift
     filteredTasks.forEach((task, index) => {
         const taskElement = createTaskElement(task, index);
         taskList.appendChild(taskElement);
@@ -310,7 +307,7 @@ function showAllTasks() {
 
 // Funktion för att öppna redigeringsläge för en uppgift. Den tar in två argument, task och index. 
 function openTaskEdit(task, index) {
-    // Skapa nya inputs för redigering av varje uppgiftsdel. 
+    // Skapar nya inputs för redigering av varje uppgiftsdel. 
     let newTitleInput = document.createElement("input");
     newTitleInput.type = "text";
     newTitleInput.value = task.title;
@@ -340,12 +337,21 @@ function openTaskEdit(task, index) {
     let updateButton = document.createElement("button");
     updateButton.textContent = "Update";
 
-    // Ersätt varje uppgiftsdetalj med motsvarande input-fält för redigering
+    // lägger till en label för checkboxen då jag saknade texten completed 
+    let statusLabel = document.createElement("label");
+    statusLabel.innerHTML = "Completed";
+
+    // adderar labeln och kryssrutan i en container i DOMen 
+    let statusContainer = document.createElement("div");
+    statusContainer.appendChild(newStatusInput);
+    statusContainer.appendChild(statusLabel);
+
+    // Ersätter varje uppgiftsdetalj med motsvarande input-fält för redigering
     let taskElement = taskList.children[index];
     taskElement.innerHTML = '';
     taskElement.appendChild(newTitleInput);
     taskElement.appendChild(newDescriptionInput);
-    taskElement.appendChild(newStatusInput);
+    taskElement.appendChild(statusContainer);
     taskElement.appendChild(newDeadlineInput);
     taskElement.appendChild(newEstimateInput);
     taskElement.appendChild(newCategoryInput);
@@ -361,10 +367,10 @@ function openTaskEdit(task, index) {
         task.estimate = newEstimateInput.value;
         task.category = newCategoryInput.value;
 
-        // Sparar
+        // Sparar till localS
         saveTasksToLocalStorage(task);
 
-        // UPdaterad lista vid ändring 
+        // UPdaterad lista vid ändring /redigering 
         taskElement.innerHTML = `
         <h3>${task.title}</h3>
         <p>${task.description}</p>
@@ -393,13 +399,8 @@ function openTaskEdit(task, index) {
             openTaskEdit(task, index);
         });
     });
-
 }
 
-// Lägg till en eventlistener för knappen "Apply Filters"
-document.getElementById('applyFiltersButton').addEventListener('click', function () {
-    filterTasksByCategory();
-});
 
 // Funktion för att filtrera uppgifter baserat på kategorierna som är markerade
 function filterTasksByCategory() {
@@ -422,12 +423,7 @@ function filterTasksByCategory() {
 
 
 
-
-// Ladda uppgifter från localStorage när sidan laddas
-
-// 4 Funktioner som ser likadana ut. De sorterar bara på olika variabler 
-
-// Funktionalitet  för att sortera uppgifter baserat på DEADLINE i stigande ordning. Ser exakt likadon ut som nästa funktion. (Hittade logiken på stackoverflow) 
+// Funktionalitet  för att sortera uppgifter baserat på DEADLINE i stigande ordning. Ser exakt likadon ut som nästa funktion. (Hittade  även denna logik via stackoverflow) 
 function sortTasks(sortType) {
     switch (sortType) {
         case 'deadlineAscending':
@@ -450,30 +446,23 @@ function sortTasks(sortType) {
 }
 
 
-
-
 // Ladda uppgifter från localStorage när sidan laddas
 //loadTasksFromLocalStorage();
 
 
-
-
-//sätta funktionalitet på knappar i tasks
-
-
-
+//sättaer funktionalitet på knappar i tasks
 
 let currentUser = localStorage.getItem("currentUser");
 let currentUserObject = JSON.parse(currentUser); //gör om strängen till ett objekt
 
 
 
-// Lägg till en eventListener till "MARKERA SOM SLUTFÖRD" / "Ångra" knappen. 
-//skapar nodelista
+// EventListener till "MARKERA SOM SLUTFÖRD" / "Ångra" knappen. 
+//skapar en nodelista
 let completedBtnNodes = document.querySelectorAll('.toggle');
 
 
-//loopa igenom nodelista och sätta funktionalitet på alla completedknappar
+//looparr igenom node-listan och sätter funktionalitet 
 completedBtnNodes.forEach((button) => {
     button.addEventListener('click', function () {
 
@@ -499,7 +488,6 @@ completedBtnNodes.forEach((button) => {
 
 document.addEventListener('DOMContentLoaded', function () { //DOMContentLoaded ser till så att detta inte körs förrns allt annat har laddats in
     // Välj alla knappar med klassen 'DELETE' 
-
     let deleteBtnNodes = document.querySelectorAll('.delete');
 
     console.log('dessa är delete nodes:' + deleteBtnNodes);
@@ -529,7 +517,6 @@ document.addEventListener('DOMContentLoaded', function () { //DOMContentLoaded s
 });
 
 
-
 // Välj alla knappar med klassen 'EDIT'
 document.addEventListener('DOMContentLoaded', function () {
     try {
@@ -551,32 +538,3 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('det går inte att göra en nodelista av edit btns');
     }
 });
-
-
-//DET HÄR UNDER ÄR DET INNEHÅLL SOM SKA SKRIVAS OM FÖR ATT MATCHA FORMATET OVAN OCH SEN TAS BORT
-
-
-
-
-
-// // Lägg till en eventListener till "Radera" knappen
-// // I delete-eventet för uppgifter, använd data-attribut för att hämta indexet för uppgiften
-// li.querySelector('.delete').addEventListener('click', function () {
-//     let taskIndex = parseInt(li.getAttribute('data-index'));
-//     tasks.splice(taskIndex, 1); // Ta bort uppgiften från arrayen baserat på index
-//     saveTasksToLocalStorage();
-//     taskList.removeChild(li); // Ta bort listelementet från DOM:en
-//     updateTaskIndices(); // Uppdatera data-index attributen för alla uppgifter efter borttagning
-// });
-
-// // Lägg till en eventListener till "Redigera" knappen
-// li.querySelector('.edit').addEventListener('click', function () {
-//     openTaskEdit(task, index);
-// });
-
-// // Sätt data-index attributet för att lagra indexet för uppgiften
-// li.setAttribute('data-index', index);
-
-
-
-//olika styling för tasks som skapas och tasks som laddas in

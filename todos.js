@@ -6,7 +6,7 @@ let taskDeadline = document.getElementById('taskDeadline');
 let taskEstimate = document.getElementById('taskEstimate');
 let taskCategory = document.getElementById('taskCategory');
 let taskList = document.getElementById('taskList');
-let tasks = JSON.parse(localStorage.getItem ("tasks")) || [];
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 let saveTasksToLocalStorage = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -200,15 +200,12 @@ function displayTasksByStatus(status) {
     });
 };
 
-function showAllTasks() {
+function showAllTasks(tasks) {
     // Rensa taskList
     taskList.innerHTML = '';
 
-    //hämta variabler
-    let currentUserShowAllTasks = localStorage.getItem("currentUser");
-    let currentUserObjectShowAll = JSON.parse(currentUserShowAllTasks); //gör om strängen till ett objekt
     // Iterera över tasks
-    currentUserObjectShowAll.tasks.forEach((task, index) => {
+    tasks.forEach((task, index) => {
         // Skapa ett nytt uppgiftselement och lägg till det i taskList
         const taskElement = createTaskElement(task, index);
         if (taskElement) {
@@ -315,7 +312,7 @@ function openTaskEdit(task, index) {
 
     //return task; //detta ska användas senare
 
-    
+
 }
 
 
@@ -325,7 +322,9 @@ function filterTasksByCategory() {
         .map(checkbox => checkbox.id.replace("CategoryCheckbox", "").toLowerCase());
 
     if (selectedCategories.length === 0) {
-        showAllTasks();
+        let currentUserShowAllTasks = localStorage.getItem("currentUser");
+        let currentUserObjectShowAll = JSON.parse(currentUserShowAllTasks); //gör om strängen till ett objekt
+        showAllTasks(currentUserObjectShowAll.tasks);
         return;
     }
 
@@ -339,31 +338,33 @@ function filterTasksByCategory() {
 }
 
 // Funktionalitet  för att sortera uppgifter baserat på DEADLINE i stigande ordning. Ser exakt likadon ut som nästa funktion. (Hittade logiken på stackoverflow) 
+// Funktion för att sortera uppgifter baserat på det valda sorteringsalternativet
 function sortTasks(sortType) {
-    let currentUserInSortingTasks = localStorage.getItem('currentUser');
-    let currentUserObjectInSortingTasks = JSON.parse(currentUserInSortingTasks); //Förlåt Brandon...
-    console.log('detta är tasks[]' + tasks);
-    console.log('detta är currentUsers tasks' + JSON.stringify(tasks));
 
+    let currentUserStorage = localStorage.getItem("currentUser");
+    let currentUserStorageObject = JSON.parse(currentUserStorage); //gör om strängen till ett objekt
+
+    console.log('Sort type:', sortType);
     switch (sortType) {
         case 'deadlineAscending':
-            tasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+            currentUserStorageObject.tasks.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
             break;
         case 'deadlineDescending':
-           tasks.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
+            currentUserStorageObject.tasks.sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
             break;
         case 'estimateAscending':
-            tasks.sort((a, b) => a.estimate - b.estimate);
+            currentUserStorageObject.tasks.sort((a, b) => a.estimate - b.estimate);
             break;
         case 'estimateDescending':
-            tasks.sort((a, b) => b.estimate - a.estimate);
+            currentUserStorageObject.tasks.sort((a, b) => b.estimate - a.estimate);
             break;
         default:
             console.log('Invalid sort type');
             return;
     }
-    showAllTasks();
-};
+
+    showAllTasks(currentUserStorageObject.tasks); // Uppdatera listan med de sorterade uppgifterna
+}
 
 
 //sätta funktionalitet på knappar i tasks
@@ -394,30 +395,30 @@ function saveNonDeletedToStorage() {
     let currentUserObjectTasks = currentUserObject.tasks;
     let taskTitle = thisTaskLi.classList.contains('title');
     let taskInTheArray = currentUserObjectTasks.find(
-        (task) =>{ return task.title === taskTitle}
-        );
+        (task) => { return task.title === taskTitle }
+    );
     let indexOfTask = currentUserObjectTasks.indexOf(taskInTheArray);
     //currentUserObject.tasks[indexOfTask] = ; //ta bort denna
-    currentUserObjectTasks.splice(taskInTheArray , 1);
+    currentUserObjectTasks.splice(taskInTheArray, 1);
     currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen
 
     localStorage.setItem('currentUser', currentUser);
 
     //uppdatera user
     let thisUserInTheArray = users.find(
-        (user) =>{ return user.username === currentUserObject.username}
-        );
-        let indexOfUser = users.indexOf(thisUserInTheArray);
-    
+        (user) => { return user.username === currentUserObject.username }
+    );
+    let indexOfUser = users.indexOf(thisUserInTheArray);
+
     users[indexOfUser] = currentUserObject;
     localStorage.setItem('users', JSON.stringify(users));
 };
 
 let deleteBtnNodes = document.querySelectorAll('.delete');
 deleteBtnNodes.forEach((button) => {
-    button.addEventListener('click', function (){
+    button.addEventListener('click', function () {
         console.log('Event listener DELETE körs!');
-        
+
         saveNonDeletedToStorage.call(this);
     });
 });
@@ -428,7 +429,7 @@ deleteBtnNodes.forEach((button) => {
 
 
 
-function saveEditedToStorage (indexOfLi, task) { // thisTask är den tidigare versionen, indexOfLi är vilket index, och task är den nya uppdaterade versionen som har gått via openTaskEdit
+function saveEditedToStorage(indexOfLi, task) { // thisTask är den tidigare versionen, indexOfLi är vilket index, och task är den nya uppdaterade versionen som har gått via openTaskEdit
     let currentUserObjectTasks = currentUserObject.tasks;
     //let taskInTheArray = currentUserObjectTasks[indexOfLi];
     currentUserObjectTasks[indexOfLi] = task;
@@ -440,28 +441,28 @@ function saveEditedToStorage (indexOfLi, task) { // thisTask är den tidigare ve
 
     //uppdatera currentUser
     currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen      
-    localStorage.setItem('currentUser', currentUser);    
+    localStorage.setItem('currentUser', currentUser);
 
     //uppdatera userS
     let users = JSON.parse(localStorage.getItem("users")) || [];
     let thisUserInTheArray = users.find(
-    (user) =>{ return user.username === currentUserObject.username}
+        (user) => { return user.username === currentUserObject.username }
     );
     let indexOfUser = users.indexOf(thisUserInTheArray);
-    
-    
+
+
     users[indexOfUser] = currentUserObject;
     localStorage.setItem('users', JSON.stringify(users));
-        
+
 };
 
 //applicera funktionen på knapparna
 let editedBtnNodes = document.querySelectorAll('.edit');
-editedBtnNodes.forEach(function(button) {
-    button.addEventListener('click', function (){
+editedBtnNodes.forEach(function (button) {
+    button.addEventListener('click', function () {
         console.log('Event listener EDIT körs!');
         //detta handlar mest om att hitta argument till parametrar i funktioner som körs mot slutet här. 
-        let thisTaskLi = this.parentNode; 
+        let thisTaskLi = this.parentNode;
 
         //hitta index till openTaskEdit()
         //hämta ul 
@@ -485,10 +486,10 @@ editedBtnNodes.forEach(function(button) {
 
 
 
-        
+
         openTaskEdit(thisTask, indexOfLi); //thisTask i det här fallet är den nuvarande/gamla versionen av task
         //saveEditedToStorage.call(this , thisTask);
-        
+
     });
 });
 
@@ -501,7 +502,7 @@ function saveToggledToStorage(indexOfLi) {
 
     //uppdatera tasks
     let currentUserObjectTasks = currentUserObject.tasks;
-    
+
     // let thisTaskList = document.querySelector('#taskList');
     // console.log('thisTaskList är: ' + thisTaskList);
     // let arrayFromTaskListChildren = Array.from(thisTaskList.children);
@@ -509,7 +510,7 @@ function saveToggledToStorage(indexOfLi) {
     // let indexOfLi = arrayFromTaskListChildren.indexOf(thisTaskLi);
     // console.log('indexOfLi är: ' + indexOfLi);
 
-    let taskInTheArray = currentUserObjectTasks[indexOfLi] ;
+    let taskInTheArray = currentUserObjectTasks[indexOfLi];
     //console.log(taskInTheArray);
     //let taskTitle = thisTaskLi.classList.contains('title');
 
@@ -521,22 +522,22 @@ function saveToggledToStorage(indexOfLi) {
     taskInTheArray.status = !taskInTheArray.status;
     console.log(taskInTheArray);
     console.log(taskInTheArray.status);
-    
+
     //Få in ändrade status i currentUser
 
     currentUserObject.tasks[indexOfLi] = taskInTheArray;
 
     //uppdatera currentUser
     currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen      
-    localStorage.setItem('currentUser', currentUser);    
+    localStorage.setItem('currentUser', currentUser);
 
     //uppdatera userS
     let users = JSON.parse(localStorage.getItem("users")) || [];
     let thisUserInTheArray = users.find(
-    (user) =>{ return user.username === currentUserObject.username}
+        (user) => { return user.username === currentUserObject.username }
     );
     let indexOfUser = users.indexOf(thisUserInTheArray);
-    
+
     users[indexOfUser] = currentUserObject;
     localStorage.setItem('users', JSON.stringify(users));
 
@@ -547,7 +548,7 @@ function saveToggledToStorage(indexOfLi) {
 
 let toggledBtnNodes = document.querySelectorAll('.toggle');
 toggledBtnNodes.forEach((button) => {
-    button.addEventListener('click', function (){
+    button.addEventListener('click', function () {
         console.log('Event listener TOGGLE körs!');
 
         // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
@@ -564,34 +565,14 @@ toggledBtnNodes.forEach((button) => {
 
 
         saveToggledToStorage(indexOfLi);
+
+    });
+
+    //Detta är en eventlistnerer och funktionl för att kunna filterar baserat på vilken kategori man vill kunna få upp. 
+    let applyFiltersButton = document.getElementById('applyFiltersButton');
+
+    applyFiltersButton.addEventListener('click', function () {
+        filterTasksByCategory();
     });
 });
 
-// let completedBtnNodes = document.querySelectorAll('.toggle');
-
-
-// let saveCompletedToStorage = () =>{
-
-// };
-
-
-// //loopa igenom nodelista och sätta funktionalitet på alla completedknappar
-// completedBtnNodes.forEach((button) => {
-//     button.addEventListener('click', function () {
-
-//         console.log('eventlistener TOGGLE körs!');
-//         let thisTaskLi = this.parentNode;
-//         let taskTitle = thisTaskLi.querySelector('.taskTitle').textContent;
-
-//         let tasksFromCurrentUser = currentUserObject.tasks;
-
-//         let task = tasksFromCurrentUser.find((task) => task.title === taskTitle);
-//         console.log(task);
-
-
-//         task.status = !task.status;
-//         li.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';
-//         this.textContent = task.status ? 'Undo' : 'Mark as complete';
-
-//     });
-// });

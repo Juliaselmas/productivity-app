@@ -13,8 +13,10 @@
     <script src="habits.js" defer></script>
     <script src="miscellaneous.js" defer></script>
 
+    <!-- script till wether.js -->
+    <script src="weatherNina.js" defer></script>
     <!-- länk till fontawesom script -->
-    <script src="https://kit.fontawesome.com/ce8c6a5a73.js" crossorigin="anonymous"></script>   
+    <script src="https://kit.fontawesome.com/ce8c6a5a73.js" crossorigin="anonymous"></script>
     <!-- länka in axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -77,7 +79,7 @@
 
                     <input type="date" id="taskDeadline">
                     <input type="number" id="taskEstimate" placeholder="Estimated time in hours" min="0">
-          
+
                     <select id="taskCategory">
                         <option value="">Select a category</option>
                         <option value="health">Health</option>
@@ -111,24 +113,45 @@
                     <button id="addHabitBtn" class="addBtn">Add Habit</button>
                     </br>
                 </section>
-                <!-- Förslag på ändring Julia, för att man ska kunna trycka på texten Height osv och inte endast behöva träffa radioButton. Ändra om du önskar // Nina  : <div>
-    <input type="radio" name="priority" id="highPriority" value="High">
-    <label for="highPriority">High</label>
-</div>
-<div>
-    <input type="radio" name="priority" id="mediumPriority" value="Medium">
-    <label for="mediumPriority">Medium</label>
-</div>
-<div>
-    <input type="radio" name="priority" id="lowPriority" value="Low">
-    <label for="lowPriority">Low</label>
-</div>
- -->
+
                 <section id="timerSection">
 
                 </section>
                 <section id="weatherSection">
-
+                    <div class="card">
+                        <div class="search">
+                            <input type="text" placeholder="Enter city name" spellcheck="false">
+                            <button><img src="image/search.png" alt="searchsymbol"></button>
+                        </div>
+                        <div class="error">
+                            <p>Ogilltig stad</p>
+                        </div>
+                        <div class="weather">
+                            <img src="image/rain.png" class="weather-icon" alt="rain">
+                            <h1 class="temp"></h1>
+                            <h2 class="city"></h2>
+                            <div class="details">
+                                <div class="col">
+                                    <div>
+                                        <p>Luftfuktighet</p>
+                                        <!-- Representerar luftfuktighet  trots att det står water  -->
+                                        <i class="fa-solid fa-water"></i> 
+                                        <p class="humidity">""</p>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div>    
+                                         <p>Vindhastighet</p>            <i class="fa-solid fa-wind"></i>
+                                        <p class="wind"></p>
+                            
+                                   
+                                    </div>
+                                </div>
+                
+                            </div>
+                
+                        </div>
+                    </div>
                 </section>
                 <section id="calendarSection">
 
@@ -160,7 +183,7 @@
 
 
                     <button id="applyFiltersButton">Apply Filters <i class="fa-solid fa-filter"></i></button>
-                    <button id="restoreTasksBtn">Restore All Tasks <i class="fa-solid fa-rotate-right"></i></button>
+
 
 
 
@@ -172,15 +195,13 @@
                     <button onclick="displayTasksByStatus(false)">Show Not Completed Tasks</button>
                     <button onclick="showAllTasks()">Show All Tasks</button>
                     <!-- Ändrad 9/3 -->
-                    <p>Sort by following </p>
-                    <select onchange="sortTasks(this.value)">
-                        <!-- Ska det vara en tom ruta ist för text? -->
-                        <option value="default" selected> Make a choice</option>
-
-                        <option value="deadlineAscending">Sort by deadline&uarr; (ascending order) </option>
-                        <option value="deadlineDescending">Sort by deadline &darr; (descending order)</option>
-                        <option value="estimateAscending">Sort by estimated time &uarr; (ascending order)</option>
-                        <option value="estimateDescending">Sort by estimated time &darr; (descending order)</option>
+                    <p>Sort by following</p>
+                    <select id="sortSelect" onchange="sortTasks(this.value)">
+                        <option value="default" selected>Make a choice</option>
+                        <option value="deadlineAscending">Sort by deadline &#8593; (ascending order)</option>
+                        <option value="deadlineDescending">Sort by deadline &#8595; (descending order)</option>
+                        <option value="estimateAscending">Sort by estimated time &#8593; (ascending order)</option>
+                        <option value="estimateDescending">Sort by estimated time &#8595; (descending order)</option>
                     </select>
 
                 </div>

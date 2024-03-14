@@ -497,28 +497,34 @@ editedBtnNodes.forEach(function(button) {
 
 
 
-function saveToggledToStorage(this, index) {
+function saveToggledToStorage(indexOfLi) {
 
     //uppdatera tasks
     let currentUserObjectTasks = currentUserObject.tasks;
-
-    this.classList.add('red');
-
-    // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
-    let thisTaskLi = this.parentNode;
-    thisTaskLi.classList.add('green');
     
+    // let thisTaskList = document.querySelector('#taskList');
+    // console.log('thisTaskList är: ' + thisTaskList);
+    // let arrayFromTaskListChildren = Array.from(thisTaskList.children);
+    // //hämta index av li i ul
+    // let indexOfLi = arrayFromTaskListChildren.indexOf(thisTaskLi);
+    // console.log('indexOfLi är: ' + indexOfLi);
 
-    let taskTitle = thisTaskLi.classList.contains('title');
+    let taskInTheArray = currentUserObjectTasks[indexOfLi] ;
+    //console.log(taskInTheArray);
+    //let taskTitle = thisTaskLi.classList.contains('title');
 
-    let taskInTheArray = currentUserObjectTasks.find(
-        (task) =>{ return task.title === taskTitle}
-        );
-    let indexOfTask = currentUserObjectTasks.indexOf(taskInTheArray);
+    // let taskInTheArray = currentUserObjectTasks.find(
+    //     (task) =>{ return task.title === taskTitle}
+    //     );
+    // let indexOfTask = currentUserObjectTasks.indexOf(taskInTheArray);
 
     taskInTheArray.status = !taskInTheArray.status;
+    console.log(taskInTheArray);
+    console.log(taskInTheArray.status);
     
+    //Få in ändrade status i currentUser
 
+    currentUserObject.tasks[indexOfLi] = taskInTheArray;
 
     //uppdatera currentUser
     currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen      
@@ -534,6 +540,9 @@ function saveToggledToStorage(this, index) {
     users[indexOfUser] = currentUserObject;
     localStorage.setItem('users', JSON.stringify(users));
 
+
+    //läs in DOM igen
+    location.reload();
 };
 
 let toggledBtnNodes = document.querySelectorAll('.toggle');
@@ -541,15 +550,20 @@ toggledBtnNodes.forEach((button) => {
     button.addEventListener('click', function (){
         console.log('Event listener TOGGLE körs!');
 
-          //hämta ul 
-          let thisTaskList = document.querySelector('#taskList');
-          console.log('thisTaskList är: ' + thisTaskList);
-          let arrayFromTaskListChildren = Array.from(thisTaskList.children);
-          //hämta index av li i ul
-          let indexOfLi = arrayFromTaskListChildren.indexOf(thisTaskLi);
-          console.log('indexOfLi är: ' + indexOfLi);
+        // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
+        let thisTaskLi = this.parentNode;
 
-        saveToggledToStorage.call(this, indexOfLi);
+        //hämta ul 
+        let thisTaskList = document.querySelector('#taskList');
+        //console.log('thisTaskList är: ' + thisTaskList);
+        let arrayFromTaskListChildren = Array.from(thisTaskList.children);
+        //hämta index av li i ul
+        let indexOfLi = arrayFromTaskListChildren.indexOf(thisTaskLi);
+        //console.log('indexOfLi är: ' + indexOfLi);
+        console.log('indexOfLi är: ' + indexOfLi);
+
+
+        saveToggledToStorage(indexOfLi);
     });
 });
 

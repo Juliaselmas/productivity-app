@@ -121,8 +121,8 @@ if (currentUserObjectLogin.tasks) {
         <p>Estimated time: ${task.estimate} hours</p>
         <p>category: ${task.category}</p>
         <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
-        <button class="edit">Edit</button>
-        <button class="delete">Delete</button>
+        <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="delete"><i class="far fa-trash-can"></i></button>
         `;  
         
         

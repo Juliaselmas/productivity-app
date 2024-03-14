@@ -300,6 +300,9 @@ ul li span {
   padding: 40px 35px;
   text-align: center;
 }
+#weatherSection .card p {
+  font-weight: 600;
+}
 #weatherSection .card .search {
   width: 100%;
   display: flex;
@@ -338,7 +341,6 @@ ul li span {
 }
 #weatherSection .card .weather h1 {
   color: gray;
-  font-size: 30px;
   font-weight: 500;
 }
 #weatherSection .card .weather h2 {
@@ -359,13 +361,16 @@ ul li span {
   align-items: center;
   text-align: center;
 }
+#weatherSection .card p {
+  font-size: 10px;
+}
 #weatherSection .card .col img {
   width: 40px;
   margin-right: 10px;
 }
 #weatherSection .card .humidity,
 #weatherSection .card .wind {
-  font-size: 28px;
+  font-size: 18px;
   margin-top: -6px;
 }
 #weatherSection .card .weather {

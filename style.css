@@ -3,6 +3,10 @@
   background-color: #e70909;
 }
 
+.green {
+  background-color: green;
+}
+
 .hide {
   display: none;
 }

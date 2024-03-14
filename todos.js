@@ -497,10 +497,42 @@ editedBtnNodes.forEach(function(button) {
 
 
 
-let saveToggledToStorage = () => {
+function saveToggledToStorage(this, index) {
+
+    //uppdatera tasks
+    let currentUserObjectTasks = currentUserObject.tasks;
+
+    this.classList.add('red');
+
+    // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
+    let thisTaskLi = this.parentNode;
+    thisTaskLi.classList.add('green');
+    
+
+    let taskTitle = thisTaskLi.classList.contains('title');
+
+    let taskInTheArray = currentUserObjectTasks.find(
+        (task) =>{ return task.title === taskTitle}
+        );
+    let indexOfTask = currentUserObjectTasks.indexOf(taskInTheArray);
+
+    taskInTheArray.status = !taskInTheArray.status;
+    
+
+
+    //uppdatera currentUser
+    currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen      
+    localStorage.setItem('currentUser', currentUser);    
+
+    //uppdatera userS
     let users = JSON.parse(localStorage.getItem("users")) || [];
+    let thisUserInTheArray = users.find(
+    (user) =>{ return user.username === currentUserObject.username}
+    );
+    let indexOfUser = users.indexOf(thisUserInTheArray);
     
-    
+    users[indexOfUser] = currentUserObject;
+    localStorage.setItem('users', JSON.stringify(users));
 
 };
 
@@ -508,7 +540,16 @@ let toggledBtnNodes = document.querySelectorAll('.toggle');
 toggledBtnNodes.forEach((button) => {
     button.addEventListener('click', function (){
         console.log('Event listener TOGGLE körs!');
-        saveToggledToStorage();
+
+          //hämta ul 
+          let thisTaskList = document.querySelector('#taskList');
+          console.log('thisTaskList är: ' + thisTaskList);
+          let arrayFromTaskListChildren = Array.from(thisTaskList.children);
+          //hämta index av li i ul
+          let indexOfLi = arrayFromTaskListChildren.indexOf(thisTaskLi);
+          console.log('indexOfLi är: ' + indexOfLi);
+
+        saveToggledToStorage.call(this, indexOfLi);
     });
 });
 

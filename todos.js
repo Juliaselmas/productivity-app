@@ -305,12 +305,15 @@ function openTaskEdit(task, index) {
         taskElement.querySelector('.edit').addEventListener('click', function () {
             openTaskEdit(task, index);
         });
+
+        //spara resten av localstorage
+        console.log('task är: ' + task);
+        console.log('index är: ' + index);
+        saveEditedToStorage(index, task);
     });
 
 
-    saveEditedToStorage(thisTask, indexOfLi, task);
-
-    return task; //detta skan användas senare
+    //return task; //detta ska användas senare
 
     
 }
@@ -425,7 +428,7 @@ deleteBtnNodes.forEach((button) => {
 
 
 
-function saveEditedToStorage(thisTask, indexOfLi, task) { // thisTask är den tidigare versionen, indexOfLi är vilket index, och task är den nya uppdaterade versionen som har gått via openTaskEdit
+function saveEditedToStorage (indexOfLi, task) { // thisTask är den tidigare versionen, indexOfLi är vilket index, och task är den nya uppdaterade versionen som har gått via openTaskEdit
     let currentUserObjectTasks = currentUserObject.tasks;
     //let taskInTheArray = currentUserObjectTasks[indexOfLi];
     currentUserObjectTasks[indexOfLi] = task;
@@ -459,7 +462,6 @@ editedBtnNodes.forEach(function(button) {
         console.log('Event listener EDIT körs!');
         //detta handlar mest om att hitta argument till parametrar i funktioner som körs mot slutet här. 
         let thisTaskLi = this.parentNode; 
-        thisTaskLi.classList.add('red');
 
         //hitta index till openTaskEdit()
         //hämta ul 
@@ -498,6 +500,8 @@ editedBtnNodes.forEach(function(button) {
 let saveToggledToStorage = () => {
     let users = JSON.parse(localStorage.getItem("users")) || [];
     
+    
+
 };
 
 let toggledBtnNodes = document.querySelectorAll('.toggle');

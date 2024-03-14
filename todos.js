@@ -321,20 +321,16 @@ function filterTasksByCategory() {
     let selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
         .map(checkbox => checkbox.id.replace("CategoryCheckbox", "").toLowerCase());
 
+    let currentUserShowAllTasks = localStorage.getItem("currentUser");
+    let currentUserObjectShowAll = JSON.parse(currentUserShowAllTasks); //gör om strängen till ett objekt
+
     if (selectedCategories.length === 0) {
-        let currentUserShowAllTasks = localStorage.getItem("currentUser");
-        let currentUserObjectShowAll = JSON.parse(currentUserShowAllTasks); //gör om strängen till ett objekt
         showAllTasks(currentUserObjectShowAll.tasks);
-        return;
     }
-
-    let filteredTasks = tasks.filter(task => selectedCategories.includes(task.category.toLowerCase()));
-
-    taskList.innerHTML = ''; // Rensa den aktuella uppgiftslistan
-    filteredTasks.forEach((task, index) => { // Lägg till de filtrerade uppgifterna i listan
-        const taskElement = createTaskElement(task, index);
-        taskList.appendChild(taskElement);
-    });
+    else {
+        let filteredTasks = currentUserObjectShowAll.tasks.filter(task => selectedCategories.includes(task.category.toLowerCase()));
+        showAllTasks(filteredTasks);
+    }
 }
 
 // Funktionalitet  för att sortera uppgifter baserat på DEADLINE i stigande ordning. Ser exakt likadon ut som nästa funktion. (Hittade logiken på stackoverflow) 

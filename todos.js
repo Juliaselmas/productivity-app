@@ -258,7 +258,7 @@ function openTaskEdit(task, index) {
     taskElement.innerHTML = '';
     taskElement.appendChild(newTitleInput);
     taskElement.appendChild(newDescriptionInput);
-    taskElement.appendChild(newStatusInput);
+    taskElement.appendChild(statusContainer);
     taskElement.appendChild(newDeadlineInput);
     taskElement.appendChild(newEstimateInput);
     taskElement.appendChild(newCategoryInput);
@@ -309,10 +309,6 @@ function openTaskEdit(task, index) {
     return task; //detta skan användas senare
 }
 
-// Lägg till en eventlistener för knappen "Apply Filters"
-document.getElementById('applyFiltersButton').addEventListener('click', function () {
-    filterTasksByCategory();
-});
 
 // Funktion för att filtrera uppgifter baserat på kategorierna som är markerade
 function filterTasksByCategory() {

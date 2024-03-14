@@ -83,8 +83,13 @@ function updateTaskIndices() {
 
 // Funktion för att lägga till en ny uppgift
 function addTask() {
-    /* kontrollerar att man som användare har fyllt i alla uppgifter. */
+    /* kontrollerar att man som användare har fyllt i alla uppgifter, men jag är medveten om att den inte fungerar korrekt. Behöver öndras */
 
+    // console.log('taskTitle.value:', taskTitle.value);
+    // console.log('taskDescription.value:', taskDescription.value);
+    // console.log('taskDeadline.value:', taskDeadline.value);
+    // console.log('taskEstimate.value:', taskEstimate.value);
+    // console.log('taskCategory.value:', taskCategory.value);
     if (!taskTitle.value || !taskDescription.value || !taskDeadline.value || !taskEstimate.value || !taskCategory.value) {
         let errorMessage = 'Fill in all the information to add a task';
 

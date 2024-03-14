@@ -372,7 +372,10 @@ ul {
     border-radius: 20px;
     padding: 40px 35px;
     text-align: center;
+ p{
 
+font-weight: 600;
+ }
     .search {
       width: 100%;
       display: flex;
@@ -417,8 +420,9 @@ ul {
 
     .weather h1 {
       color: gray;
-      font-size: 30px;
+
       font-weight: 500;
+    
     }
 
     .weather h2 {
@@ -441,6 +445,9 @@ ul {
       align-items: center;
       text-align: center;
     }
+    p{
+      font-size: 10px
+    }
 
     .col img {
       width: 40px;
@@ -449,7 +456,7 @@ ul {
 
     .humidity,
     .wind {
-      font-size: 28px;
+      font-size: 18px;
       margin-top: -6px;
     }
 

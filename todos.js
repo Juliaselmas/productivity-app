@@ -21,7 +21,7 @@ function createTaskElement(task, index) {
     // Skapa ett nytt listelement
     let li = document.createElement('li');
 
-    // Lägg till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
+    // Lägger till uppgiftens titel, beskrivning, status, deadline, tidsestimat och kategori till listelementet
 
     li.innerHTML = `
         <h3 class="taskTitle">${task.title}</h3>
@@ -58,7 +58,7 @@ function createTaskElement(task, index) {
         updateTaskIndices(); // Uppdatera data-index attributen för alla uppgifter efter borttagning
     });
 
-    // Lägg till en eventListener till "Redigera" knappen
+    // EventListener till "Redigera" knappen
     li.querySelector('.edit').addEventListener('click', function () {
         openTaskEdit(task, index);
     });
@@ -92,7 +92,7 @@ function addTask() {
         return;
     }
 
-    // Skapa ett nytt uppgifts-objekt med värdena från inmatningsfälten
+    // Skapar ett nytt uppgifts-objekt med värdena från inmatningsfälten
     let task = {
         title: taskTitle.value,
         description: taskDescription.value,
@@ -190,10 +190,10 @@ function displayTasksByStatus(status) {
     // Filtrera uppgifterna
     let filteredTasks = filterTasksByStatus(status);
 
-    // Rensa den nuvarande uppgiftslistan
+    // Rensar den nuvarande uppgiftslistan
     taskList.innerHTML = '';
 
-    // Skapa och lägg till ett nytt uppgiftselement för varje filtrerad uppgift
+    // Skapar och lägger till ett nytt uppgiftselement för varje filtrerad uppgift
     filteredTasks.forEach((task, index) => {
         const taskElement = createTaskElement(task, index);
         taskList.appendChild(taskElement);
@@ -221,7 +221,7 @@ function showAllTasks() {
 
 //Funktion för att öppna redigeringsläge för en uppgift. Den tar in två argument, task och index. 
 function openTaskEdit(task, index) {
-    // Skapa nya inputs för redigering av varje uppgiftsdel. 
+    // Skapar nya inputs för redigering av varje uppgiftsdel. 
     let newTitleInput = document.createElement("input");
     newTitleInput.type = "text";
     newTitleInput.value = task.title;
@@ -274,10 +274,10 @@ function openTaskEdit(task, index) {
         task.estimate = newEstimateInput.value;
         task.category = newCategoryInput.value;
 
-        // Sparar
+        // Sparar till localS
         saveTasksToLocalStorage(task);
 
-        // UPdaterad lista vid ändring 
+        // UPdaterad lista vid ändring /redigering 
         taskElement.innerHTML = `
         <h3>${task.title}</h3>
         <p>${task.description}</p>
@@ -439,7 +439,7 @@ function saveEditedToStorage() {
     currentUser = JSON.stringify(currentUserObject);//uppdatera denna så att den matchar den andra igen      
     localStorage.setItem('currentUser', currentUser);    
 
-    //uppdatera user
+    //uppdatera userS
     let users = JSON.parse(localStorage.getItem("users")) || [];
     let thisUserInTheArray = users.find(
     (user) =>{ return user.username === currentUserObject.username}
@@ -450,7 +450,8 @@ function saveEditedToStorage() {
     localStorage.setItem('users', JSON.stringify(users));
         
 };
-    
+
+//applicera funktionen på knapparna
 let editedBtnNodes = document.querySelectorAll('.edit');
 editedBtnNodes.forEach((button) => {
     button.addEventListener('click', function (){

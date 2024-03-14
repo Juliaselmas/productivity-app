@@ -258,7 +258,7 @@ function openTaskEdit(task, index) {
     taskElement.innerHTML = '';
     taskElement.appendChild(newTitleInput);
     taskElement.appendChild(newDescriptionInput);
-    taskElement.appendChild(statusContainer);
+    taskElement.appendChild(newStatusInput);
     taskElement.appendChild(newDeadlineInput);
     taskElement.appendChild(newEstimateInput);
     taskElement.appendChild(newCategoryInput);
@@ -275,7 +275,7 @@ function openTaskEdit(task, index) {
         task.category = newCategoryInput.value;
 
         // Sparar till localS
-        saveTasksToLocalStorage(task);
+        saveTasksToLocalStorage(task); // denna sparar bara till tasks[] som ligger löst i LocalStorage
 
         // UPdaterad lista vid ändring /redigering 
         taskElement.innerHTML = `
@@ -290,7 +290,7 @@ function openTaskEdit(task, index) {
         <button class="delete"><i class="far fa-trash-can"></i>
     `;
 
-        // Den återställer evetlistner  för "Markera som slutförd" / "Ångra" och "Radera" knappar
+        // Den återställer eventlistener  för "Markera som slutförd" / "Ångra" och "Radera" knappar
         taskElement.querySelector('.toggle').addEventListener('click', function () {
             task.status = !task.status;
             taskElement.querySelector('.status').textContent = task.status ? 'completed' : 'Not completed';
@@ -306,7 +306,13 @@ function openTaskEdit(task, index) {
             openTaskEdit(task, index);
         });
     });
+
+
+    saveEditedToStorage(thisTask, indexOfLi, task);
+
     return task; //detta skan användas senare
+
+    
 }
 
 
@@ -419,13 +425,11 @@ deleteBtnNodes.forEach((button) => {
 
 
 
-function saveEditedToStorage() {
+function saveEditedToStorage(thisTask, indexOfLi, task) { // thisTask är den tidigare versionen, indexOfLi är vilket index, och task är den nya uppdaterade versionen som har gått via openTaskEdit
     let currentUserObjectTasks = currentUserObject.tasks;
-    let taskInTheArray = currentUserObjectTasks.find(
-        (task) =>{ return task.title === taskTitle}
-        );
-    let indexOfTask = currentUserObjectTasks.indexOf(taskInTheArray);
-    console.log('den nya versionen av tasken: ' + newVersionOfTask);    
+    //let taskInTheArray = currentUserObjectTasks[indexOfLi];
+    currentUserObjectTasks[indexOfLi] = task;
+    //let indexOfTask = currentUserObjectTasks.indexOf(taskInTheArray);   
 
     //uppdatera currentUserObject.tasks
     //currentUserObject.tasks[indexOfTask] = /*den nya versionen av tasken här*/ ;
@@ -442,6 +446,7 @@ function saveEditedToStorage() {
     );
     let indexOfUser = users.indexOf(thisUserInTheArray);
     
+    
     users[indexOfUser] = currentUserObject;
     localStorage.setItem('users', JSON.stringify(users));
         
@@ -449,16 +454,39 @@ function saveEditedToStorage() {
 
 //applicera funktionen på knapparna
 let editedBtnNodes = document.querySelectorAll('.edit');
-editedBtnNodes.forEach((button) => {
+editedBtnNodes.forEach(function(button) {
     button.addEventListener('click', function (){
         console.log('Event listener EDIT körs!');
+        //detta handlar mest om att hitta argument till parametrar i funktioner som körs mot slutet här. 
+        let thisTaskLi = this.parentNode; 
+        thisTaskLi.classList.add('red');
+
+        //hitta index till openTaskEdit()
+        //hämta ul 
+        let thisTaskList = document.querySelector('#taskList');
+        console.log('thisTaskList är: ' + thisTaskList);
+        let arrayFromTaskListChildren = Array.from(thisTaskList.children);
+        //hämta index av li i ul
+        let indexOfLi = arrayFromTaskListChildren.indexOf(thisTaskLi);
+        console.log('indexOfLi är: ' + indexOfLi);
+
+
+        //hitta task till openTaskEdit()
+
         // Hämta förälderelementet till knappen, vilket är listelementet som innehåller uppgiften
-        let thisTaskLi = this.parentNode;
-        let taskTitle = thisTaskLi.classList.contains('title');
+        console.log('thisTaskLi är: ' + JSON.stringify(thisTaskLi));
+        let taskTitle = thisTaskLi.classList.contains('title'); //fungerar ej?? därav nedan fullösning nedan
+        console.log('thisTaskTitle är: ' + taskTitle);
+        let currentUserObjectTasksInThisEvent = currentUserObject.tasks;
+        let thisTask = currentUserObjectTasksInThisEvent[indexOfLi];
+        console.log('thisTask är: ' + thisTask);
+
+
+
         
-        openTaskEdit();
-        let newVersionOfTask = openTaskEdit();
-        saveEditedToStorage.call(this , taskTitle);
+        openTaskEdit(thisTask, indexOfLi); //thisTask i det här fallet är den nuvarande/gamla versionen av task
+        //saveEditedToStorage.call(this , thisTask);
+        
     });
 });
 

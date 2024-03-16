@@ -1,21 +1,30 @@
 //variabler
-$backgroundGradient: linear-gradient(
-  164deg,
-  #310056 4.01%,
-  #8e69ff 55.23%,
-  #a215b5 99.09%
-);
+$backgroundGradient: linear-gradient(164deg,
+    #310056 4.01%,
+    #8e69ff 55.23%,
+    #a215b5 99.09%);
 // Ändrade från  #7b47e1; då den under verkar användas ist ? 9/3
 $buttonPurple: #8e69ff;
 $buttonPurpleHover: #7255c9;
 
 
 $greybackgroundColorBtnFilterSort: #d3d0d0;
-$greybackgroundColorBtnFilterSortHover:#b3b1b1; 
+$greybackgroundColorBtnFilterSortHover: #b3b1b1;
 
 //Bakgrunsfärg på containrar login, habit, tasks
 $backgroundColorContainer: #eeeeee;
 $bg-primary: #ffffff;
+
+
+.red {
+  //används endast till test
+  background-color: #e70909;
+}
+
+.green {
+  //används endast till test
+  background-color: green;
+}
 
 .hide {
   display: none;
@@ -150,7 +159,7 @@ main {
       font-size: 14px;
       resize: vertical; // För att förhindra att vyn görändras. Kan ändras till annan höjd om så önskas
       max-height: 200px;
-      
+
     }
 
     #leftColumn {
@@ -158,10 +167,11 @@ main {
       width: 29%;
       padding-top: 0;
     }
+
     #todo-container,
     #habitsContainer {
       box-sizing: border-box;
-  
+
 
 
       #applyFiltersButton,
@@ -175,59 +185,69 @@ main {
           background-color: $buttonPurpleHover;
         }
 
-       
+
       }
-      .sortingBox{
+
+      .sortingBox {
         background-color: white;
         padding: 4px;
         border-radius: 4px;
       }
-      .sortingBox p{
+
+      .sortingBox p {
         font-size: 14px;
       }
+
       .sortingBox button {
         background-color: $buttonPurple;
         color: white;
         font-weight: 600;
         border: none;
-      
+
         &:hover {
           background-color: $buttonPurpleHover;
         }
       }
-      .filterBox{
+
+      .filterBox {
         background-color: white;
         padding: 4px;
         border-radius: 4px;
 
         input[type="checkbox"] {
           margin-right: 5px;
+
           // Ändra färgen på kryssrutorna till lila
           &:checked {
-           accent-color: $buttonPurple;
+            accent-color: $buttonPurple;
           }
         }
-       } 
       }
+    }
 
 
     .delete i {
       color: #e70909;
     }
+
     button.delete {
       border: none;
     }
+
     .edit i {
       color: #310056;
     }
+
     button.edit {
       border: none;
     }
+
     .toggle {
       background-color: F0F0F0;
       border: none;
-      
+
     }
+
     .mainColumn {
       align-items: center; // Ändrat 5/3
       display: flex;
@@ -263,94 +283,208 @@ main {
         justify-content: space-between;
 
 
-        }
-        }
-        .showSortingBtn,
-        .showFiltersBtn {    
-            width: 45%;
-          border: none;
-          background-color: $greybackgroundColorBtnFilterSort;
-          
-          &:hover {
-              background-color:$greybackgroundColorBtnFilterSortHover;
-            }
-          }
-        }
-      }
-
-      ul {
-        list-style-type: none;
-        padding-left: 0;
-
-        li {
-          
-          background-color: white;
-          padding: 4%;
-          border-radius: 4px;
-          box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
-
-          p,
-          span {
-            font-size: 12px;
-          }
-
-          margin-top: 5%; //Ändrat 6/3
-          margin-bottom: 5%; //Ändrat 6/3
-        }
-      }
-
-      .card {
-        width: 90%;
-        background-color: $bg-primary;
-      }
-    
-    //Tillagd css 9/3 , ändra om ni önskar behöver
-    #newTaskSection {
-      text-align: center; /* Centrera knappens innehåll vertikalt */
-
-      #taskStatusContainer{
-        input[type="checkbox"] {
-          margin-right: 5px;
-          // Ändra färgen på kryssrutorna till lila
-          &:checked {
-           accent-color: $buttonPurple;
-          }
-        }
-
       }
     }
 
-    .addBtn {
-      background-color: $buttonPurple;
-      color: white;
+    .showSortingBtn,
+    .showFiltersBtn {
+      width: 45%;
       border: none;
-      border-radius: 3px;
-      box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
-      font-weight: 600;
-      width: 10rem;
-      margin: auto; /* Centrera knappen horisontellt */
-      margin-top: 10px; /* Lägg till lite toppmarginal */
-      padding: 0.5rem 1rem;
+      background-color: $greybackgroundColorBtnFilterSort;
+
+      &:hover {
+        background-color: $greybackgroundColorBtnFilterSortHover;
+      }
     }
-    .addBtn:hover {
-      background-color: $buttonPurpleHover;
+  }
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+
+  li {
+
+    background-color: white;
+    padding: 4%;
+    border-radius: 4px;
+    box-shadow: 0px 0px 5.8px 0px rgba(0, 0, 0, 0.25);
+
+    p,
+    span {
+      font-size: 12px;
     }
 
-    ////Gammla css borttagen 9/3
-    // .addBtn {
-    //   //lös bredden på dessa
-    //   background-color: #8e69ff;
-    //   color: white;
-    //   border: none;
-    //   border-radius: 3px;
-    //   box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
-    //   font-weight: 600;
-    //   margin-left: none;
-    //   width: 10rem;
-    //   margin: 0.5rem;
-    //   padding: 0.5rem 1rem;
-    // }
-  
+    margin-top: 5%; //Ändrat 6/3
+    margin-bottom: 5%; //Ändrat 6/3
+  }
+}
+
+.card {
+  width: 90%;
+  background-color: $bg-primary;
+}
+
+//Tillagd css 9/3 , ändra om ni önskar behöver
+#newTaskSection {
+  text-align: center;
+  /* Centrera knappens innehåll vertikalt */
+
+  #taskStatusContainer {
+    input[type="checkbox"] {
+      margin-right: 5px;
+
+      // Ändra färgen på kryssrutorna till lila
+      &:checked {
+        accent-color: $buttonPurple;
+      }
+    }
+
+  }
+}
+
+.addBtn {
+  background-color: $buttonPurple;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
+  font-weight: 600;
+  width: 10rem;
+  margin: auto;
+  /* Centrera knappen horisontellt */
+  margin-top: 10px;
+  /* Lägg till lite toppmarginal */
+  padding: 0.5rem 1rem;
+}
+
+.addBtn:hover {
+  background-color: $buttonPurpleHover;
+}
+
+
+#weatherSection {
+  .card {
+    width: 0%;
+    max-width: 470px;
+    color: gray;
+    margin: auto 0;
+    border-radius: 20px;
+    padding: 40px 35px;
+    text-align: center;
+ p{
+
+font-weight: 600;
+ }
+    .search {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    
+
+     input {
+      border: 0;
+      outline: 0;
+      background-color: white;
+      border: 3px solid #ccc;
+      color: #555;
+      padding: 0;
+      height: 60px;
+      border-radius: 30px;
+      flex: 1;
+      margin-right: 0px;
+      font-size: 18px;
+    }
+  }
+
+    .search button {
+      border: 0;
+      outline: 0;
+      background-color: white;
+      border-color: gray;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+    }
+
+    .search button img {
+      width: 16px;
+    }
+
+    .weather-icon {
+      width: 80px;
+      margin-top: 30px;
+    }
+
+    .weather h1 {
+      color: gray;
+
+      font-weight: 500;
+    
+    }
+
+    .weather h2 {
+      color: gray;
+      font-size: 24px;
+      font-weight: 400;
+      margin-top: -10px;
+    }
+
+    .details {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      margin-top: 50px;
+    }
+
+    .col {
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+    p{
+      font-size: 10px
+    }
+
+    .col img {
+      width: 40px;
+      margin-right: 10px;
+    }
+
+    .humidity,
+    .wind {
+      font-size: 18px;
+      margin-top: -6px;
+    }
+
+    .weather {
+      display: none;
+
+    }
+
+    .error {
+      text-align: center;
+      margin-left: 10px;
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .error p {
+      font-weight: 300;
+    }
+
+
+
+
+
+  }
+
+}
+
 
 footer {
   display: flex;
@@ -404,7 +538,7 @@ footer {
 
         #registerBtn,
         #logInBtn {
-    
+
           background-color: $buttonPurple;
           color: white;
           border: none;
@@ -418,11 +552,12 @@ footer {
           margin: 0.5rem;
           padding: 0.5rem 1rem;
 
-         &:hover{
+          &:hover {
             background-color: $buttonPurpleHover;
-         } 
+          }
         }
       }
+
       .columnDivs {
         display: flex;
         flex-direction: column;
@@ -436,6 +571,9 @@ footer {
       }
     }
   }
-  //Styling av js knapp i todo-container
-  
+
+  //Styling av wether.js
+
+
+
 }

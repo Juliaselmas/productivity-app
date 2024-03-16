@@ -1,4 +1,12 @@
 @charset "UTF-8";
+.red {
+  background-color: #e70909;
+}
+
+.green {
+  background-color: green;
+}
+
 .hide {
   display: none;
 }
@@ -254,7 +262,8 @@ ul li span {
 }
 
 #newTaskSection {
-  text-align: center; /* Centrera knappens innehåll vertikalt */
+  text-align: center;
+  /* Centrera knappens innehåll vertikalt */
 }
 #newTaskSection #taskStatusContainer input[type=checkbox] {
   margin-right: 5px;
@@ -271,13 +280,111 @@ ul li span {
   box-shadow: 0px 0px 1.5px 0px rgba(0, 0, 0, 0.45);
   font-weight: 600;
   width: 10rem;
-  margin: auto; /* Centrera knappen horisontellt */
-  margin-top: 10px; /* Lägg till lite toppmarginal */
+  margin: auto;
+  /* Centrera knappen horisontellt */
+  margin-top: 10px;
+  /* Lägg till lite toppmarginal */
   padding: 0.5rem 1rem;
 }
 
 .addBtn:hover {
   background-color: #7255c9;
+}
+
+#weatherSection .card {
+  width: 0%;
+  max-width: 470px;
+  color: gray;
+  margin: auto 0;
+  border-radius: 20px;
+  padding: 40px 35px;
+  text-align: center;
+}
+#weatherSection .card p {
+  font-weight: 600;
+}
+#weatherSection .card .search {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#weatherSection .card .search input {
+  border: 0;
+  outline: 0;
+  background-color: white;
+  border: 3px solid #ccc;
+  color: #555;
+  padding: 0;
+  height: 60px;
+  border-radius: 30px;
+  flex: 1;
+  margin-right: 0px;
+  font-size: 18px;
+}
+#weatherSection .card .search button {
+  border: 0;
+  outline: 0;
+  background-color: white;
+  border-color: gray;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+#weatherSection .card .search button img {
+  width: 16px;
+}
+#weatherSection .card .weather-icon {
+  width: 80px;
+  margin-top: 30px;
+}
+#weatherSection .card .weather h1 {
+  color: gray;
+  font-weight: 500;
+}
+#weatherSection .card .weather h2 {
+  color: gray;
+  font-size: 24px;
+  font-weight: 400;
+  margin-top: -10px;
+}
+#weatherSection .card .details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin-top: 50px;
+}
+#weatherSection .card .col {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+#weatherSection .card p {
+  font-size: 10px;
+}
+#weatherSection .card .col img {
+  width: 40px;
+  margin-right: 10px;
+}
+#weatherSection .card .humidity,
+#weatherSection .card .wind {
+  font-size: 18px;
+  margin-top: -6px;
+}
+#weatherSection .card .weather {
+  display: none;
+}
+#weatherSection .card .error {
+  text-align: center;
+  margin-left: 10px;
+  font-size: 14px;
+  margin-top: 10px;
+  display: none;
+}
+#weatherSection .card .error p {
+  font-weight: 300;
 }
 
 footer {

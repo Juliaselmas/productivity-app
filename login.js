@@ -106,9 +106,9 @@ let currentUserObjectLogin = JSON.parse(currentUserLogin);
 
 
 //Börja med att ta bort tidigare användares tasks
-taskListUl.innerHTML = " "; // varför funkar inte det här???
+taskListUl.innerHTML = " "; 
 console.log('Om det inte finns några tasks så är detta undefined - > ' + currentUserObjectLogin.tasks);
-if (currentUserObjectLogin.tasks) { // verkar ej fungera nu längre?
+if (currentUserObjectLogin.tasks) { 
     
     currentUserObjectLogin.tasks.forEach(task => {
         let taskLi = document.createElement("li"); 
@@ -121,8 +121,8 @@ if (currentUserObjectLogin.tasks) { // verkar ej fungera nu längre?
         <p>Estimated time: ${task.estimate} hours</p>
         <p>category: ${task.category}</p>
         <button class="toggle">${task.status ? 'Undo' : 'Mark as complete'}</button>
-        <button class="edit">Edit</button>
-        <button class="delete">Delete</button>
+        <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
+        <button class="delete"><i class="far fa-trash-can"></i></button>
         `;  
         
         
@@ -145,7 +145,7 @@ quoteParagraph.setAttribute('id', 'quoteParagraph');
 let getQuote = async () =>{
     let response = await axios.get('https://api.quotable.io/quotes/random');
     let quote = response.data[0].content;
-    console.log(quote);
+    
     
     quoteParagraph.innerText = quote;
     

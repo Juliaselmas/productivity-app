@@ -355,8 +355,8 @@ addHabitBtn.addEventListener("click", () => {
 
 });
 
-
-sortHabitsBtn.addEventListener("click", () => {
+/*
+sortHabitsDropdown.addEventListener('change', () => {
     let selectedSortOption = sortHabitsDropdown.value;
 
     let sortedHabits;
@@ -382,19 +382,61 @@ sortHabitsBtn.addEventListener("click", () => {
     // Uppdatera DOM med den sorterade listan av vanor
     updateHabitList(sortedHabits);
 });
+*/
 
-/* FUNGERAR EJ! SKRIVER ÖVER VÄRDEN FRÅN SKAPADE OBJEKT OCH GÖR DE IDENTISKA
+function sortHabits(sortType) {
+    let currentUserStorage = localStorage.getItem("currentUser");
+    let currentUserStorageObject = JSON.parse(currentUserStorage);
+
+    switch (sortType) {
+        case 'highestPriority':
+            currentUserStorageObject.habits.sort((a, b) => {
+                let priorityOrder = { "High": 3, "Medium": 2, "Low": 1 };
+                return priorityOrder[a.priority] - priorityOrder[b.priority];
+            });
+            break;
+        case 'lowestPriority':
+            currentUserStorageObject.habits.sort((a, b) => {
+                let priorityOrder = { "High": 3, "Medium": 2, "Low": 1 };
+                return priorityOrder[b.priority] - priorityOrder[a.priority];
+            });
+            break;
+        case 'highestStreak':
+            currentUserStorageObject.habits.sort((a, b) => a.streak - b.streak);
+            break;
+        case 'lowestStreak':
+            currentUserStorageObject.habits.sort((a, b) => b.streak - a.streak);
+            break;
+        default:
+            console.log('Unable to sort habits');
+            return;
+    }
+
+    // Uppdatera listan med de sorterade vanorna
+    updateHabitList(currentUserStorageObject.habits);
+}
+
+//FUNGERAR EJ! SKRIVER ÖVER VÄRDEN FRÅN SKAPADE OBJEKT OCH GÖR DE IDENTISKA
 function updateHabitList(sortedHabits) {
     // Rensa befintliga vanor från listan
     habitList.innerHTML = '';
 
     // Skapa nya listelement för varje habit i den sorterade listan
     sortedHabits.forEach(habit => {
-        let habitItem = createHabitListItem(habit.title, habit.priority, habit.streak, habit.id);
-        habitList.appendChild(habitItem);
+        let li = document.createElement('li');
+        li.innerHTML = `
+            <h3>${habit.title}</h3>
+            <p>Priority: ${habit.priority}</p>
+            <p>Streak: ${habit.streak}</p>
+            <button class="completedBtn">Done for the day!</button>
+            <button class="editBtn">Edit Habit</button>
+            <button class="deleteBtn">Delete Habit</button>
+        `;
+        // Lägg till li-elementet i habitList
+        habitList.appendChild(li);
     });
 }
-*/
+
 
 let loadHabitsFromLocalStorage = () => {
     // Rensa befintliga vanor från currentUser

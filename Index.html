@@ -221,10 +221,9 @@
                 </div>
 
                 <div class="sortingBox hide">
-                    <select id="sortHabitsDropdown">
+                    <select id="sortHabitsDropdown" onchange="sortHabits(this.value)">
                         <option value="default" selected>Sort your habits</option>
-
-                        <option value="highestPriority">Sort by priority &uarr; (ascending order) </option>
+                        <option value="highestPriority">Sort by priority &uarr; (ascending order)</option>
                         <option value="lowestPriority">Sort by priority &darr; (descending order)</option>
                         <option value="highestStreak">Sort by streak &uarr; (ascending order)</option>
                         <option value="lowestStreak">Sort by streak &darr; (descending order)</option>

@@ -7,14 +7,21 @@ let habitStreakCounter = 0;
 let id = Date.now().toString(); //genererar ett unikt ID baserat på aktuell tid
 let sortHabitsBtn = document.getElementById("showSortingBtnHabits");
 let sortHabitsDropdown = document.getElementById("sortHabitsDropdown");
+let filterHabitsBtn = document.getElementById("showFiltersBtnHabits");
+let applyFiltersBtn = document.getElementById("applyFiltersButton");
 
 
-/*Att göra:
-Sortering - få ordning på funktion updateHabitListItem rad 417
-Filtrering
-påbygga completedknappen - tidsgräns på streak? nollställs efter 24h?
+/*NOTES:
+SORTERING: 
+-Går ej att klicka på editBtn, completedBtn i sorteringsläget?
+-deleteBtn nås men uppdateras ej i localStorage.
 
-EN BUG: när en habit med högre streak än 0 raderas från DOM så startar inte streaken på 0 i nästa habit i DOM. funkar i localStorage. 
+FILTRERING:
+-Inget händer när man klickar på applyFiltersBtn. ID stämmer, men nås inte radioknapparna kanske? 
+
+ANNAT:
+-påbygga completedknappen - tidsgräns på streak? nollställs efter 24h?
+ 
 */
 
 let createHabitListItem = (title, priority, streak, id) => {
@@ -29,7 +36,7 @@ let createHabitListItem = (title, priority, streak, id) => {
         <button class="deleteBtn">Delete Habit</button>
     `;
 
-     // Markera den valda radioknappen för prioritet
+     //markerar den valda radioknappen för prioritet
      let priorityRadios = li.querySelectorAll('input[name="editPriority"]');
      priorityRadios.forEach(radio => {
          if (radio.value === priority) {
@@ -41,17 +48,17 @@ let createHabitListItem = (title, priority, streak, id) => {
     completedBtn.addEventListener('click', () => {
         streak++;
         habitStreakCounter++;
-        // Uppdatera streak i DOM
+        //uppdaterar streak i DOM
         let streakElement = li.querySelector('p:nth-of-type(2)');
         streakElement.innerText = "Streak: " + streak;
     
-        // Uppdatera streak i habits[]
+        //uppdaterar streak i habits[]
         let habitIndex = habits.findIndex(habit => habit.id === id);
         if (habitIndex !== -1) {
             habits[habitIndex].streak = streak;
             localStorage.setItem("habits", JSON.stringify(habits));
     
-            // Uppdatera streak i currentUserObject.habits[]
+            //uppdaterar streak i currentUserObject.habits[]
             let currentUser = JSON.parse(localStorage.getItem("currentUser"));
             if (currentUser) {
                 let currentUserHabits = currentUser.habits || [];
@@ -60,7 +67,7 @@ let createHabitListItem = (title, priority, streak, id) => {
                     currentUserHabits[currentUserHabitIndex].streak = streak;
                     localStorage.setItem("currentUser", JSON.stringify(currentUser));
                     
-                    // Uppdatera streak i users[]
+                    //uppdaterar streak i users[]
                     let users = JSON.parse(localStorage.getItem("users")) || [];
                     let currentUserIndex = users.findIndex(user => user.username === currentUser.username);
                     if (currentUserIndex !== -1) {
@@ -160,7 +167,7 @@ let createHabitListItem = (title, priority, streak, id) => {
     
             //uppdaterar DOM med de nya värdena
             habitTextElement.innerText = editedHabitText;
-            selectedPriorityElement.innerText = editedPriorityValue + " Priority";
+            selectedPriorityElement.innerText = "Priority: " + editedPriorityValue;
             streakNumberElement.innerText = "Streak: " + editedStreakCounter;
 
             //tar bort inputfältet för habit och saveChangesBtn
@@ -173,10 +180,10 @@ let createHabitListItem = (title, priority, streak, id) => {
             //sparar den uppdaterade habit till localstorage
             //saveToLocalStorage(editedHabitText, editedPriorityValue, editedStreakCounter, id);
 
-            // Spara den uppdaterade habiten till localStorage
-        localStorage.setItem("habits", JSON.stringify(habits));
+            //sparar uppdaterad habit till localStorage
+            localStorage.setItem("habits", JSON.stringify(habits));
         
-        // Uppdatera habiten i currentUser och users om det finns
+        //uppdaterar habit i currentUser och users om det finns
         let currentUser = JSON.parse(localStorage.getItem("currentUser"));
         if (currentUser) {
             let currentUserHabits = currentUser.habits || [];
@@ -208,21 +215,21 @@ let createHabitListItem = (title, priority, streak, id) => {
     let deleteBtn = li.querySelector('.deleteBtn');
     deleteBtn.addEventListener('click', () => {
         
-        // Hitta indexet för habiten i habits[]
+        //hittar indexet för habit i habits[]
         let habitIndex = habits.findIndex(habit => habit.id === id);
         if (habitIndex !== -1) {
-            // Ta bort habiten från habits[]
+            //tar bort habit från habits[]
             habits.splice(habitIndex, 1);
-            // Uppdatera localStorage för habits
+            //uppdaterar localStorage för habits
             localStorage.setItem("habits", JSON.stringify(habits));
         }
 
 
         
-    // Uppdatera currentUserObject i localStorage
+    //uppdaterar currentUserObject i localStorage
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (currentUser) {
-        // Hitta indexet för habiten i currentUserObject.habits[]
+        //hittar indexet för habit i currentUserObject.habits[]
         let currentUserHabitIndex = currentUser.habits.findIndex(habit => habit.id === id);
         if (currentUserHabitIndex !== -1) {
             currentUser.habits.splice(currentUserHabitIndex, 1);
@@ -231,23 +238,23 @@ let createHabitListItem = (title, priority, streak, id) => {
     }
 
     if (currentUser) {
-        // Hitta indexet för den aktuella användaren i users[]
+        //hittar indexet för den aktuella användaren i users[]
         let currentUserIndex = users.findIndex(user => user.username === currentUser.username);
         if (currentUserIndex !== -1) {
-            // Ta bort vanan från den aktuella användarens habits i users[]
+            //tar bort habit från den aktuella användarens habits i users[]
             if (!users[currentUserIndex].habits) {
                 users[currentUserIndex].habits = [];
             }
             let userHabitIndex = users[currentUserIndex].habits.findIndex(habit => habit.id === id);
             if (userHabitIndex !== -1) {
                 users[currentUserIndex].habits.splice(userHabitIndex, 1);
-                // Uppdatera localStorage för users
+                //uppdaterar localStorage för users
                 localStorage.setItem("users", JSON.stringify(users));
             }
         }
     }
 
-    // Ta bort vanan från DOM
+    //tar bort habit från DOM
     li.remove();
     });
 
@@ -267,7 +274,7 @@ let createHabitListItem = (title, priority, streak, id) => {
     //let users = JSON.parse(localStorage.getItem("users")) || [];
 
     if (currentUser) {
-        // Uppdatera currentUserObject med den nya vanan
+        //uppdaterar currentUserObject med den nya vanan
         if (!currentUser.habits) {
             currentUser.habits = [];
         }
@@ -276,10 +283,10 @@ let createHabitListItem = (title, priority, streak, id) => {
     }
 
     if (users.length > 0) {
-        // Hitta indexet för den aktuella användaren i users[]
+        //hittar indexet för den aktuella användaren i users[]
         let currentUserIndex = users.findIndex(user => user.username === currentUser.username);
         if (currentUserIndex !== -1) {
-            // Uppdatera användarens habits med den nya vanan
+            //uppdaterar användarens habits med den nya vanan
             if (!users[currentUserIndex].habits) {
                 users[currentUserIndex].habits = [];
             }
@@ -292,7 +299,7 @@ let createHabitListItem = (title, priority, streak, id) => {
 
 
 let saveHabitToUser = (habit) => {
-    let currentUserObject = JSON.parse(localStorage.getItem("currentUser")); // Deklarera currentUserObject baserat på localStorage
+    let currentUserObject = JSON.parse(localStorage.getItem("currentUser")); //deklarerar currentUserObject baserat på localStorage
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
     //hittar användaren i users[]
@@ -341,48 +348,19 @@ addHabitBtn.addEventListener("click", () => {
         return;
     }
 
-    let priority = document.querySelector("[name='priority']:checked").value; // Implementera logik för att få prioritet från användare
-    let streak = 0; // Implementera logik för att sätta streak
+    let priority = document.querySelector("[name='priority']:checked").value; //implementerar logik för att få prioritet från användare
+    let streak = 0; //implementerar logik för att sätta streak
 
-    // Skapa en unik ID för den nya vanan
+    //skapar en unik ID för den nya vanan
     let id = Date.now().toString();
 
-    // Skapa en ny vana och lägg till den i listan samt spara den i localStorage
+    //skapar en ny vana och lägg till den i listan samt spara den i localStorage
     createHabitListItem(title, priority, streak, id);
 
-    // Återställ inputfältet
+    //återställer inputfältet
     habitInput.value = "";
 
 });
-
-/*
-sortHabitsDropdown.addEventListener('change', () => {
-    let selectedSortOption = sortHabitsDropdown.value;
-
-    let sortedHabits;
-    switch(selectedSortOption) {
-        case "priorityAscending":
-            sortedHabits = habits.slice().sort(sortByPriorityAscending);
-            break;
-        case "priorityDescending":
-            sortedHabits = habits.slice().sort(sortByPriorityDescending);
-            break;
-        case "streakAscending":
-            sortedHabits = habits.slice().sort(sortByStreakAscending);
-            break;
-        case "streakDescending":
-            sortedHabits = habits.slice().sort(sortByStreakDescending);
-            break;
-        default:
-            // Om inget valt alternativ matchar, använd standard-sorteringen (om det finns någon)
-            sortedHabits = habits;
-            break;
-    }
-
-    // Uppdatera DOM med den sorterade listan av vanor
-    updateHabitList(sortedHabits);
-});
-*/
 
 function sortHabits(sortType) {
     let currentUserStorage = localStorage.getItem("currentUser");
@@ -412,16 +390,78 @@ function sortHabits(sortType) {
             return;
     }
 
-    // Uppdatera listan med de sorterade vanorna
+    //uppdaterar listan med de sorterade vanorna
     updateHabitList(currentUserStorageObject.habits);
 }
 
-//FUNGERAR EJ! SKRIVER ÖVER VÄRDEN FRÅN SKAPADE OBJEKT OCH GÖR DE IDENTISKA
+habitList.addEventListener('click', function(event) {
+    let target = event.target;
+    if (target.classList.contains('completedBtn')) {
+        //hanterar klick på completedBtn
+        let li = target.closest('li');
+        let titleElement = li.querySelector('h3');
+        let streakElement = li.querySelector('p:nth-of-type(2)');
+        let id = li.dataset.id;
+
+        //uppdaterar streak i DOM
+        let currentStreak = parseInt(streakElement.innerText.split(':')[1].trim());
+        streakElement.innerText = "Streak: " + (currentStreak );
+
+        //uppdaterar streak i localStorage
+        let habitIndex = habits.findIndex(habit => habit.id === id);
+        if (habitIndex !== -1) {
+            habits[habitIndex].streak = currentStreak + 1;
+            localStorage.setItem("habits", JSON.stringify(habits));
+        }
+    } else if (target.classList.contains('editBtn')) {
+        //hanterar klick på editBtn
+        //implementerar redigering av vana här
+    } else if (target.classList.contains('deleteBtn')) {
+        //hanterar klick på deleteBtn
+        let li = target.closest('li');
+        let id = li.dataset.id;
+
+        //tar bort habit från DOM
+        li.remove();
+
+        //tar bort habit från habits[]
+        let habitIndex = habits.findIndex(habit => habit.id === id);
+        if (habitIndex !== -1) {
+            habits.splice(habitIndex, 1);
+            localStorage.setItem("habits", JSON.stringify(habits));
+        }
+
+        //uppdaterar currentUser och users i localStorage
+        let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (currentUser) {
+            let currentUserHabits = currentUser.habits || [];
+            let currentUserHabitIndex = currentUserHabits.findIndex(habit => habit.id === id);
+            if (currentUserHabitIndex !== -1) {
+                currentUserHabits.splice(currentUserHabitIndex, 1);
+                localStorage.setItem("currentUser", JSON.stringify(currentUser));
+            }
+        }
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        let currentUserIndex = users.findIndex(user => user.username === currentUser.username);
+        if (currentUserIndex !== -1) {
+            if (!users[currentUserIndex].habits) {
+                users[currentUserIndex].habits = [];
+            }
+            let userHabitIndex = users[currentUserIndex].habits.findIndex(habit => habit.id === id);
+            if (userHabitIndex !== -1) {
+                users[currentUserIndex].habits.splice(userHabitIndex, 1);
+                localStorage.setItem("users", JSON.stringify(users));
+            }
+        }
+    }
+});
+
+
 function updateHabitList(sortedHabits) {
-    // Rensa befintliga vanor från listan
+    //rensar befintliga habits från listan
     habitList.innerHTML = '';
 
-    // Skapa nya listelement för varje habit i den sorterade listan
+    //skapar nya listelement för varje habit i den sorterade listan
     sortedHabits.forEach(habit => {
         let li = document.createElement('li');
         li.innerHTML = `
@@ -432,35 +472,35 @@ function updateHabitList(sortedHabits) {
             <button class="editBtn">Edit Habit</button>
             <button class="deleteBtn">Delete Habit</button>
         `;
-        // Lägg till li-elementet i habitList
+        //lägger till li-elementet i habitList
         habitList.appendChild(li);
     });
 }
 
 
 let loadHabitsFromLocalStorage = () => {
-    // Rensa befintliga vanor från currentUser
+    //rensar befintliga habits från currentUser
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (currentUser) {
         currentUser.habits = [];
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
     }
 
-    // Rensa befintliga vanor från users[]
+    //rensar befintliga habits från users[]
     let users = JSON.parse(localStorage.getItem("users")) || [];
     users.forEach(user => {
         user.habits = [];
     });
     localStorage.setItem("users", JSON.stringify(users));
 
-    // Lägg till vanor från local storage
+    //lägger till habits från localstorage
     let habits = JSON.parse(localStorage.getItem('habits')) || [];
     habits.forEach(habit => {
         createHabitListItem(habit.title, habit.priority, habit.streak, habit.id);
     });
 };
 
-// Kalla på funktionen när sidan laddas eller användaren loggar in
+//kallar på funktionen när sidan laddas eller användaren loggar in
 window.addEventListener('load', loadHabitsFromLocalStorage);
 
 
@@ -485,3 +525,49 @@ function sortByStreakAscending(a, b) {
 function sortByStreakDescending(a, b) {
     return b.streak - a.streak;
 }
+
+//funktion för att filtrera habits baserat på prioritet
+function filterHabitsByPriority() {
+    let priorityFilters = []; //tom array för att lagra valda prioriteringar
+    
+
+    //hämtar valda prioriteringar från checkboxar
+    if (document.getElementById('low').checked) {
+        priorityFilters.push('low');
+    }
+    if (document.getElementById('medium').checked) {
+        priorityFilters.push('medium');
+    }
+    if (document.getElementById('high').checked) {
+        priorityFilters.push('high');
+    } else {
+        console.log("Ingen av kraven i filtreringen uppfylls.")
+    }
+
+    //loopar igenom alla habits i DOM- döljer eller visar baserat på filtret
+    let habitItems = document.querySelectorAll('#habitList li');
+    habitItems.forEach(item => {
+        let priority = item.querySelector('p:nth-of-type(1)').innerText.split(': ')[1];
+        if (priorityFilters.includes(priority)) {
+            item.style.display = 'block'; //visar habit om den matchar filtret
+        } else {
+            item.style.display = 'none'; //döljer habit om den inte matchar filtret
+        }
+    });
+
+    console.log(priorityFilters);
+};
+
+
+document.getElementById("applyFiltersButton").addEventListener("click", filterHabitsByPriority);
+
+/*
+document.getElementById("applyFiltersButton").addEventListener("click", function() {
+    console.log("knapptest")
+    filterHabitsByPriority();
+});
+
+applyFiltersBtn.addEventListener("click", () => {
+    filterHabitsByPriority()
+});
+*/

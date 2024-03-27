@@ -134,18 +134,20 @@ main #userContentContainer #habitsContainer {
   box-sizing: border-box;
 }
 main #userContentContainer #todo-container #applyFiltersButton,
-main #userContentContainer #todo-container #restoreTasksBtn,
+main #userContentContainer #todo-container #restoreTasksBtn, main #userContentContainer #todo-container #applyHabitFiltersButton,
 main #userContentContainer #habitsContainer #applyFiltersButton,
-main #userContentContainer #habitsContainer #restoreTasksBtn {
+main #userContentContainer #habitsContainer #restoreTasksBtn,
+main #userContentContainer #habitsContainer #applyHabitFiltersButton {
   background-color: #8e69ff;
   color: white;
   font-weight: 600;
   border: none;
 }
 main #userContentContainer #todo-container #applyFiltersButton:hover,
-main #userContentContainer #todo-container #restoreTasksBtn:hover,
+main #userContentContainer #todo-container #restoreTasksBtn:hover, main #userContentContainer #todo-container #applyHabitFiltersButton:hover,
 main #userContentContainer #habitsContainer #applyFiltersButton:hover,
-main #userContentContainer #habitsContainer #restoreTasksBtn:hover {
+main #userContentContainer #habitsContainer #restoreTasksBtn:hover,
+main #userContentContainer #habitsContainer #applyHabitFiltersButton:hover {
   background-color: #7255c9;
 }
 main #userContentContainer #todo-container .sortingBox,
@@ -200,6 +202,10 @@ main #userContentContainer .toggle {
   border: none;
 }
 main #userContentContainer .completedBtn {
+  background-color: F0F0F0;
+  border: none;
+}
+main #userContentContainer #saveChangesBtn {
   background-color: F0F0F0;
   border: none;
 }

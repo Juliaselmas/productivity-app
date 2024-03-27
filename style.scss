@@ -175,7 +175,7 @@ main {
 
 
       #applyFiltersButton,
-      #restoreTasksBtn {
+      #restoreTasksBtn, #applyHabitFiltersButton {
         background-color: $buttonPurple;
         color: white;
         font-weight: 600;
@@ -252,6 +252,11 @@ main {
       background-color: F0F0F0;
       border: none;
 
+    }
+
+    #saveChangesBtn {
+      background-color: F0F0F0;
+      border: none;
     }
 
     .mainColumn {

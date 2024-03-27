@@ -451,3 +451,55 @@ function sortByStreakAscending(a, b) {
 function sortByStreakDescending(a, b) {
     return b.streak - a.streak;
 }
+
+
+
+//funktion för att filtrera habits baserat på prioritet
+function filterHabitsByPriority(priorityFilters) {
+    let habitItems = document.querySelectorAll('#habitList li');
+    habitItems.forEach(item => {
+        let priority = item.querySelector('p:nth-of-type(2)').innerText.split(': ')[1];
+        if (priorityFilters.length === 0 || priorityFilters.includes(priority)) {
+            item.style.display = 'block'; // Visar habit om den matchar filtret eller om inga filter är valda
+        } else {
+            item.style.display = 'none'; // Döljer habit om den inte matchar filtret
+        }
+    });
+};
+
+// Funktion för att visa alla habits
+function showAllHabits() {
+    let habitItems = document.querySelectorAll('#habitList li');
+    habitItems.forEach(item => {
+        item.style.display = 'block'; // Visa alla habit-items
+    });
+};
+
+// Funktion för att hantera klick på applyFiltersButton
+function applyFilters() {
+    let priorityFilters = []; // Tom array för att lagra valda prioriteringar
+    if (document.getElementById('low').checked) {
+        priorityFilters.push('Low');
+    }
+    if (document.getElementById('medium').checked) {
+        priorityFilters.push('Medium');
+    }
+    if (document.getElementById('high').checked) {
+        priorityFilters.push('High');
+    }
+
+    if (priorityFilters.length === 0) {
+        showAllHabits(); // Visa alla habits om inga filter är valda
+    } else {
+        filterHabitsByPriority(priorityFilters); // Filtrera habits baserat på valda prioriteringar
+    }
+};
+
+//document.getElementById("applyFiltersButton").addEventListener("click", filterHabitsByPriority);
+document.getElementById("applyFiltersButton").addEventListener("click", applyFilters);
+/*
+applyFiltersBtn.addEventListener('click', function () {
+    filterHabitsByPriority();
+});
+*/
+console.log(filterHabitsByPriority());

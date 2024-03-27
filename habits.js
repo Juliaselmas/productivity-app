@@ -12,7 +12,6 @@ let applyFiltersBtn = document.getElementById("applyHabitFiltersButton");
 
 
 /*NOTES:
-SORTERING: 
 
 FILTRERING:
 -Inget händer när man klickar på applyFiltersBtn. ID stämmer, men nås inte radioknapparna kanske? 
@@ -140,6 +139,7 @@ let createHabitListItem = (title, priority, streak, id) => {
         
 
     let saveChangesBtn = document.createElement("button");
+    saveChangesBtn.setAttribute("id", "saveChangesBtn");
     saveChangesBtn.innerText = "Save Changes";
     li.append(saveChangesBtn);
 
@@ -175,9 +175,6 @@ let createHabitListItem = (title, priority, streak, id) => {
             saveChangesBtn.remove();
             editedStreakInput.remove();
             editedStreakLabel.remove();
-    
-            //sparar den uppdaterade habit till localstorage
-            //saveToLocalStorage(editedHabitText, editedPriorityValue, editedStreakCounter, id);
 
             //sparar uppdaterad habit till localStorage
             localStorage.setItem("habits", JSON.stringify(habits));
@@ -569,6 +566,7 @@ function updateHabitList(sortedHabits) {
         
 
     let saveChangesBtn = document.createElement("button");
+    saveChangesBtn.setAttribute("id", "saveChangesBtn");
     saveChangesBtn.innerText = "Save Changes";
     li.append(saveChangesBtn);
 
@@ -681,24 +679,9 @@ function updateHabitList(sortedHabits) {
     //tar bort habit från DOM
     li.remove();
     });
-    
-    // let id = Date.now().toString();
 
-
-        //lägger till li-elementet i habitList
-        habitList.appendChild(li);
-
-        //sparar den nya vanan för både currentUser och users i localStorage
-    //saveHabitToUser({ title, priority, streak, id });
-
-    // //sparar den nya vanan i habits[]
-    // habits.push(title, priority, streak, id });
-    // localStorage.setItem("habits", JSON.stringify(habits));
-
-    //uppdaterar currentUser och users i localStorage
-    //let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-        
+    //lägger till li-elementet i habitList
+    habitList.appendChild(li);   
 
     });
 
@@ -754,54 +737,28 @@ function sortByStreakDescending(a, b) {
     return b.streak - a.streak;
 }
 
+applyFiltersBtn.addEventListener("click", () => {
+    let lowPriorityChecked = document.getElementById("low").checked;
+    let mediumPriorityChecked = document.getElementById("medium").checked;
+    let highPriorityChecked = document.getElementById("high").checked;
 
+    let habits = document.getElementById("habitList").getElementsByTagName("li");
 
-//funktion för att filtrera habits baserat på prioritet
-function filterHabitsByPriority(priorityFilters) {
-    let habitItems = document.querySelectorAll('#habitList li');
-    habitItems.forEach(item => {
-        let priority = item.querySelector('p:nth-of-type(2)').innerText.split(': ')[1];
-        if (priorityFilters.length === 0 || priorityFilters.includes(priority)) {
-            item.style.display = 'block'; // Visar habit om den matchar filtret eller om inga filter är valda
+    for (let i = 0; i < habits.length; i++) {
+        let habit = habits[i];
+        let priority = habit.querySelector("p").innerText.split(": ")[1]; //hämtar prioritet från habit
+
+        //kontrollerar om habit ska visas baserat på checkboxvalen
+        let shouldBeDisplayed = 
+            (lowPriorityChecked && priority === "Low") ||
+            (mediumPriorityChecked && priority === "Medium") ||
+            (highPriorityChecked && priority === "High");
+
+        //visar eller döljer habit baserat på filtreringen
+        if (shouldBeDisplayed) {
+            habit.style.display = "block";
         } else {
-            item.style.display = 'none'; // Döljer habit om den inte matchar filtret
+            habit.style.display = "none";
         }
-    });
-};
-
-// Funktion för att visa alla habits
-function showAllHabits() {
-    let habitItems = document.querySelectorAll('#habitList li');
-    habitItems.forEach(item => {
-        item.style.display = 'block'; // Visa alla habit-items
-    });
-};
-
-// Funktion för att hantera klick på applyFiltersButton
-function applyFilters() {
-    let priorityFilters = []; // Tom array för att lagra valda prioriteringar
-    if (document.getElementById('low').checked) {
-        priorityFilters.push('Low');
     }
-    if (document.getElementById('medium').checked) {
-        priorityFilters.push('Medium');
-    }
-    if (document.getElementById('high').checked) {
-        priorityFilters.push('High');
-    }
-
-    if (priorityFilters.length === 0) {
-        showAllHabits(); // Visa alla habits om inga filter är valda
-    } else {
-        filterHabitsByPriority(priorityFilters); // Filtrera habits baserat på valda prioriteringar
-    }
-};
-
-//document.getElementById("applyFiltersButton").addEventListener("click", filterHabitsByPriority);
-document.getElementById("applyFiltersButton").addEventListener("click", applyFilters);
-/*
-applyFiltersBtn.addEventListener('click', function () {
-    filterHabitsByPriority();
 });
-*/
-console.log(filterHabitsByPriority());

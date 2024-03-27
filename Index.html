@@ -216,12 +216,33 @@
                 <h2>My habits</h2>
                 <!-- filtrering & sortering här -->
                 <div class="filterSortingBtnContainer">
-                    <button class="showFiltersBtn"><i class="fa-solid fa-sliders"></i></button>
-                    <button class="showSortingBtn"><i class="fa-solid fa-sort"></i></button>
+                    <button class="showFiltersBtn" id="showFiltersBtnHabits"><i class="fa-solid fa-sliders"></i></button>
+                    <button class="showSortingBtn" id="showSortingBtnHabits"><i class="fa-solid fa-sort"></i></button>
+                </div>
+
+                <div class="sortingBox hide">
+                    <select id="sortHabitsDropdown" onchange="sortHabits(this.value)">
+                        <option value="default" selected>Sort your habits</option>
+                        <option value="highestPriority">Sort by priority &uarr; (ascending order)</option>
+                        <option value="lowestPriority">Sort by priority &darr; (descending order)</option>
+                        <option value="highestStreak">Sort by streak &uarr; (ascending order)</option>
+                        <option value="lowestStreak">Sort by streak &darr; (descending order)</option>
+                    </select>
                 </div>
 
                 <div class="filterBox hide">
                     <!--Lägg filtreringen här-->
+                    <input type="checkbox" id="low">
+                    <label for="low">Low Priority</label>
+                    <input type="checkbox" id="medium">
+                    <label for="medium">Medium Priority</label>
+                    <input type="checkbox" id="high">
+                    <label for="high">High Priority</label>
+
+
+
+                    <button id="applyHabitFiltersButton">Apply Filters <i class="fa-solid fa-filter"></i></button>
+                    <!-- <button id="showHabitsBtn">Show All Habits</button> -->
 
                 </div>
 

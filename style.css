@@ -199,6 +199,10 @@ main #userContentContainer .toggle {
   background-color: F0F0F0;
   border: none;
 }
+main #userContentContainer .completedBtn {
+  background-color: F0F0F0;
+  border: none;
+}
 main #userContentContainer .mainColumn {
   align-items: center;
   display: flex;
